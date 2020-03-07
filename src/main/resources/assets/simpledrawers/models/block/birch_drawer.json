@@ -1,0 +1,8 @@
+{
+	"parent": "simpledrawers:block/full_drawer",
+	"textures": {
+		"particle": "block/stripped_birch_log",
+		"base": "block/stripped_birch_log",
+		"edge": "block/birch_log"
+	}
+}

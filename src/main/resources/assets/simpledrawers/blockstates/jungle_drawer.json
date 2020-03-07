@@ -1,0 +1,8 @@
+{
+	"variants": {
+		"facing=north": { "model": "simpledrawers:block/jungle_drawer" },
+		"facing=east": { "model": "simpledrawers:block/jungle_drawer", "y": 90 },
+		"facing=south": { "model": "simpledrawers:block/jungle_drawer", "y": 180  },
+		"facing=west": { "model": "simpledrawers:block/jungle_drawer", "y": 270  }
+	}
+}
