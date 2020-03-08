@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"WWW",
+		"SCW",
+		"WWW"
+	],
+	"key": {
+		"W": {
+			"item": "minecraft:dark_oak_planks"
+		},
+		"S": {
+			"item": "minecraft:dark_oak_slab"
+		},
+		"C": {
+			"item": "minecraft:chest"
+		}
+	},
+	"result": {
+		"item": "simpledrawers:dark_oak_drawer",
+		"count": 1
+	}
+}

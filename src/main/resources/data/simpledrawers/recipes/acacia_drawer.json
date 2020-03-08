@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"WWW",
+		"SCW",
+		"WWW"
+	],
+	"key": {
+		"W": {
+			"item": "minecraft:acacia_planks"
+		},
+		"S": {
+			"item": "minecraft:acacia_slab"
+		},
+		"C": {
+			"item": "minecraft:chest"
+		}
+	},
+	"result": {
+		"item": "simpledrawers:acacia_drawer",
+		"count": 1
+	}
+}

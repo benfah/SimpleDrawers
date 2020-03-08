@@ -62,7 +62,7 @@ public class BlockBasicDrawer extends BlockWithEntity
 				BlockEntityBasicDrawer drawer = (BlockEntityBasicDrawer) world.getBlockEntity(pos);
 				if (drawer.getHolder() == null || drawer.getHolder().isEmpty())
 				{
-					drawer.setHolder(new ItemHolder(player.getMainHandStack().getItem(), 32 * 64, drawer));
+					drawer.setHolder(new ItemHolder(32 * 64, drawer));
 				}
 				return drawer.getHolder().offer(player.getMainHandStack());
 			}

@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"WWW",
+		"SCW",
+		"WWW"
+	],
+	"key": {
+		"W": {
+			"item": "minecraft:spruce_planks"
+		},
+		"S": {
+			"item": "minecraft:spruce_slab"
+		},
+		"C": {
+			"item": "minecraft:chest"
+		}
+	},
+	"result": {
+		"item": "simpledrawers:spruce_drawer",
+		"count": 1
+	}
+}
