@@ -7,27 +7,30 @@ import java.util.Locale;
 import me.benfah.simpledrawers.utils.ItemUtils;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Tickable;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 
-public class ItemHolder
+public class ItemHolder implements SidedInventory
 {
 	public static NumberFormat FORMAT = NumberFormat.getInstance(Locale.US);
 	
-	private ItemStack internalStack;
-	private int maxAmount;
+	private ItemStack internalStack = ItemStack.EMPTY;
+	private int maxStacks;
 	private BlockEntityClientSerializable blockEntity;
-	
-	
-	
-	public ItemHolder(int maxAmount, BlockEntityClientSerializable blockEntity)
+	private ItemStack transferStack;
+		
+	public ItemHolder(int maxStacks, BlockEntityClientSerializable blockEntity)
 	{
 //		this.internalStack = new ItemStack(itemType, 1);
-		this.maxAmount = maxAmount;
+		this.maxStacks = maxStacks;
 		this.blockEntity = blockEntity;
 	}
 	
@@ -40,7 +43,7 @@ public class ItemHolder
 	
 	public ActionResult offer(ItemStack stack)
 	{
-		if(internalStack == null)
+		if(internalStack == null || internalStack.isEmpty())
 		{
 			internalStack = stack.copy();
 			stack.setCount(0);
@@ -49,7 +52,7 @@ public class ItemHolder
 		}
 		if(stack != null && internalStack.isItemEqual(stack) && ItemStack.areTagsEqual(internalStack, stack))
 		{
-			int newAmount = Math.min(internalStack.getCount() + stack.getCount(), maxAmount);
+			int newAmount = Math.min(internalStack.getCount() + stack.getCount(), getMaxAmount());
 			int stackSize = (internalStack.getCount() + stack.getCount()) - newAmount;
 			stack.setCount(stackSize);
 			internalStack.setCount(newAmount);
@@ -57,7 +60,12 @@ public class ItemHolder
 			return ActionResult.SUCCESS;
 		}
 		
-		return ActionResult.PASS;
+		return ActionResult.CONSUME;
+	}
+	
+	public int getMaxAmount()
+	{
+		return internalStack.getItem().getMaxCount() * maxStacks;
 	}
 	
 	public boolean tryInsertIntoInventory(PlayerEntity player, boolean singleItem)
@@ -106,7 +114,7 @@ public class ItemHolder
 	{
 		tag.put("Item", ItemUtils.toTag(new CompoundTag(), internalStack));
 //		tag.putInt("Amount", itemType);
-		tag.putInt("MaxAmount", maxAmount);
+		tag.putInt("MaxAmount", maxStacks);
 		return tag;
 	}
 	
@@ -114,7 +122,7 @@ public class ItemHolder
 	{
 		ItemHolder holder = new ItemHolder();
 		holder.internalStack = ItemUtils.fromTag(tag.getCompound("Item"));
-		holder.maxAmount = tag.getInt("MaxAmount");
+		holder.maxStacks = tag.getInt("MaxAmount");
 		holder.blockEntity = blockEntity;
 		return holder;
 	}
@@ -131,6 +139,119 @@ public class ItemHolder
 	
 	static {
 		FORMAT.setGroupingUsed(true);
+	}
+	
+	
+	
+	
+	
+	
+	@Override
+	public void clear()
+	{
+		internalStack.setCount(0);
+	}
+
+	@Override
+	public int getInvSize()
+	{
+		return 1;
+	}
+
+	@Override
+	public boolean isInvEmpty()
+	{
+		return internalStack.isEmpty();
+	}
+
+	@Override
+	public ItemStack getInvStack(int slot)
+	{
+		if(transferStack == null)
+		transferStack = new ItemStack(internalStack.getItem());
+		return transferStack;
+	}
+
+	@Override
+	public ItemStack takeInvStack(int slot, int amount)
+	{
+		if(internalStack.getCount() >= amount)
+		{
+			ItemStack result = generateStack(amount);
+			internalStack.decrement(amount);
+			return result;
+		}
+		return null;
+	}
+
+	@Override
+	public ItemStack removeInvStack(int slot)
+	{
+		int maxAmount = internalStack.getItem().getMaxCount();
+		
+		if(internalStack.getCount() >= maxAmount)
+		{
+			ItemStack result = generateStack(maxAmount);
+			internalStack.decrement(maxAmount);
+			return result;
+		}
+		return null;
+	}
+
+	@Override
+	public void setInvStack(int slot, ItemStack stack)
+	{
+		offer(stack);
+	}
+
+	@Override
+	public void markDirty()
+	{
+		blockEntity.sync();
+	}
+
+	@Override
+	public boolean canPlayerUseInv(PlayerEntity player)
+	{
+		return false;
+	}
+
+	@Override
+	public int[] getInvAvailableSlots(Direction side)
+	{
+		int[] result = new int[32];
+		
+		for(int i = 0; i < 32; i++)
+		{
+			result[i] = i;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir)
+	{
+		return internalStack.getCount() <= getMaxAmount();
+	}
+
+	@Override
+	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir)
+	{
+		return !isEmpty();
+	}
+	
+	public void transferImminentStack()
+	{
+		if(transferStack != null && !transferStack.isEmpty())
+		{
+			if(transferStack.getCount() > 1)
+			{
+				transferStack.decrement(1);
+				offer(transferStack);
+				transferStack.setCount(1);
+			}
+		}
 	}
 	
 }

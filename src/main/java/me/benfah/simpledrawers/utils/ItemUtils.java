@@ -27,6 +27,7 @@ public class ItemUtils
 		Item i = Registry.ITEM.get(new Identifier(tag.getString("id")));
 		ItemStack result = new ItemStack(i);
 		result.setCount(tag.getInt("Count"));
+		if(tag.contains("tag"))
 		result.setTag(tag.getCompound("tag"));
 		return result;
 	}

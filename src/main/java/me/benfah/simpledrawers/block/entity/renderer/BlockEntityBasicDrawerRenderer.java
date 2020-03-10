@@ -100,7 +100,6 @@ public class BlockEntityBasicDrawerRenderer extends BlockEntityRenderer<BlockEnt
 		RenderSystem.setupGui3DDiffuseLighting();
 		else
 		RenderSystem.setupGuiFlatDiffuseLighting();
-
         matrices.peek().getNormal().load(Matrix3f.scale(1, -1, 1));
 		MinecraftClient.getInstance().getItemRenderer().renderItem(stack, Mode.GUI, light, overlay, matrices, vertexConsumers);
 		if(vertexConsumers instanceof VertexConsumerProvider.Immediate)

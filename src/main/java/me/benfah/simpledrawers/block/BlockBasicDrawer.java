@@ -7,9 +7,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.InventoryProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -26,10 +28,11 @@ import net.minecraft.util.hit.HitResult.Type;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.RayTraceContext;
 import net.minecraft.world.World;
 
-public class BlockBasicDrawer extends BlockWithEntity
+public class BlockBasicDrawer extends BlockWithEntity implements InventoryProvider
 {
 
 	public static DirectionProperty FACING = Properties.FACING;
@@ -60,10 +63,7 @@ public class BlockBasicDrawer extends BlockWithEntity
 			if (hand.equals(Hand.MAIN_HAND) && !player.getMainHandStack().isEmpty())
 			{
 				BlockEntityBasicDrawer drawer = (BlockEntityBasicDrawer) world.getBlockEntity(pos);
-				if (drawer.getHolder() == null || drawer.getHolder().isEmpty())
-				{
-					drawer.setHolder(new ItemHolder(32 * 64, drawer));
-				}
+				
 				return drawer.getHolder().offer(player.getMainHandStack());
 			}
 		}
@@ -131,6 +131,12 @@ public class BlockBasicDrawer extends BlockWithEntity
 	protected void appendProperties(Builder<Block, BlockState> builder)
 	{
 		builder.add(FACING);
+	}
+
+	@Override
+	public SidedInventory getInventory(BlockState state, IWorld world, BlockPos pos)
+	{
+		return ((BlockEntityBasicDrawer)world.getBlockEntity(pos)).getHolder();
 	}
 
 }
