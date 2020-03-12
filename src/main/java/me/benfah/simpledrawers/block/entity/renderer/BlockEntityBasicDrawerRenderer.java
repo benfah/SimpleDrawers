@@ -96,10 +96,12 @@ public class BlockEntityBasicDrawerRenderer extends BlockEntityRenderer<BlockEnt
 	public void drawLock(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Direction facing)
 	{
 		matrices.push();
+		transformAttribToFace(matrices, facing.getOpposite());
+
+		
 		transformToCenteredPosition(13.5, matrices);
 		matrices.scale(1 / 16f, 1 / 16f, 1 / 16f);
 		matrices.translate(-0.5, 0, 0);
-		transformAttribToFace(matrices, facing.getOpposite());
 
 		ModelUtils.drawSpecialTexture(matrices, vertexConsumers, ModelUtils.SpecialModel.LOCK.getBakedModel(), light, overlay);
 		
