@@ -1,20 +1,14 @@
 package me.benfah.simpledrawers.block.entity.renderer;
 
-import java.util.List;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
 import me.benfah.simpledrawers.utils.ModelUtils;
-import me.benfah.simpledrawers.utils.ModelUtils.SpecialModel;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.render.model.json.ModelTransformation.Mode;
 import net.minecraft.client.util.math.Matrix3f;
 import net.minecraft.client.util.math.MatrixStack;

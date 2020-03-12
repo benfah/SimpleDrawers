@@ -1,13 +1,10 @@
 package me.benfah.simpledrawers.init;
 
-import com.mojang.datafixers.types.Type;
-
 import me.benfah.simpledrawers.SimpleDrawersMod;
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.thread.TaskQueue.Simple;
 
 public class SDBlockEntities
 {

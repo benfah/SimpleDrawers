@@ -2,7 +2,6 @@ package me.benfah.simpledrawers.block;
 
 
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
-import me.benfah.simpledrawers.block.entity.holder.ItemHolder;
 import me.benfah.simpledrawers.item.ItemKey;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -15,7 +14,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.state.StateManager.Builder;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
@@ -30,7 +28,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.RayTraceContext;
 import net.minecraft.world.World;
 
 public class BlockBasicDrawer extends BlockWithEntity implements InventoryProvider

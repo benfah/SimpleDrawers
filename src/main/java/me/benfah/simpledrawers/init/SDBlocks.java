@@ -2,14 +2,12 @@ package me.benfah.simpledrawers.init;
 
 import me.benfah.simpledrawers.SimpleDrawersMod;
 import me.benfah.simpledrawers.block.BlockBasicDrawer;
-import net.minecraft.block.Block.Settings;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
 
 public class SDBlocks
 {
