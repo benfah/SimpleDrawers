@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"GGG",
+		"  N"
+	],
+	"key": {
+		"G": {
+			"item": "minecraft:gold_ingot"
+		},
+		"N": {
+			"item": "minecraft:gold_nugget"
+		}
+	},
+	"result": {
+		"item": "simpledrawers:lock_key",
+		"count": 1
+	}
+}

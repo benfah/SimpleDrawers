@@ -4,17 +4,14 @@ package me.benfah.simpledrawers.block.entity.holder;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import me.benfah.simpledrawers.utils.ItemUtils;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 
@@ -22,11 +19,15 @@ public class ItemHolder implements SidedInventory
 {
 	public static NumberFormat FORMAT = NumberFormat.getInstance(Locale.US);
 	
-	private ItemStack internalStack = ItemStack.EMPTY;
+	
+	private Item itemType;
+	private CompoundTag tag;
+	private int amount;
 	private int maxStacks;
 	private BlockEntityClientSerializable blockEntity;
 	private ItemStack transferStack;
-		
+	private boolean locked = false;
+	
 	public ItemHolder(int maxStacks, BlockEntityClientSerializable blockEntity)
 	{
 //		this.internalStack = new ItemStack(itemType, 1);
@@ -38,25 +39,28 @@ public class ItemHolder implements SidedInventory
 	
 	public String getDisplayAmount()
 	{
-		return FORMAT.format(internalStack.getCount());
+		return FORMAT.format(amount);
 	}
 	
 	public ActionResult offer(ItemStack stack)
 	{
-		if(internalStack == null || internalStack.isEmpty())
+		if(itemType == null || (amount <= 0 && !locked))
 		{
-			internalStack = stack.copy();
+			itemType = stack.getItem();
+			tag = stack.getOrCreateTag();
+			amount = stack.getCount();
 			stack.setCount(0);
 			blockEntity.sync();
 			return ActionResult.SUCCESS;
 		}
-		if(stack != null && internalStack.isItemEqual(stack) && ItemStack.areTagsEqual(internalStack, stack))
+		if(stack != null && isStackEqual(stack))
 		{
-			int newAmount = Math.min(internalStack.getCount() + stack.getCount(), getMaxAmount());
-			int stackSize = (internalStack.getCount() + stack.getCount()) - newAmount;
+			int newAmount = Math.min(amount + stack.getCount(), getMaxAmount());
+			int stackSize = (amount + stack.getCount()) - newAmount;
 			stack.setCount(stackSize);
-			internalStack.setCount(newAmount);
+			amount = newAmount;
 			blockEntity.sync();
+
 			return ActionResult.SUCCESS;
 		}
 		
@@ -65,7 +69,7 @@ public class ItemHolder implements SidedInventory
 	
 	public int getMaxAmount()
 	{
-		return internalStack.getItem().getMaxCount() * maxStacks;
+		return itemType.getMaxCount() * maxStacks;
 	}
 	
 	public boolean tryInsertIntoInventory(PlayerEntity player, boolean singleItem)
@@ -73,9 +77,9 @@ public class ItemHolder implements SidedInventory
 		ItemStack stack = getStack(singleItem);
 		if(!stack.isEmpty())
 		{
-			internalStack.decrement(stack.getCount());
+			amount = amount - stack.getCount();
 			boolean result = player.inventory.insertStack(stack);
-			internalStack.increment(stack.getCount());
+			amount = amount + stack.getCount();
 			blockEntity.sync();
 			return result;
 		}
@@ -84,13 +88,13 @@ public class ItemHolder implements SidedInventory
 	
 	public ItemStack getStack(boolean singleItem)
 	{
-		if(internalStack.getCount() > 0)
+		if(amount > 0)
 		{
 			if(singleItem)
 			{
 				return generateStack(1);
 			}
-			int stackAmount = Math.min(internalStack.getMaxCount(), internalStack.getCount());
+			int stackAmount = Math.min(itemType.getMaxCount(), amount);
 			
 			return generateStack(stackAmount);
 		}
@@ -100,41 +104,78 @@ public class ItemHolder implements SidedInventory
 	
 	private ItemStack generateStack(int amount)
 	{
-		ItemStack result = internalStack.copy();
-		result.setCount(amount);
-		return result;
+		return new ItemStack(itemType, amount);
 	}
 	
 	public boolean isEmpty()
 	{
-		return internalStack.isEmpty();
+		return amount <= 0;
+	}
+	
+	public boolean isLocked()
+	{
+		return locked;
+	}
+	
+	public void setLocked(boolean locked)
+	{
+		this.locked = locked;
+		blockEntity.sync();
 	}
 	
 	public CompoundTag toNBT(CompoundTag tag)
 	{
-		tag.put("Item", ItemUtils.toTag(new CompoundTag(), internalStack));
-//		tag.putInt("Amount", itemType);
+		tag.put("Item", serializeItemData(new CompoundTag()));
 		tag.putInt("MaxAmount", maxStacks);
+		tag.putBoolean("Locked", locked);
+		
 		return tag;
 	}
 	
 	public static ItemHolder fromNBT(CompoundTag tag, BlockEntityClientSerializable blockEntity)
 	{
 		ItemHolder holder = new ItemHolder();
-		holder.internalStack = ItemUtils.fromTag(tag.getCompound("Item"));
+		holder.deserializeItemData(tag.getCompound("Item"));
 		holder.maxStacks = tag.getInt("MaxAmount");
 		holder.blockEntity = blockEntity;
+		
+		if(tag.getBoolean("Locked"))
+		holder.locked = tag.getBoolean("Locked");
+		
 		return holder;
+	}
+	
+	
+	
+	public CompoundTag serializeItemData(CompoundTag tag)
+	{
+		
+		tag.putString("id", Registry.ITEM.getId(itemType).toString());
+		tag.putInt("Count", amount);
+		tag.put("tag", this.tag);
+		
+		return tag;
+	}
+	
+	public void deserializeItemData(CompoundTag tag)
+	{
+		Identifier id = new Identifier(tag.getString("id"));
+		if(Registry.ITEM.containsId(id))
+		{
+		itemType = Registry.ITEM.get(id);
+		amount = tag.getInt("Count");
+		this.tag = tag.getCompound("tag");
+		}
 	}
 	
 	public Item getItemType()
 	{
-		return internalStack.getItem();
+		return itemType;
 	}
 	
 	public int getAmount()
 	{
-		return internalStack.getCount();
+		return amount;
 	}
 	
 	static {
@@ -149,7 +190,7 @@ public class ItemHolder implements SidedInventory
 	@Override
 	public void clear()
 	{
-		internalStack.setCount(0);
+		amount = 0;
 	}
 
 	@Override
@@ -161,24 +202,25 @@ public class ItemHolder implements SidedInventory
 	@Override
 	public boolean isInvEmpty()
 	{
-		return internalStack.isEmpty();
+		return isEmpty();
 	}
 
 	@Override
 	public ItemStack getInvStack(int slot)
 	{
 		if(transferStack == null)
-		transferStack = new ItemStack(internalStack.getItem());
+		transferStack = new ItemStack(itemType);
 		return transferStack;
 	}
 
 	@Override
 	public ItemStack takeInvStack(int slot, int amount)
 	{
-		if(internalStack.getCount() >= amount)
+		int maxAmount = Math.min(itemType.getMaxCount(), amount);
+		if(!isEmpty())
 		{
-			ItemStack result = generateStack(amount);
-			internalStack.decrement(amount);
+			ItemStack result = generateStack(maxAmount);
+			this.amount = this.amount - maxAmount;
 			return result;
 		}
 		return null;
@@ -187,12 +229,12 @@ public class ItemHolder implements SidedInventory
 	@Override
 	public ItemStack removeInvStack(int slot)
 	{
-		int maxAmount = internalStack.getItem().getMaxCount();
+		int maxAmount = Math.min(itemType.getMaxCount(), amount);
 		
-		if(internalStack.getCount() >= maxAmount)
+		if(!isEmpty())
 		{
 			ItemStack result = generateStack(maxAmount);
-			internalStack.decrement(maxAmount);
+			amount = amount - maxAmount;
 			return result;
 		}
 		return null;
@@ -228,11 +270,24 @@ public class ItemHolder implements SidedInventory
 		
 		return result;
 	}
+	
+	public boolean isStackEqual(ItemStack stack)
+	{
+		
 
+		if(stack.getItem().equals(itemType))
+		{
+			CompoundTag tag1 = this.tag == null ? new CompoundTag() : tag;
+			CompoundTag tag2 = stack.getTag() == null ? new CompoundTag() : stack.getTag();
+			return tag1.equals(tag2);
+		}
+		return false;
+	}
+	
 	@Override
 	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir)
 	{
-		return internalStack.getCount() <= getMaxAmount();
+		return isEmpty() || isStackEqual(stack);
 	}
 
 	@Override

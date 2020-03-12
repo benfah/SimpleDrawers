@@ -3,6 +3,7 @@ package me.benfah.simpledrawers.block;
 
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
 import me.benfah.simpledrawers.block.entity.holder.ItemHolder;
+import me.benfah.simpledrawers.item.ItemKey;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -64,10 +65,16 @@ public class BlockBasicDrawer extends BlockWithEntity implements InventoryProvid
 			{
 				BlockEntityBasicDrawer drawer = (BlockEntityBasicDrawer) world.getBlockEntity(pos);
 				
+				if(player.getMainHandStack().getItem() instanceof ItemKey)
+				{
+					((ItemKey)player.getMainHandStack().getItem()).interact(drawer.getHolder());
+					return ActionResult.SUCCESS;
+				}
+				
 				return drawer.getHolder().offer(player.getMainHandStack());
 			}
 		}
-		return ActionResult.CONSUME;
+		return ActionResult.PASS;
 	}
 	
 	@Override

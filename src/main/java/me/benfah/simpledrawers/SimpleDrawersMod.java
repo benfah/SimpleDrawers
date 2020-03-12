@@ -14,6 +14,8 @@ public class SimpleDrawersMod implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
+		
+		
 		SDBlocks.init();
 		SDBlockEntities.init();
 		SDItems.init();
