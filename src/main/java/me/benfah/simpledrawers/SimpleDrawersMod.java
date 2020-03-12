@@ -8,14 +8,12 @@ import net.fabricmc.api.ModInitializer;
 
 public class SimpleDrawersMod implements ModInitializer
 {
-	
+
 	public static final String MOD_ID = "simpledrawers";
-	
+
 	@Override
 	public void onInitialize()
 	{
-		
-		
 		SDBlocks.init();
 		SDBlockEntities.init();
 		SDItems.init();

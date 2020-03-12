@@ -13,7 +13,8 @@ public class SimpleDrawersModClient implements ClientModInitializer
 	public void onInitializeClient()
 	{
 		ModelUtils.loadSpecialModels();
-		BlockEntityRendererRegistry.INSTANCE.register(SDBlockEntities.BASIC_DRAWER, BlockEntityBasicDrawerRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(SDBlockEntities.BASIC_DRAWER,
+				BlockEntityBasicDrawerRenderer::new);
 	}
 
 }

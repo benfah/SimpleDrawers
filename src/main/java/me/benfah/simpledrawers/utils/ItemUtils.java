@@ -21,15 +21,15 @@ public class ItemUtils
 
 		return tag;
 	}
-	
+
 	public static ItemStack fromTag(CompoundTag tag)
 	{
 		Item i = Registry.ITEM.get(new Identifier(tag.getString("id")));
 		ItemStack result = new ItemStack(i);
 		result.setCount(tag.getInt("Count"));
-		if(tag.contains("tag"))
-		result.setTag(tag.getCompound("tag"));
+		if (tag.contains("tag"))
+			result.setTag(tag.getCompound("tag"));
 		return result;
 	}
-	
+
 }

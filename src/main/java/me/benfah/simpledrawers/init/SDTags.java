@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 
 public class SDTags
 {
-	
+
 	public static Tag<Item> DRAWERS_ITEM;
 	public static Tag<Block> DRAWERS_BLOCK;
 
@@ -19,5 +19,5 @@ public class SDTags
 		DRAWERS_BLOCK = BlockTags.getContainer().getOrCreate(new Identifier("simpledrawers:drawers"));
 
 	}
-	
+
 }

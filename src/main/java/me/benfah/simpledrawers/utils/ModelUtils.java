@@ -35,10 +35,11 @@ public class ModelUtils
 		}));
 	}
 
-	public static void drawSpecialTexture(MatrixStack matrices, VertexConsumerProvider consumers, BakedModel model, int light,
-			int overlay)
+	public static void drawSpecialTexture(MatrixStack matrices, VertexConsumerProvider consumers, BakedModel model,
+			int light, int overlay)
 	{
-		renderQuads(matrices.peek(), consumers.getBuffer(RenderLayer.getTranslucent()), model.getQuads(null, null, ModelUtils.RANDOM), light, overlay);
+		renderQuads(matrices.peek(), consumers.getBuffer(RenderLayer.getTranslucent()),
+				model.getQuads(null, null, ModelUtils.RANDOM), light, overlay);
 
 	}
 
@@ -48,29 +49,29 @@ public class ModelUtils
 		for (BakedQuad quad : list)
 			vertexConsumer.quad(entry, quad, 1F, 1F, 1F, light, overlay);
 	}
-	
-	public enum SpecialModel 
+
+	public enum SpecialModel
 	{
-		
+
 		LOCK(new ModelIdentifier("simpledrawers:attributes/lock"));
-		
+
 		private ModelIdentifier identifier;
-		
+
 		private SpecialModel(ModelIdentifier identifier)
 		{
 			this.identifier = identifier;
 		}
-		
+
 		public ModelIdentifier getIdentifier()
 		{
 			return identifier;
 		}
-		
+
 		public BakedModel getBakedModel()
 		{
 			return MinecraftClient.getInstance().getBakedModelManager().getModel(identifier);
 		}
-		
+
 	}
 
 }

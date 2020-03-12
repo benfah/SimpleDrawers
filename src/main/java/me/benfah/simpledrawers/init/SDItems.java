@@ -25,9 +25,9 @@ public class SDItems
 	public static BlockItem JUNGLE_DRAWER;
 	public static BlockItem ACACIA_DRAWER;
 	public static BlockItem DARK_OAK_DRAWER;
-	
+
 	public static ItemGroup SD_GROUP;
-	
+
 	public static ItemKey LOCK_KEY;
 
 	public static void init()
@@ -49,13 +49,13 @@ public class SDItems
 		}));
 
 	}
-	
+
 	private static void initItemGroup()
 	{
-		SD_GROUP = FabricItemGroupBuilder.build(new Identifier(SimpleDrawersMod.MOD_ID, "simple_drawers"), () -> new ItemStack(OAK_DRAWER));
+		SD_GROUP = FabricItemGroupBuilder.build(new Identifier(SimpleDrawersMod.MOD_ID, "simple_drawers"),
+				() -> new ItemStack(OAK_DRAWER));
 	}
-	
-	
+
 	public static BlockItem registerBlockItem(Block block)
 	{
 		BlockItem blockItem = new BlockItem(block, new Settings().group(SD_GROUP));
