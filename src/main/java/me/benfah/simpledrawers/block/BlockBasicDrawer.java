@@ -74,7 +74,7 @@ public class BlockBasicDrawer extends BlockWithEntity implements InventoryProvid
 				return drawer.getHolder().offer(player.getMainHandStack());
 			}
 		}
-		return ActionResult.PASS;
+		return ActionResult.CONSUME;
 	}
 	
 	@Override

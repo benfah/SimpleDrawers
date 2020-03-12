@@ -139,7 +139,7 @@ public class ItemHolder implements SidedInventory
 		holder.maxStacks = tag.getInt("MaxAmount");
 		holder.blockEntity = blockEntity;
 		
-		if(tag.getBoolean("Locked"))
+		if(tag.contains("Locked"))
 		holder.locked = tag.getBoolean("Locked");
 		
 		return holder;
