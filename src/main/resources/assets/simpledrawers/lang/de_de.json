@@ -5,5 +5,7 @@
 	"block.simpledrawers.jungle_drawer": "Tropenbaumschublade",
 	"block.simpledrawers.acacia_drawer": "Akazienschublade",
 	"block.simpledrawers.dark_oak_drawer": "Schwarzeichenschublade",
+	"block.simpledrawers.crimson_drawer": "Karmesinschublade",
+	"block.simpledrawers.warped_drawer": "Wirrschublade",
 	"item.simpledrawers.lock_key": "Schubladenschlüssel"
 }

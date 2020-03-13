@@ -5,6 +5,8 @@
 	"block.simpledrawers.jungle_drawer": "Jungle Drawer",
 	"block.simpledrawers.acacia_drawer": "Acacia Drawer",
 	"block.simpledrawers.dark_oak_drawer": "Dark Oak Drawer",
+	"block.simpledrawers.crimson_drawer": "Crimson Drawer",
+	"block.simpledrawers.warped_drawer": "Warped Drawer",
 	"item.simpledrawers.lock_key": "Drawer Key",
 	"itemGroup.simpledrawers.simple_drawers": "Simple Drawers"
 }

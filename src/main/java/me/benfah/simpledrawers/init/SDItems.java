@@ -25,6 +25,8 @@ public class SDItems
 	public static BlockItem JUNGLE_DRAWER;
 	public static BlockItem ACACIA_DRAWER;
 	public static BlockItem DARK_OAK_DRAWER;
+	public static BlockItem CRIMSON_DRAWER;
+	public static BlockItem WARPED_DRAWER;
 
 	public static ItemGroup SD_GROUP;
 
@@ -39,6 +41,8 @@ public class SDItems
 		JUNGLE_DRAWER = registerBlockItem(SDBlocks.JUNGLE_DRAWER);
 		ACACIA_DRAWER = registerBlockItem(SDBlocks.ACACIA_DRAWER);
 		DARK_OAK_DRAWER = registerBlockItem(SDBlocks.DARK_OAK_DRAWER);
+		CRIMSON_DRAWER = registerBlockItem(SDBlocks.CRIMSON_DRAWER);
+		WARPED_DRAWER = registerBlockItem(SDBlocks.WARPED_DRAWER);
 
 		LOCK_KEY = register("lock_key", new ItemKey(new Settings().group(SD_GROUP), (itemHolder) ->
 		{

@@ -20,6 +20,8 @@ public class SDBlocks
 	public static BlockBasicDrawer JUNGLE_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build());
 	public static BlockBasicDrawer ACACIA_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build());
 	public static BlockBasicDrawer DARK_OAK_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build());
+	public static BlockBasicDrawer CRIMSON_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build());
+	public static BlockBasicDrawer WARPED_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build());
 
 	public static void init()
 	{
@@ -29,6 +31,8 @@ public class SDBlocks
 		register("jungle_drawer", JUNGLE_DRAWER);	
 		register("acacia_drawer", ACACIA_DRAWER);	
 		register("dark_oak_drawer", DARK_OAK_DRAWER);
+		register("crimson_drawer", CRIMSON_DRAWER);
+		register("warped_drawer", WARPED_DRAWER);
 
 	}
 	
