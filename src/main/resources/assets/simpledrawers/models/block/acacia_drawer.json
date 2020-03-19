@@ -1,8 +1,7 @@
 {
-	"parent": "simpledrawers:block/full_drawer",
+	"parent": "simpledrawers:block/drawer_base",
 	"textures": {
 		"particle": "block/stripped_acacia_log",
-		"base": "block/stripped_acacia_log",
-		"edge": "block/acacia_log"
+		"base": "block/stripped_acacia_log"
 	}
 }

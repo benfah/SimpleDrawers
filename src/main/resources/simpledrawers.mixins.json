@@ -3,12 +3,10 @@
   "minVersion": "0.8",
   "package": "me.benfah.simpledrawers.mixin",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
-  ],
   "client": [
-    
+    "client.ModelLoaderMixin"
   ],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 0
   }
 }

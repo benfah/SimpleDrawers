@@ -2,8 +2,10 @@ package me.benfah.simpledrawers.block.entity.renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import me.benfah.simpledrawers.block.BlockBasicDrawer;
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
 import me.benfah.simpledrawers.utils.ModelUtils;
+import me.benfah.simpledrawers.utils.ModelUtils.SpecialModel;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -69,6 +71,7 @@ public class BlockEntityBasicDrawerRenderer extends BlockEntityRenderer<BlockEnt
 		
 		if(blockEntity.getHolder().isLocked())
 			drawLock(matrices, vertexConsumers, light, overlay, facing);
+		
 		
 		if(!blockEntity.getHolder().isEmpty() || blockEntity.getHolder().isLocked())
 		{

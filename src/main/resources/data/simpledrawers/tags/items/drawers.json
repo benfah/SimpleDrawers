@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "simpledrawers:oak_drawer",
+    "simpledrawers:dark_oak_drawer",
+    "simpledrawers:spruce_drawer",
+    "simpledrawers:jungle_drawer",
+    "simpledrawers:acacia_drawer",
+    "simpledrawers:birch_drawer"
+  ]
+}
