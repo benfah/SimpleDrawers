@@ -3,6 +3,8 @@ package me.benfah.simpledrawers.block.entity.holder;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
+import me.benfah.simpledrawers.models.border.BorderRegistry;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.UnbakedModel;
@@ -10,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
@@ -24,11 +27,11 @@ public class ItemHolder implements SidedInventory
 	private CompoundTag tag;
 	private int amount;
 	private int maxStacks;
-	private BlockEntityClientSerializable blockEntity;
+	private BlockEntityBasicDrawer blockEntity;
 	private ItemStack transferStack;
 	private boolean locked = false;
 
-	public ItemHolder(int maxStacks, BlockEntityClientSerializable blockEntity)
+	public ItemHolder(int maxStacks, BlockEntityBasicDrawer blockEntity)
 	{
 		this.maxStacks = maxStacks;
 		this.blockEntity = blockEntity;
@@ -70,7 +73,7 @@ public class ItemHolder implements SidedInventory
 
 	public int getMaxAmount()
 	{
-		return itemType.getMaxCount() * maxStacks;
+		return itemType.getMaxCount() * maxStacks * blockEntity.getCachedState().get(BorderRegistry.BORDER_TYPE).getStackMultiplier();
 	}
 
 	public boolean tryInsertIntoInventory(PlayerEntity player, boolean singleItem)
@@ -133,7 +136,7 @@ public class ItemHolder implements SidedInventory
 		return tag;
 	}
 
-	public static ItemHolder fromNBT(CompoundTag tag, BlockEntityClientSerializable blockEntity)
+	public static ItemHolder fromNBT(CompoundTag tag, BlockEntityBasicDrawer blockEntity)
 	{
 		ItemHolder holder = new ItemHolder();
 		holder.deserializeItemData(tag.getCompound("Item"));
@@ -148,11 +151,15 @@ public class ItemHolder implements SidedInventory
 
 	public CompoundTag serializeItemData(CompoundTag tag)
 	{
-
-		tag.putString("id", Registry.ITEM.getId(itemType).toString());
-		tag.putInt("Count", amount);
-		tag.put("tag", this.tag);
-
+		if(itemType != null)
+		{
+			tag.putString("id", Registry.ITEM.getId(itemType).toString());
+			tag.putInt("Count", amount);
+			tag.put("tag", this.tag);
+		}
+		else
+			tag.putString("id", Registry.ITEM.getDefaultId().toString());
+		
 		return tag;
 	}
 
@@ -162,8 +169,14 @@ public class ItemHolder implements SidedInventory
 		if (Registry.ITEM.containsId(id))
 		{
 			itemType = Registry.ITEM.get(id);
-			amount = tag.getInt("Count");
-			this.tag = tag.getCompound("tag");
+			if(itemType != Items.AIR)
+			{
+				amount = tag.getInt("Count");
+				this.tag = tag.getCompound("tag");
+			}
+			else
+			itemType = null;	
+			
 		}
 	}
 
@@ -176,7 +189,12 @@ public class ItemHolder implements SidedInventory
 	{
 		return amount;
 	}
-
+	
+	public CompoundTag getTag()
+	{
+		return tag;
+	}
+	
 	static
 	{
 		FORMAT.setGroupingUsed(true);

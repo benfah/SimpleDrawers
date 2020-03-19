@@ -19,13 +19,14 @@ public class ModelUtils
 	public static Random RANDOM = new Random();
 
 	public static void loadSpecialModels()
-	{
+	{	
+		
 		ModelLoadingRegistry.INSTANCE.registerAppender((manager, out) ->
 		{
 			for (SpecialModel model : SpecialModel.values())
 				out.accept(model.getIdentifier());
 		});
-
+		
 		ModelLoadingRegistry.INSTANCE.registerVariantProvider(manager -> ((modelId, context) ->
 		{
 			for (SpecialModel m : SpecialModel.values())
@@ -33,8 +34,10 @@ public class ModelUtils
 					return context.loadModel(new Identifier(modelId.getNamespace(), modelId.getPath()));
 			return null;
 		}));
+		
+		
 	}
-
+	
 	public static void drawSpecialTexture(MatrixStack matrices, VertexConsumerProvider consumers, BakedModel model,
 			int light, int overlay)
 	{
@@ -54,7 +57,11 @@ public class ModelUtils
 	{
 
 		LOCK(new ModelIdentifier("simpledrawers:attributes/lock"));
+		
+		
 
+		
+		
 		private ModelIdentifier identifier;
 
 		private SpecialModel(ModelIdentifier identifier)
@@ -72,6 +79,11 @@ public class ModelUtils
 			return MinecraftClient.getInstance().getBakedModelManager().getModel(identifier);
 		}
 
+	}
+	
+	public static boolean identifiersEqual(Identifier id1, Identifier id2)
+	{
+		return id1.getNamespace().equals(id2.getNamespace()) && id1.getPath().equals(id2.getPath());
 	}
 
 }

@@ -4,12 +4,12 @@
   "version": "${version}",
 
   "name": "Simple Drawers",
-  "description": "TODO",
+  "description": "",
   "authors": [
     "benfah"
   ],
   "license": "MIT",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/simpledrawers/icon.png",
 
   "environment": "*",
   "entrypoints": {

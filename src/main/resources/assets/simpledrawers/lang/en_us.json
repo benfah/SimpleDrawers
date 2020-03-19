@@ -6,5 +6,12 @@
 	"block.simpledrawers.acacia_drawer": "Acacia Drawer",
 	"block.simpledrawers.dark_oak_drawer": "Dark Oak Drawer",
 	"item.simpledrawers.lock_key": "Drawer Key",
-	"itemGroup.simpledrawers.simple_drawers": "Simple Drawers"
+	"itemGroup.simpledrawers.simple_drawers": "Simple Drawers",
+	"item.simpledrawers.iron_upgrade": "Iron Upgrade",
+	"item.simpledrawers.gold_upgrade": "Gold Upgrade",
+	"item.simpledrawers.diamond_upgrade": "Diamond Upgrade",
+	"item.simpledrawers.emerald_upgrade": "Emerald Upgrade",
+	"item.simpledrawers.full_gold_upgrade": "Full Gold Upgrade",
+	"item.simpledrawers.full_diamond_upgrade": "Full Diamond Upgrade",
+	"item.simpledrawers.full_emerald_upgrade": "Full Emerald Upgrade"
 }

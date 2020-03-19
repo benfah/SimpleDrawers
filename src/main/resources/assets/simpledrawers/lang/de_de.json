@@ -5,5 +5,12 @@
 	"block.simpledrawers.jungle_drawer": "Tropenbaumschublade",
 	"block.simpledrawers.acacia_drawer": "Akazienschublade",
 	"block.simpledrawers.dark_oak_drawer": "Schwarzeichenschublade",
-	"item.simpledrawers.lock_key": "Schubladenschlüssel"
+	"item.simpledrawers.lock_key": "Schubladenschlüssel",
+	"item.simpledrawers.iron_upgrade": "Eisen-Aufrüstung",
+	"item.simpledrawers.gold_upgrade": "Gold-Aufrüstung",
+	"item.simpledrawers.diamond_upgrade": "Diamant-Aufrüstung",
+	"item.simpledrawers.emerald_upgrade": "Smaragd-Aufrüstung",
+	"item.simpledrawers.full_gold_upgrade": "Volle Gold-Aufrüstung",
+	"item.simpledrawers.full_diamond_upgrade": "Volle Diamant-Aufrüstung",
+	"item.simpledrawers.full_emerald_upgrade": "Volle Smaragd-Aufrüstung"
 }
