@@ -77,7 +77,11 @@ public class Border implements Comparable<Border>
 			new Identifier(SimpleDrawersMod.MOD_ID, "block/border/acacia_border"), BorderType.BASIC, null);
 	public static Border JUNGLE_BORDER = new Border(1,
 			new Identifier(SimpleDrawersMod.MOD_ID, "block/border/jungle_border"), BorderType.BASIC, null);
-
+	public static Border CRIMSON_BORDER = new Border(1,
+			new Identifier(SimpleDrawersMod.MOD_ID, "block/border/crimson_border"), BorderType.BASIC, null);
+	public static Border WARPED_BORDER = new Border(1,
+			new Identifier(SimpleDrawersMod.MOD_ID, "block/border/warped_border"), BorderType.BASIC, null);
+	
 	public static Border IRON_BORDER = new Border(4,
 			new Identifier(SimpleDrawersMod.MOD_ID, "block/border/iron_border"), BorderType.UPGRADED,
 			() -> SDItems.BASIC_IRON_UPGRADE);
@@ -99,12 +103,14 @@ public class Border implements Comparable<Border>
 		BorderRegistry.register("spruce_border", SPRUCE_BORDER);
 		BorderRegistry.register("acacia_border", ACACIA_BORDER);
 		BorderRegistry.register("jungle_border", JUNGLE_BORDER);
+		BorderRegistry.register("warped_border", WARPED_BORDER);
+		BorderRegistry.register("crimson_border", CRIMSON_BORDER);
 
 		BorderRegistry.register("iron_border", IRON_BORDER);
 		BorderRegistry.register("gold_border", GOLD_BORDER);
 		BorderRegistry.register("diamond_border", DIAMOND_BORDER);
 		BorderRegistry.register("emerald_border", EMERALD_BORDER);
-
+		
 	}
 
 	public static enum BorderType

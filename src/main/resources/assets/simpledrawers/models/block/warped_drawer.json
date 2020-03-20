@@ -1,8 +1,7 @@
 {
-	"parent": "simpledrawers:block/full_drawer",
+	"parent": "simpledrawers:block/drawer_base",
 	"textures": {
 		"particle": "block/stripped_warped_stem",
-		"base": "block/stripped_warped_stem",
-		"edge": "block/warped_stem"
+		"base": "block/stripped_warped_stem"
 	}
 }

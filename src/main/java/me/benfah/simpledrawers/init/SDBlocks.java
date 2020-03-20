@@ -39,8 +39,8 @@ public class SDBlocks
 	public static BlockBasicDrawer DARK_OAK_DRAWER = new BlockBasicDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.DARK_OAK_BORDER);
-	public static BlockBasicDrawer CRIMSON_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(), Border.OAK_BORDER);
-	public static BlockBasicDrawer WARPED_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(), Border.OAK_BORDER);
+	public static BlockBasicDrawer CRIMSON_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(), Border.CRIMSON_BORDER);
+	public static BlockBasicDrawer WARPED_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(), Border.WARPED_BORDER);
 	
 	
 	public static void init()

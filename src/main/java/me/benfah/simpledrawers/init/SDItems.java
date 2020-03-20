@@ -56,6 +56,7 @@ public class SDItems
 		JUNGLE_DRAWER = registerBlockItem(SDBlocks.JUNGLE_DRAWER);
 		ACACIA_DRAWER = registerBlockItem(SDBlocks.ACACIA_DRAWER);
 		DARK_OAK_DRAWER = registerBlockItem(SDBlocks.DARK_OAK_DRAWER);
+		
 		CRIMSON_DRAWER = registerBlockItem(SDBlocks.CRIMSON_DRAWER);
 		WARPED_DRAWER = registerBlockItem(SDBlocks.WARPED_DRAWER);
 		
