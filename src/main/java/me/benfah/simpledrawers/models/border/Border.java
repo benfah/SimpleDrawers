@@ -82,16 +82,17 @@ public class Border implements Comparable<Border>
 	public static Border WARPED_BORDER = new Border(1,
 			new Identifier(SimpleDrawersMod.MOD_ID, "block/border/warped_border"), BorderType.BASIC, null);
 	
-	public static Border IRON_BORDER = new Border(4,
+
+	public static Border IRON_BORDER = new Border(2,
 			new Identifier(SimpleDrawersMod.MOD_ID, "block/border/iron_border"), BorderType.UPGRADED,
 			() -> SDItems.BASIC_IRON_UPGRADE);
-	public static Border GOLD_BORDER = new Border(8,
+	public static Border GOLD_BORDER = new Border(4,
 			new Identifier(SimpleDrawersMod.MOD_ID, "block/border/gold_border"), BorderType.UPGRADED,
 			() -> SDItems.FULL_GOLD_UPGRADE);
-	public static Border DIAMOND_BORDER = new Border(16,
+	public static Border DIAMOND_BORDER = new Border(8,
 			new Identifier(SimpleDrawersMod.MOD_ID, "block/border/diamond_border"), BorderType.UPGRADED,
 			() -> SDItems.FULL_DIAMOND_UPGRADE);
-	public static Border EMERALD_BORDER = new Border(32,
+	public static Border EMERALD_BORDER = new Border(16,
 			new Identifier(SimpleDrawersMod.MOD_ID, "block/border/emerald_border"), BorderType.UPGRADED,
 			() -> SDItems.FULL_EMERALD_UPGRADE);
 
