@@ -4,6 +4,7 @@ import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
 import me.benfah.simpledrawers.item.DrawerInteractable;
 import me.benfah.simpledrawers.item.ItemKey;
 import me.benfah.simpledrawers.models.border.Border;
+import me.benfah.simpledrawers.models.border.Border.BorderType;
 import me.benfah.simpledrawers.models.border.BorderRegistry;
 import me.benfah.simpledrawers.models.border.BorderRegistry.BorderProperty;
 import me.benfah.simpledrawers.utils.model.BorderModelProvider;
@@ -14,10 +15,12 @@ import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.InventoryProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.state.StateManager.Builder;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
@@ -101,34 +104,45 @@ public class BlockBasicDrawer extends BlockWithEntity implements InventoryProvid
 		}
 	}
 
+	
 	@Override
-	public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved)
+	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player)
 	{
 		BlockEntityBasicDrawer drawer = (BlockEntityBasicDrawer) world.getBlockEntity(pos);
-
-		if (newState.isAir() && !moved)
+		
+		if (state.get(BorderRegistry.BORDER_TYPE).getBorderType() != BorderType.BASIC && !player.isCreative())
 		{
-			if (state.get(BorderRegistry.BORDER_TYPE).getDropItem() != null)
-			{
-				ItemEntity upgradeEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
-						state.get(BorderRegistry.BORDER_TYPE).getDropItem());
-				world.spawnEntity(upgradeEntity);
-			}
-			
-			if (!drawer.getHolder().isEmpty())
-			{
-
-				ItemStack stack = new ItemStack(drawer.getHolder().getItemType(), drawer.getHolder().getAmount());
-				if (drawer.getHolder().getTag() != null)
-					stack.setTag(drawer.getHolder().getTag());
-
-				ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
-				world.spawnEntity(itemEntity);
-			}
+			ItemEntity drawerEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
+					getStack(this, state.get(BORDER_TYPE)));
+			drawerEntity.setToDefaultPickupDelay();
+			world.spawnEntity(drawerEntity);
 		}
-		super.onBlockRemoved(state, world, pos, newState, moved);
-	}
+		
+		if (!drawer.getHolder().isEmpty())
+		{
 
+			ItemStack stack = new ItemStack(drawer.getHolder().getItemType(), drawer.getHolder().getAmount());
+			if (drawer.getHolder().getTag() != null)
+				stack.setTag(drawer.getHolder().getTag());
+
+			ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
+			itemEntity.setToDefaultPickupDelay();
+			world.spawnEntity(itemEntity);
+		}
+		super.onBreak(world, pos, state, player);
+	}
+	
+	@Override
+	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack)
+	{
+		if(itemStack != null && !itemStack.equals(ItemStack.EMPTY))
+		state = deserializeStack(itemStack, state);
+		
+		world.setBlockState(pos, state);
+		
+		super.onPlaced(world, pos, state, placer, itemStack);
+	}
+	
 	@Override
 	public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos)
 	{
@@ -174,5 +188,58 @@ public class BlockBasicDrawer extends BlockWithEntity implements InventoryProvid
 	{
 		return borderIdentifier;
 	}
+	
+	private static BlockState deserializeStack(ItemStack stack, BlockState state)
+	{
+		DeserializedInfo info = deserializeInfo(stack);
+		
+		if(info.getBorder() != null)
+		state = state.with(BORDER_TYPE, info.getBorder());
+		return state;
+	}
+	
+	public static DeserializedInfo deserializeInfo(ItemStack stack)
+	{
+		if(stack.getSubTag("DrawerInfo") != null)
+		{
+			CompoundTag data = stack.getSubTag("DrawerInfo");
+			
+			String border = data.getString("Border");
+			if(border != null)
+			{
+				Border b = BorderRegistry.getBorder(border);
+				return new DeserializedInfo(b);
+			}
+		}
+		return new DeserializedInfo(null);
+	}
+	
+	public static ItemStack getStack(BlockBasicDrawer drawer, Border border)
+	{
+		ItemStack result = new ItemStack(drawer.asItem());
+		CompoundTag data = new CompoundTag();
+		
+		data.putString("Border", BorderRegistry.getName(border));
+		
+		result.putSubTag("DrawerInfo", data);
+		return result;
+	}
+	
+	public static class DeserializedInfo
+	{
+		
+		private Border border;
+		
+		private DeserializedInfo(Border border)
+		{
+			this.border = border;
+		}
 
+		public Border getBorder()
+		{
+			return border;
+		}
+		
+	}
+	
 }
