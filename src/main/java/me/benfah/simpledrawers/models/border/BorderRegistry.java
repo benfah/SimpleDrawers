@@ -25,6 +25,11 @@ public class BorderRegistry
 		return BORDER_MAP.get(name);
 	}
 	
+	public static String getName(Border border)
+	{
+		return BORDER_MAP.inverse().get(border);
+	}
+	
 	public static Set<Border> getBorders()
 	{
 		return BORDER_MAP.values();

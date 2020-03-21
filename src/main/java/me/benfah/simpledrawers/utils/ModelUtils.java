@@ -1,6 +1,9 @@
 package me.benfah.simpledrawers.utils;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
@@ -84,6 +87,23 @@ public class ModelUtils
 	public static boolean identifiersEqual(Identifier id1, Identifier id2)
 	{
 		return id1.getNamespace().equals(id2.getNamespace()) && id1.getPath().equals(id2.getPath());
+	}
+	
+	public static String variantMapToString(Map<String, String> map)
+	{
+		String result = "";
+		
+		Iterator<Entry<String, String>> iterator = map.entrySet().iterator();
+		
+		while(iterator.hasNext())
+		{
+			Entry<String, String> entry = iterator.next();
+			result = result + entry.getKey() + "=" + entry.getValue();
+			
+			if(iterator.hasNext())
+				result = result + ",";
+		}
+		return result;
 	}
 
 }
