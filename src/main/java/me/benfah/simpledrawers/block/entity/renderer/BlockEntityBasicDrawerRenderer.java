@@ -76,7 +76,7 @@ public class BlockEntityBasicDrawerRenderer extends BlockEntityRenderer<BlockEnt
 		if(!blockEntity.getHolder().isEmpty() || blockEntity.getHolder().isLocked())
 		{
 			drawCenteredText(11, blockEntity.getHolder().getDisplayAmount(), matrices, vertexConsumers, facing);
-			drawItem(6, new ItemStack(blockEntity.getHolder().getItemType()), matrices, vertexConsumers, light, overlay, facing);
+			drawItem(6, blockEntity.getHolder().generateStack(1), matrices, vertexConsumers, light, overlay, facing);
 			
 			
 			

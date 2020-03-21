@@ -106,9 +106,11 @@ public class ItemHolder implements SidedInventory
 		return ItemStack.EMPTY;
 	}
 
-	private ItemStack generateStack(int amount)
+	public ItemStack generateStack(int amount)
 	{
-		return new ItemStack(itemType, amount);
+		ItemStack stack = new ItemStack(itemType, amount);
+		stack.setTag(tag);
+		return stack;
 	}
 
 	public boolean isEmpty()
