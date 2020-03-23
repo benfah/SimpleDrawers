@@ -7,7 +7,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Tickable;
 
-public class BlockEntityBasicDrawer extends BlockEntity implements BlockEntityClientSerializable, Tickable
+public class BlockEntityBasicDrawer extends BlockEntity implements BlockEntityClientSerializable
 {
 
 	private ItemHolder holder = new ItemHolder(32, this);
@@ -63,9 +63,4 @@ public class BlockEntityBasicDrawer extends BlockEntity implements BlockEntityCl
 		return toClientTag(tag);
 	}
 
-	@Override
-	public void tick()
-	{
-		holder.transferImminentStack();
-	}
 }
