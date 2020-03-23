@@ -13,7 +13,7 @@ public class BorderRegistry
 {
 	private static BiMap<String, Border> BORDER_MAP = HashBiMap.create();
 	
-	public static BorderProperty BORDER_TYPE = new BorderProperty("border_type", Border.class);
+	public static final BorderProperty BORDER_TYPE = new BorderProperty("border_type", Border.class);
 	
 	public static void register(String name, Border border)
 	{

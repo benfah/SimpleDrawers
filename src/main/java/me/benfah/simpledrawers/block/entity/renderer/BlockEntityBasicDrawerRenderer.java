@@ -52,7 +52,7 @@ public class BlockEntityBasicDrawerRenderer extends BlockEntityRenderer<BlockEnt
 	// render method gives a light argument with 0, so i have to get it somewhere else
 	private int calcLight(BlockEntityBasicDrawer blockEntity)
 	{
-		Direction d = blockEntity.getCachedState().get(Properties.FACING);
+		Direction d = blockEntity.getCachedState().get(BlockBasicDrawer.FACING);
 		BlockPos pos = blockEntity.getPos().add(d.getVector());
 		int skyLight = blockEntity.getWorld().getLightLevel(LightType.SKY, pos);
 		int blockLight = blockEntity.getWorld().getLightLevel(LightType.BLOCK, pos);
@@ -67,7 +67,7 @@ public class BlockEntityBasicDrawerRenderer extends BlockEntityRenderer<BlockEnt
 		light = calcLight(blockEntity);
 			
 		
-		Direction facing = blockEntity.getCachedState().get(Properties.FACING);
+		Direction facing = blockEntity.getCachedState().get(BlockBasicDrawer.FACING);
 		
 		if(blockEntity.getHolder().isLocked())
 			drawLock(matrices, vertexConsumers, light, overlay, facing);

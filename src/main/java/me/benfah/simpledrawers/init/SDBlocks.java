@@ -6,6 +6,7 @@ import java.util.List;
 
 import me.benfah.simpledrawers.SimpleDrawersMod;
 import me.benfah.simpledrawers.block.BlockBasicDrawer;
+import me.benfah.simpledrawers.block.BlockDrawerController;
 import me.benfah.simpledrawers.models.border.Border;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -42,22 +43,26 @@ public class SDBlocks
 	public static BlockBasicDrawer CRIMSON_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(), Border.CRIMSON_BORDER);
 	public static BlockBasicDrawer WARPED_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(), Border.WARPED_BORDER);
 	
-	
+	public static BlockDrawerController DRAWER_CONTROLLER = new BlockDrawerController(
+			FabricBlockSettings.of(Material.STONE).build());
+
 	public static void init()
 	{
-		registerDrawer("oak_drawer", OAK_DRAWER);
-		registerDrawer("spruce_drawer", SPRUCE_DRAWER);
-		registerDrawer("birch_drawer", BIRCH_DRAWER);
-		registerDrawer("jungle_drawer", JUNGLE_DRAWER);
-		registerDrawer("acacia_drawer", ACACIA_DRAWER);
-		registerDrawer("dark_oak_drawer", DARK_OAK_DRAWER);
-		registerDrawer("crimson_drawer", CRIMSON_DRAWER);
-		registerDrawer("warped_drawer", WARPED_DRAWER);
-
+		registerBlock("oak_drawer", OAK_DRAWER);
+		registerBlock("spruce_drawer", SPRUCE_DRAWER);
+		registerBlock("birch_drawer", BIRCH_DRAWER);
+		registerBlock("jungle_drawer", JUNGLE_DRAWER);
+		registerBlock("acacia_drawer", ACACIA_DRAWER);
+		registerBlock("dark_oak_drawer", DARK_OAK_DRAWER);
+		registerBlock("crimson_drawer", CRIMSON_DRAWER);
+		registerBlock("warped_drawer", WARPED_DRAWER);
+		
+		registerBlock("drawer_controller", DRAWER_CONTROLLER);
+		
 	}
 
-	private static void registerDrawer(String name, BlockBasicDrawer block)
-	{		
+	private static void registerBlock(String name, Block block)
+	{
 		Registry.register(Registry.BLOCK, new Identifier(SimpleDrawersMod.MOD_ID, name), block);
 	}
 
