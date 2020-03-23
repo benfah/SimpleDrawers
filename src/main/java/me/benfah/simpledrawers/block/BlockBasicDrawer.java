@@ -181,7 +181,7 @@ public class BlockBasicDrawer extends BlockWithEntity implements InventoryProvid
 	@Override
 	public SidedInventory getInventory(BlockState state, IWorld world, BlockPos pos)
 	{
-		return ((BlockEntityBasicDrawer) world.getBlockEntity(pos)).getHolder();
+		return ((BlockEntityBasicDrawer) world.getBlockEntity(pos)).getHolder().getInventoryHandler();
 	}
 
 	@Override

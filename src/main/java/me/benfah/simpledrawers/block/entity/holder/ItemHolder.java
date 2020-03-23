@@ -19,26 +19,30 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 
-public class ItemHolder implements SidedInventory
+public class ItemHolder
 {
 	public static NumberFormat FORMAT = NumberFormat.getInstance(Locale.US);
 
-	private Item itemType;
-	private CompoundTag tag;
-	private int amount;
-	private int maxStacks;
-	private BlockEntityBasicDrawer blockEntity;
-	private ItemStack transferStack;
+	protected Item itemType;
+	protected CompoundTag tag;
+	protected int amount;
+	protected int maxStacks;
+	protected BlockEntityBasicDrawer blockEntity;
+
+	private InventoryHandler handler;
+
 	private boolean locked = false;
 
 	public ItemHolder(int maxStacks, BlockEntityBasicDrawer blockEntity)
 	{
+		this();
 		this.maxStacks = maxStacks;
 		this.blockEntity = blockEntity;
 	}
 
 	private ItemHolder()
 	{
+		this.handler = new InventoryHandler(this);
 	}
 
 	public String getDisplayAmount()
@@ -48,32 +52,38 @@ public class ItemHolder implements SidedInventory
 
 	public ActionResult offer(ItemStack stack)
 	{
-		if (itemType == null || (amount <= 0 && !locked))
+		if (stack != null && !stack.isEmpty())
 		{
-			itemType = stack.getItem();
-			tag = stack.getOrCreateTag();
-			amount = stack.getCount();
-			stack.setCount(0);
-			blockEntity.sync();
-			return ActionResult.SUCCESS;
+			if (itemType == null || (amount <= 0 && !locked))
+			{
+				itemType = stack.getItem();
+				tag = stack.getOrCreateTag();
+				amount = stack.getCount();
+				stack.setCount(0);
+				blockEntity.sync();
+				return ActionResult.SUCCESS;
+			}
+			if (stack != null && isStackEqual(stack))
+			{
+				int newAmount = Math.min(amount + stack.getCount(), getMaxAmount());
+				int stackSize = (amount + stack.getCount()) - newAmount;
+				stack.setCount(stackSize);
+				amount = newAmount;
+				blockEntity.sync();
+				return ActionResult.SUCCESS;
+			}
 		}
-		if (stack != null && isStackEqual(stack))
-		{
-			int newAmount = Math.min(amount + stack.getCount(), getMaxAmount());
-			int stackSize = (amount + stack.getCount()) - newAmount;
-			stack.setCount(stackSize);
-			amount = newAmount;
-			blockEntity.sync();
-			UnbakedModel model;
-			return ActionResult.SUCCESS;
-		}
-
 		return ActionResult.CONSUME;
 	}
 
 	public int getMaxAmount()
 	{
-		return itemType.getMaxCount() * maxStacks * blockEntity.getCachedState().get(BorderRegistry.BORDER_TYPE).getStackMultiplier();
+		return itemType.getMaxCount() * getMaxStacks();
+	}
+
+	public int getMaxStacks()
+	{
+		return maxStacks * blockEntity.getCachedState().get(BorderRegistry.BORDER_TYPE).getStackMultiplier();
 	}
 
 	public boolean tryInsertIntoInventory(PlayerEntity player, boolean singleItem)
@@ -92,7 +102,7 @@ public class ItemHolder implements SidedInventory
 
 	public ItemStack getStack(boolean singleItem)
 	{
-		if (amount > 0)
+		if (!isEmpty())
 		{
 			if (singleItem)
 			{
@@ -153,15 +163,14 @@ public class ItemHolder implements SidedInventory
 
 	public CompoundTag serializeItemData(CompoundTag tag)
 	{
-		if(itemType != null)
+		if (itemType != null)
 		{
 			tag.putString("id", Registry.ITEM.getId(itemType).toString());
 			tag.putInt("Count", amount);
 			tag.put("tag", this.tag);
-		}
-		else
+		} else
 			tag.putString("id", Registry.ITEM.getDefaultId().toString());
-		
+
 		return tag;
 	}
 
@@ -171,14 +180,13 @@ public class ItemHolder implements SidedInventory
 		if (Registry.ITEM.containsId(id))
 		{
 			itemType = Registry.ITEM.get(id);
-			if(itemType != Items.AIR)
+			if (itemType != Items.AIR)
 			{
 				amount = tag.getInt("Count");
 				this.tag = tag.getCompound("tag");
-			}
-			else
-			itemType = null;	
-			
+			} else
+				itemType = null;
+
 		}
 	}
 
@@ -191,99 +199,20 @@ public class ItemHolder implements SidedInventory
 	{
 		return amount;
 	}
-	
+
 	public CompoundTag getTag()
 	{
 		return tag;
 	}
-	
-	static
+
+	public boolean isFull()
 	{
-		FORMAT.setGroupingUsed(true);
+		return amount >= getMaxAmount();
 	}
 
-	@Override
-	public void clear()
+	public InventoryHandler getInventoryHandler()
 	{
-		amount = 0;
-	}
-
-	@Override
-	public int getInvSize()
-	{
-		return 1;
-	}
-
-	@Override
-	public boolean isInvEmpty()
-	{
-		return isEmpty();
-	}
-
-	@Override
-	public ItemStack getInvStack(int slot)
-	{
-		if (transferStack == null)
-			transferStack = new ItemStack(itemType);
-		return transferStack;
-	}
-
-	@Override
-	public ItemStack takeInvStack(int slot, int amount)
-	{
-		int maxAmount = Math.min(itemType.getMaxCount(), amount);
-		if (!isEmpty())
-		{
-			ItemStack result = generateStack(maxAmount);
-			this.amount = this.amount - maxAmount;
-			return result;
-		}
-		return null;
-	}
-
-	@Override
-	public ItemStack removeInvStack(int slot)
-	{
-		int maxAmount = Math.min(itemType.getMaxCount(), amount);
-
-		if (!isEmpty())
-		{
-			ItemStack result = generateStack(maxAmount);
-			amount = amount - maxAmount;
-			return result;
-		}
-		return null;
-	}
-
-	@Override
-	public void setInvStack(int slot, ItemStack stack)
-	{
-		offer(stack);
-	}
-
-	@Override
-	public void markDirty()
-	{
-		blockEntity.sync();
-	}
-
-	@Override
-	public boolean canPlayerUseInv(PlayerEntity player)
-	{
-		return false;
-	}
-
-	@Override
-	public int[] getInvAvailableSlots(Direction side)
-	{
-		int[] result = new int[32];
-
-		for (int i = 0; i < 32; i++)
-		{
-			result[i] = i;
-		}
-
-		return result;
+		return handler;
 	}
 
 	public boolean isStackEqual(ItemStack stack)
@@ -298,29 +227,9 @@ public class ItemHolder implements SidedInventory
 		return false;
 	}
 
-	@Override
-	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir)
+	static
 	{
-		return isEmpty() || isStackEqual(stack);
-	}
-
-	@Override
-	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir)
-	{
-		return !isEmpty();
-	}
-
-	public void transferImminentStack()
-	{
-		if (transferStack != null && !transferStack.isEmpty())
-		{
-			if (transferStack.getCount() > 1)
-			{
-				transferStack.decrement(1);
-				offer(transferStack);
-				transferStack.setCount(1);
-			}
-		}
+		FORMAT.setGroupingUsed(true);
 	}
 
 }
