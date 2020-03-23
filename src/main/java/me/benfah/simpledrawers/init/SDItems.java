@@ -31,6 +31,8 @@ public class SDItems
 	public static BlockItem JUNGLE_DRAWER;
 	public static BlockItem ACACIA_DRAWER;
 	public static BlockItem DARK_OAK_DRAWER;
+	
+	public static BlockItem DRAWER_CONTROLLER;
 
 	public static ItemGroup SD_GROUP;
 
@@ -54,6 +56,8 @@ public class SDItems
 		JUNGLE_DRAWER = registerBlockItem(SDBlocks.JUNGLE_DRAWER);
 		ACACIA_DRAWER = registerBlockItem(SDBlocks.ACACIA_DRAWER);
 		DARK_OAK_DRAWER = registerBlockItem(SDBlocks.DARK_OAK_DRAWER);
+		
+		DRAWER_CONTROLLER = registerBlockItem(SDBlocks.DRAWER_CONTROLLER);
 		
 		BASIC_IRON_UPGRADE = register("iron_upgrade", new ItemDrawerUpgrade(new Settings().group(SD_GROUP).maxCount(1), Either.right(BorderType.BASIC), Border.IRON_BORDER));
 		IRON_GOLD_UPGRADE = register("gold_upgrade", new ItemDrawerUpgrade(new Settings().group(SD_GROUP).maxCount(1), Either.left(Border.IRON_BORDER), Border.GOLD_BORDER));

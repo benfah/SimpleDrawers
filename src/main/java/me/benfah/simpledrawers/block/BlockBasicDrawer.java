@@ -12,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.InventoryProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
@@ -41,7 +42,7 @@ import net.minecraft.world.World;
 public class BlockBasicDrawer extends BlockWithEntity implements InventoryProvider, BorderModelProvider
 {
 
-	public static DirectionProperty FACING = Properties.FACING;
+	public static DirectionProperty FACING = HorizontalFacingBlock.FACING;
 	public static BorderProperty BORDER_TYPE = BorderRegistry.BORDER_TYPE;
 	public Identifier borderIdentifier;
 
