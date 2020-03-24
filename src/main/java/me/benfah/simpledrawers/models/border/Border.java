@@ -1,6 +1,5 @@
 package me.benfah.simpledrawers.models.border;
 
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import me.benfah.simpledrawers.SimpleDrawersMod;

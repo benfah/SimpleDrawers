@@ -5,18 +5,13 @@ import java.util.Locale;
 
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
 import me.benfah.simpledrawers.models.border.BorderRegistry;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.UnbakedModel;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 
 public class ItemHolder
@@ -52,18 +47,19 @@ public class ItemHolder
 
 	public ActionResult offer(ItemStack stack)
 	{
-		if (stack != null && !stack.isEmpty())
+		if (shouldOffer(stack))
 		{
 			if (itemType == null || (amount <= 0 && !locked))
 			{
 				itemType = stack.getItem();
-				tag = stack.getOrCreateTag();
 				amount = stack.getCount();
+				tag = stack.getTag();
+				
 				stack.setCount(0);
 				blockEntity.sync();
 				return ActionResult.SUCCESS;
 			}
-			if (stack != null && isStackEqual(stack))
+			if (isStackEqual(stack))
 			{
 				int newAmount = Math.min(amount + stack.getCount(), getMaxAmount());
 				int stackSize = (amount + stack.getCount()) - newAmount;
@@ -74,6 +70,12 @@ public class ItemHolder
 			}
 		}
 		return ActionResult.CONSUME;
+	}
+
+	public boolean shouldOffer(ItemStack stack)
+	{
+		return stack != null && !stack.isEmpty()
+				&& ((itemType == null || (amount <= 0 && !locked)) || isStackEqual(stack));
 	}
 
 	public int getMaxAmount()
@@ -119,7 +121,8 @@ public class ItemHolder
 	public ItemStack generateStack(int amount)
 	{
 		ItemStack stack = new ItemStack(itemType, amount);
-		stack.setTag(tag);
+		if (tag != null)
+			stack.setTag(tag);
 		return stack;
 	}
 
@@ -167,7 +170,8 @@ public class ItemHolder
 		{
 			tag.putString("id", Registry.ITEM.getId(itemType).toString());
 			tag.putInt("Count", amount);
-			tag.put("tag", this.tag);
+			if (this.tag != null)
+				tag.put("tag", this.tag);
 		} else
 			tag.putString("id", Registry.ITEM.getDefaultId().toString());
 
@@ -183,7 +187,8 @@ public class ItemHolder
 			if (itemType != Items.AIR)
 			{
 				amount = tag.getInt("Count");
-				this.tag = tag.getCompound("tag");
+				if (tag.contains("tag"))
+					this.tag = tag.getCompound("tag");
 			} else
 				itemType = null;
 

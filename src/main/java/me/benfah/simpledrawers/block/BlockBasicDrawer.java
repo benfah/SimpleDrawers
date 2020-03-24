@@ -2,7 +2,6 @@ package me.benfah.simpledrawers.block;
 
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
 import me.benfah.simpledrawers.item.DrawerInteractable;
-import me.benfah.simpledrawers.item.ItemKey;
 import me.benfah.simpledrawers.models.border.Border;
 import me.benfah.simpledrawers.models.border.Border.BorderType;
 import me.benfah.simpledrawers.models.border.BorderRegistry;
@@ -24,7 +23,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.state.StateManager.Builder;
 import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
