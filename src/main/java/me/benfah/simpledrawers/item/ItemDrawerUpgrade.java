@@ -3,14 +3,11 @@ package me.benfah.simpledrawers.item;
 import com.mojang.datafixers.util.Either;
 
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
-import me.benfah.simpledrawers.block.entity.holder.ItemHolder;
 import me.benfah.simpledrawers.models.border.Border;
 import me.benfah.simpledrawers.models.border.BorderRegistry;
 import me.benfah.simpledrawers.models.border.Border.BorderType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 
 public class ItemDrawerUpgrade extends Item implements DrawerInteractable
