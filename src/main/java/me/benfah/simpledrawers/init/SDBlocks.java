@@ -44,7 +44,7 @@ public class SDBlocks
 	public static BlockBasicDrawer WARPED_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(), Border.WARPED_BORDER);
 	
 	public static BlockDrawerController DRAWER_CONTROLLER = new BlockDrawerController(
-			FabricBlockSettings.of(Material.STONE).build());
+			FabricBlockSettings.of(Material.STONE).strength(1.5F, 6.0F).build());
 
 	public static void init()
 	{
