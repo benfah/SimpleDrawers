@@ -31,5 +31,5 @@ public class ItemUtils
 			result.setTag(tag.getCompound("tag"));
 		return result;
 	}
-	
+
 }
