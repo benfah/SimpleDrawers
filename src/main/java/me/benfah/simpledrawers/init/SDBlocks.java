@@ -42,7 +42,7 @@ public class SDBlocks
 			Border.DARK_OAK_BORDER);
 
 	public static BlockDrawerController DRAWER_CONTROLLER = new BlockDrawerController(
-			FabricBlockSettings.of(Material.STONE).build());
+			FabricBlockSettings.of(Material.STONE).strength(1.5F, 6.0F).build());
 
 	public static void init()
 	{
