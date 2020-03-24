@@ -30,7 +30,7 @@ public class BlockEntityDrawerController extends BlockEntity implements SidedInv
 		drawerPositions.clear();
 		Direction d = getCachedState().get(BlockDrawerController.FACING).getOpposite();
 		BlockPos pos = getPos().offset(d);
-		for (int offsetY = -1; offsetY <= 1; offsetY++)
+		for (int offsetY = 1; offsetY >= -1; offsetY--)
 		{
 			for (int offset = -1; offset <= 1; offset++)
 			{

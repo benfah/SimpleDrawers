@@ -12,5 +12,6 @@
 	"item.simpledrawers.emerald_upgrade": "Smaragd-Aufrüstung",
 	"item.simpledrawers.full_gold_upgrade": "Volle Gold-Aufrüstung",
 	"item.simpledrawers.full_diamond_upgrade": "Volle Diamant-Aufrüstung",
-	"item.simpledrawers.full_emerald_upgrade": "Volle Smaragd-Aufrüstung"
+	"item.simpledrawers.full_emerald_upgrade": "Volle Smaragd-Aufrüstung",
+	"block.simpledrawers.drawer_controller": "Schubladen-Steuerung"
 }
