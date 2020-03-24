@@ -15,5 +15,6 @@
 	"item.simpledrawers.emerald_upgrade": "Emerald Upgrade",
 	"item.simpledrawers.full_gold_upgrade": "Full Gold Upgrade",
 	"item.simpledrawers.full_diamond_upgrade": "Full Diamond Upgrade",
-	"item.simpledrawers.full_emerald_upgrade": "Full Emerald Upgrade"
+	"item.simpledrawers.full_emerald_upgrade": "Full Emerald Upgrade",
+	"block.simpledrawers.drawer_controller": "Drawer Controller"
 }
