@@ -53,7 +53,7 @@ public class ModelLoaderMixin
 		ModelPreBakeCallback.EVENT.invoker().onPreBake(modelsToBake, this::bake, bakedModels);
 	}
 
-	@Inject(method = "method_21604", at = @At(value = "INVOKE", target = "java/util/Map.get(Ljava/lang/Object;)Ljava/lang/Object;", shift = Shift.BY, by = 3), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+	@Inject(method = "method_21604", at = @At(value = "INVOKE", target = "java/util/Map.get(Ljava/lang/Object;)Ljava/lang/Object;", shift = Shift.BY, by = 3), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true, require = 0)
 	public void onLambda(Map<?, ?> map, Identifier identifier, Pair<?, ?> pair, Map<?, ?> map2,
 			ModelIdentifier modelIdentifier, BlockState state, CallbackInfo info, Pair<?, ?> localPair)
 	{

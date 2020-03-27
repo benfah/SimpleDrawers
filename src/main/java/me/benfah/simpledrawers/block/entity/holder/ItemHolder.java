@@ -154,6 +154,7 @@ public class ItemHolder
 	public static ItemHolder fromNBT(CompoundTag tag, BlockEntityBasicDrawer blockEntity)
 	{
 		ItemHolder holder = new ItemHolder();
+		
 		holder.deserializeItemData(tag.getCompound("Item"));
 		holder.maxStacks = tag.getInt("MaxAmount");
 		holder.blockEntity = blockEntity;
@@ -170,7 +171,7 @@ public class ItemHolder
 		{
 			tag.putString("id", Registry.ITEM.getId(itemType).toString());
 			tag.putInt("Count", amount);
-			if (this.tag != null)
+			if (this.tag != null && !this.tag.isEmpty())
 				tag.put("tag", this.tag);
 		} else
 			tag.putString("id", Registry.ITEM.getDefaultId().toString());
@@ -187,7 +188,7 @@ public class ItemHolder
 			if (itemType != Items.AIR)
 			{
 				amount = tag.getInt("Count");
-				if (tag.contains("tag"))
+				if (tag.contains("tag") && !tag.getCompound("tag").isEmpty())
 					this.tag = tag.getCompound("tag");
 			} else
 				itemType = null;
