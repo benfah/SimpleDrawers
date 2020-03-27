@@ -10,7 +10,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-@Environment(EnvType.CLIENT)
 public class Border implements Comparable<Border>
 {
 

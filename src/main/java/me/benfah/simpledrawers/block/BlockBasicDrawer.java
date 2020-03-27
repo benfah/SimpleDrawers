@@ -109,7 +109,7 @@ public class BlockBasicDrawer extends BlockWithEntity implements InventoryProvid
 	{
 		BlockEntityBasicDrawer drawer = (BlockEntityBasicDrawer) world.getBlockEntity(pos);
 		
-		if (state.get(BorderRegistry.BORDER_TYPE).getBorderType() != BorderType.BASIC && !player.isCreative())
+		if (!player.isCreative())
 		{
 			ItemEntity drawerEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
 					getStack(this, state.get(BORDER_TYPE)));
