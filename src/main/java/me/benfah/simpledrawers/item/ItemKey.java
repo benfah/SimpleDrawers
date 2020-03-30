@@ -2,8 +2,9 @@ package me.benfah.simpledrawers.item;
 
 import java.util.function.Consumer;
 
+import me.benfah.simpledrawers.api.drawer.BlockEntityAbstractDrawer;
+import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
-import me.benfah.simpledrawers.block.entity.holder.ItemHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 
@@ -18,9 +19,9 @@ public class ItemKey extends Item implements DrawerInteractable
 		this.action = action;
 	}
 
-	public void interact(BlockEntityBasicDrawer drawer, PlayerEntity player)
+	public void interact(BlockEntityAbstractDrawer drawer, PlayerEntity player, ItemHolder holder)
 	{
-		action.accept(drawer.getHolder());
+		action.accept(holder);
 	}
 
 }

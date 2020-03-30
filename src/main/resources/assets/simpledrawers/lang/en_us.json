@@ -16,5 +16,13 @@
 	"item.simpledrawers.full_gold_upgrade": "Full Gold Upgrade",
 	"item.simpledrawers.full_diamond_upgrade": "Full Diamond Upgrade",
 	"item.simpledrawers.full_emerald_upgrade": "Full Emerald Upgrade",
-	"block.simpledrawers.drawer_controller": "Drawer Controller"
+	"block.simpledrawers.drawer_controller": "Drawer Controller",
+	"block.simpledrawers.half_oak_drawer": "Double Oak Drawer",
+	"block.simpledrawers.half_birch_drawer": "Double Birch Drawer",
+	"block.simpledrawers.half_spruce_drawer": "Double Spruce Drawer",
+	"block.simpledrawers.half_jungle_drawer": "Double Jungle Drawer",
+	"block.simpledrawers.half_acacia_drawer": "Double Acacia Drawer",
+	"block.simpledrawers.half_dark_oak_drawer": "Double Dark Oak Drawer",
+	"block.simpledrawers.half_crimson_drawer": "Double Crimson Drawer",
+	"block.simpledrawers.half_warped_drawer": "Double Warped Drawer"
 }

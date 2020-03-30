@@ -2,9 +2,12 @@ package me.benfah.simpledrawers.block.entity.renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import me.benfah.simpledrawers.block.BlockBasicDrawer;
+import me.benfah.simpledrawers.api.drawer.BlockEntityAbstractDrawer;
+import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
+import me.benfah.simpledrawers.block.BlockDrawer;
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
 import me.benfah.simpledrawers.utils.ModelUtils;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -20,10 +23,10 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.world.LightType;
 
-public class BlockEntityBasicDrawerRenderer extends BlockEntityRenderer<BlockEntityBasicDrawer>
+public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbstractDrawer> extends BlockEntityRenderer<B>
 {
 
-	public BlockEntityBasicDrawerRenderer(BlockEntityRenderDispatcher dispatcher)
+	public BlockEntityAbstractDrawerRenderer(BlockEntityRenderDispatcher dispatcher)
 	{
 		super(dispatcher);
 	}
@@ -48,9 +51,9 @@ public class BlockEntityBasicDrawerRenderer extends BlockEntityRenderer<BlockEnt
 	}
 	
 	// render method gives a light argument with 0, so i have to get it somewhere else
-	private int calcLight(BlockEntityBasicDrawer blockEntity)
+	protected int calcLight(BlockEntityAbstractDrawer blockEntity)
 	{
-		Direction d = blockEntity.getCachedState().get(BlockBasicDrawer.FACING);
+		Direction d = blockEntity.getCachedState().get(BlockDrawer.FACING);
 		BlockPos pos = blockEntity.getPos().add(d.getVector());
 		int skyLight = blockEntity.getWorld().getLightLevel(LightType.SKY, pos);
 		int blockLight = blockEntity.getWorld().getLightLevel(LightType.BLOCK, pos);
@@ -58,43 +61,15 @@ public class BlockEntityBasicDrawerRenderer extends BlockEntityRenderer<BlockEnt
 		return skyLight << 20 | blockLight << 4;
 	}
 	
-	@Override
-	public void render(BlockEntityBasicDrawer blockEntity, float tickDelta, MatrixStack matrices,
-			VertexConsumerProvider vertexConsumers, int light, int overlay)
-	{
-		light = calcLight(blockEntity);
-			
-		
-		Direction facing = blockEntity.getCachedState().get(BlockBasicDrawer.FACING);
-		
-		if(blockEntity.getHolder().isLocked())
-			drawLock(matrices, vertexConsumers, light, overlay, facing);
-		
-		
-		if(!blockEntity.getHolder().isEmpty() || blockEntity.getHolder().isLocked())
-		{
-			drawCenteredText(11, blockEntity.getHolder().getDisplayAmount(), matrices, vertexConsumers, facing);
-			drawItem(6, blockEntity.getHolder().generateStack(1), matrices, vertexConsumers, light, overlay, facing);
-			
-			
-			
-			
-			matrices.pop();
-			RenderSystem.setupLevelDiffuseLighting(matrices.peek().getModel());
-			matrices.push();
-		}
-		
-
-		
-	}
 	
-	public void drawLock(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Direction facing)
+	
+	public void drawLock(double x, double y, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Direction facing)
 	{
 		matrices.push();
 		transformAttribToFace(matrices, facing.getOpposite());
 
 		
-		transformToCenteredPosition(13.5, matrices);
+		transformToPosition(x, y, matrices);
 		matrices.scale(1 / 16f, 1 / 16f, 1 / 16f);
 		matrices.translate(-0.5, 0, 0);
 
@@ -103,16 +78,16 @@ public class BlockEntityBasicDrawerRenderer extends BlockEntityRenderer<BlockEnt
 		matrices.pop();
 	}
 	
-	public void drawItem(double y, ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Direction facing)
+	public void drawItem(double x, double y, float scale, ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Direction facing)
 	{
 		matrices.push();
 //		matrices.translate(0, 1, 0);
 		transformToFace(matrices, facing);
-		transformToCenteredPosition(y, matrices);
+		transformToPosition(x, y, matrices);
 		matrices.translate(0, 0, -0.01);
 		matrices.multiply(new Quaternion(Vector3f.NEGATIVE_Z, 180, true));
 		matrices.multiply(new Quaternion(Vector3f.NEGATIVE_Y, 180, true));
-		matrices.scale(0.4f, 0.4f, 0.0001f);
+		matrices.scale(scale, scale, 0.0001f);
 		if(vertexConsumers instanceof VertexConsumerProvider.Immediate)
 		((VertexConsumerProvider.Immediate)vertexConsumers).draw();
 		
@@ -129,12 +104,12 @@ public class BlockEntityBasicDrawerRenderer extends BlockEntityRenderer<BlockEnt
 		matrices.pop();
 	}
 	
-	public void drawCenteredText(double y, String s, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Direction facing)
+	public void drawCenteredText(double x, double y, String s, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Direction facing)
 	{
 		matrices.push();		
 		
 		transformToFace(matrices, facing);
-		transformToCenteredPosition(y, matrices);
+		transformToPosition(x, y, matrices);
 		
 		matrices.scale(0.01f, 0.01f, 0.01f);
 		

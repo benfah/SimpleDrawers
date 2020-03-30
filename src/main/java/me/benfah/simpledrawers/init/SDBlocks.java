@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.benfah.simpledrawers.SimpleDrawersMod;
-import me.benfah.simpledrawers.block.BlockBasicDrawer;
+import me.benfah.simpledrawers.api.border.Border;
+import me.benfah.simpledrawers.block.BlockDrawer;
 import me.benfah.simpledrawers.block.BlockDrawerController;
-import me.benfah.simpledrawers.models.border.Border;
+import me.benfah.simpledrawers.block.BlockHalfDrawer;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
@@ -22,27 +23,57 @@ public class SDBlocks
 	{
 	}
 
-	public static BlockBasicDrawer OAK_DRAWER = new BlockBasicDrawer(
+	public static BlockDrawer OAK_DRAWER = new BlockDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.OAK_BORDER);
-	public static BlockBasicDrawer BIRCH_DRAWER = new BlockBasicDrawer(
+	public static BlockDrawer BIRCH_DRAWER = new BlockDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.BIRCH_BORDER);
-	public static BlockBasicDrawer SPRUCE_DRAWER = new BlockBasicDrawer(
+	public static BlockDrawer SPRUCE_DRAWER = new BlockDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.SPRUCE_BORDER);
-	public static BlockBasicDrawer JUNGLE_DRAWER = new BlockBasicDrawer(
+	public static BlockDrawer JUNGLE_DRAWER = new BlockDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.JUNGLE_BORDER);
-	public static BlockBasicDrawer ACACIA_DRAWER = new BlockBasicDrawer(
+	public static BlockDrawer ACACIA_DRAWER = new BlockDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.ACACIA_BORDER);
-	public static BlockBasicDrawer DARK_OAK_DRAWER = new BlockBasicDrawer(
+	public static BlockDrawer DARK_OAK_DRAWER = new BlockDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.DARK_OAK_BORDER);
-	public static BlockBasicDrawer CRIMSON_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(), Border.CRIMSON_BORDER);
-	public static BlockBasicDrawer WARPED_DRAWER = new BlockBasicDrawer(FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(), Border.WARPED_BORDER);
+	public static BlockDrawer CRIMSON_DRAWER = new BlockDrawer(
+			FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(),
+			Border.CRIMSON_BORDER);
+	public static BlockDrawer WARPED_DRAWER = new BlockDrawer(
+			FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(),
+			Border.WARPED_BORDER);
+
+	public static BlockHalfDrawer HALF_OAK_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
+			Border.OAK_BORDER);
+	public static BlockHalfDrawer HALF_BIRCH_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
+			Border.BIRCH_BORDER);
+	public static BlockHalfDrawer HALF_SPRUCE_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
+			Border.SPRUCE_BORDER);
+	public static BlockHalfDrawer HALF_JUNGLE_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
+			Border.JUNGLE_BORDER);
+	public static BlockHalfDrawer HALF_ACACIA_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
+			Border.ACACIA_BORDER);
+	public static BlockHalfDrawer HALF_DARK_OAK_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
+			Border.DARK_OAK_BORDER);
 	
+	public static BlockHalfDrawer HALF_CRIMSON_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(),
+			Border.CRIMSON_BORDER);
+	public static BlockHalfDrawer HALF_WARPED_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.NETHER_WOOD).strength(2f, 2f).sounds(BlockSoundGroup.NETHER_STEM).build(),
+			Border.WARPED_BORDER);
+
 	public static BlockDrawerController DRAWER_CONTROLLER = new BlockDrawerController(
 			FabricBlockSettings.of(Material.STONE).strength(1.5F, 6.0F).build());
 
@@ -56,9 +87,18 @@ public class SDBlocks
 		registerBlock("dark_oak_drawer", DARK_OAK_DRAWER);
 		registerBlock("crimson_drawer", CRIMSON_DRAWER);
 		registerBlock("warped_drawer", WARPED_DRAWER);
+
+		registerBlock("half_oak_drawer", HALF_OAK_DRAWER);
+		registerBlock("half_spruce_drawer", HALF_SPRUCE_DRAWER);
+		registerBlock("half_birch_drawer", HALF_BIRCH_DRAWER);
+		registerBlock("half_jungle_drawer", HALF_JUNGLE_DRAWER);
+		registerBlock("half_acacia_drawer", HALF_ACACIA_DRAWER);
+		registerBlock("half_dark_oak_drawer", HALF_DARK_OAK_DRAWER);
+		registerBlock("half_crimson_drawer", HALF_CRIMSON_DRAWER);
+		registerBlock("half_warped_drawer", HALF_WARPED_DRAWER);
 		
 		registerBlock("drawer_controller", DRAWER_CONTROLLER);
-		
+
 	}
 
 	private static void registerBlock(String name, Block block)

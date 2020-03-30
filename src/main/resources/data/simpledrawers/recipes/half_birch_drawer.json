@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"SCW",
+		"WWW",
+		"SCW"
+	],
+	"key": {
+		"W": {
+			"item": "minecraft:birch_planks"
+		},
+		"S": {
+			"item": "minecraft:birch_slab"
+		},
+		"C": {
+			"item": "minecraft:chest"
+		}
+	},
+	"result": {
+		"item": "simpledrawers:half_birch_drawer",
+		"count": 1
+	}
+}

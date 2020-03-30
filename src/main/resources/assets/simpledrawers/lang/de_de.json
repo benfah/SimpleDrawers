@@ -15,5 +15,13 @@
 	"item.simpledrawers.full_gold_upgrade": "Volle Gold-Aufrüstung",
 	"item.simpledrawers.full_diamond_upgrade": "Volle Diamant-Aufrüstung",
 	"item.simpledrawers.full_emerald_upgrade": "Volle Smaragd-Aufrüstung",
-	"block.simpledrawers.drawer_controller": "Schubladen-Steuerung"
+	"block.simpledrawers.drawer_controller": "Schubladen-Steuerung",
+	"block.simpledrawers.half_oak_drawer": "Doppel-Eichenschublade",
+	"block.simpledrawers.half_birch_drawer": "Doppel-Birkenschublade",
+	"block.simpledrawers.half_spruce_drawer": "Doppel-Fichtenschublade",
+	"block.simpledrawers.half_jungle_drawer": "Doppel-Tropenbaumschublade",
+	"block.simpledrawers.half_acacia_drawer": "Doppel-Akazienschublade",
+	"block.simpledrawers.half_dark_oak_drawer": "Doppel-Schwarzeichenschublade",
+	"block.simpledrawers.half_crimson_drawer": "Doppel-Karmesinschublade",
+	"block.simpledrawers.half_warped_drawer": "Doppel-Wirrschublade"
 }

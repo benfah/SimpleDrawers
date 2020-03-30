@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import com.mojang.datafixers.util.Pair;
 
-import me.benfah.simpledrawers.block.BlockBasicDrawer;
+import me.benfah.simpledrawers.block.BlockDrawer;
 import me.benfah.simpledrawers.callback.ModelPostBakeCallback;
 import me.benfah.simpledrawers.callback.ModelPreBakeCallback;
 import net.minecraft.block.BlockState;
@@ -53,15 +53,7 @@ public class ModelLoaderMixin
 		ModelPreBakeCallback.EVENT.invoker().onPreBake(modelsToBake, this::bake, bakedModels);
 	}
 
-	@Inject(method = "method_21604", at = @At(value = "INVOKE", target = "java/util/Map.get(Ljava/lang/Object;)Ljava/lang/Object;", shift = Shift.BY, by = 3), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true, require = 0)
-	public void onLambda(Map<?, ?> map, Identifier identifier, Pair<?, ?> pair, Map<?, ?> map2,
-			ModelIdentifier modelIdentifier, BlockState state, CallbackInfo info, Pair<?, ?> localPair)
-	{
-		if (localPair == null && state.getBlock() instanceof BlockBasicDrawer)
-		{
-			info.cancel();
-		}
-	}
+	
 
 	@Shadow
 	public BakedModel bake(Identifier identifier, ModelBakeSettings settings)

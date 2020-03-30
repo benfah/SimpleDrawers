@@ -1,8 +1,2 @@
 {
-	"parent": "simpledrawers:item/full_drawer_item",
-	"textures": {
-		"particle": "block/stripped_dark_oak_log",
-		"border": "block/dark_oak_log",
-		"base": "block/stripped_dark_oak_log"
-	}
 }
