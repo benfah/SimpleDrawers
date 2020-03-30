@@ -10,10 +10,11 @@ import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
+import me.benfah.simpledrawers.api.border.Border;
+import me.benfah.simpledrawers.api.border.BorderRegistry;
+import me.benfah.simpledrawers.api.drawer.DrawerType;
 import me.benfah.simpledrawers.callback.ModelPostBakeCallback;
 import me.benfah.simpledrawers.callback.ModelPreBakeCallback;
-import me.benfah.simpledrawers.models.border.Border;
-import me.benfah.simpledrawers.models.border.BorderRegistry;
 import me.benfah.simpledrawers.utils.ModelUtils;
 import me.benfah.simpledrawers.utils.WrappedBakedModel;
 import net.minecraft.client.render.model.BakedModel;
@@ -38,8 +39,21 @@ public class ModelMerger implements ModelPostBakeCallback, ModelPreBakeCallback
 				{
 					String borderType = variantMap.get("border_type");
 					Border border = BorderRegistry.getBorder(borderType);
+					
+					Identifier borderIdentifier = null;
+					
+					if(variantMap.get("drawer_type").equals(DrawerType.FULL.asString()))
+					{
+						borderIdentifier = border.getFullModelIdentifier();
+					}
+					
+					if(variantMap.get("drawer_type").equals(DrawerType.HALF.asString()))
+					{
+						borderIdentifier = border.getHalfModelIdentifier();
+					}
+					
 					BakedModel borderModel = baked.get(
-							new ModelIdentifier(border.getModelIdentifier(), "facing=" + variantMap.get("facing")));
+							new ModelIdentifier(borderIdentifier, "facing=" + variantMap.get("facing")));
 					baked.put(modelEntry.getKey(), new WrappedBakedModel(modelEntry.getValue(), borderModel));
 				}
 			}
@@ -50,8 +64,8 @@ public class ModelMerger implements ModelPostBakeCallback, ModelPreBakeCallback
 	public void onPreBake(Map<Identifier, UnbakedModel> unbaked,
 			BiFunction<Identifier, ModelBakeSettings, BakedModel> bakeFunction, Map<ModelIdentifier, BakedModel> baked)
 	{
-		List<Identifier> toBake = BorderRegistry.getBorders().stream().map(border -> border.getModelIdentifier())
-				.collect(Collectors.toList());
+		List<Identifier> toBake = BorderRegistry.getBorders().stream()
+				.flatMap((border) -> border.getModelIdentifiers().stream()).collect(Collectors.toList());
 
 		for (Identifier borderIdentifier : toBake)
 		{
@@ -63,13 +77,11 @@ public class ModelMerger implements ModelPostBakeCallback, ModelPreBakeCallback
 					bakeFunction.apply(borderIdentifier, ModelRotation.X0_Y180));
 			baked.put(new ModelIdentifier(borderIdentifier, "facing=west"),
 					bakeFunction.apply(borderIdentifier, ModelRotation.X0_Y270));
-			
-			new HashSet<>(unbaked.keySet()).stream()
-			.filter((identifier) -> ModelUtils.identifiersEqual(identifier, borderIdentifier))
-			.forEach(identifier -> unbaked.remove(identifier));
-		}
 
-			
+			new HashSet<>(unbaked.keySet()).stream()
+					.filter((identifier) -> ModelUtils.identifiersEqual(identifier, borderIdentifier))
+					.forEach(identifier -> unbaked.remove(identifier));
+		}
 
 	}
 

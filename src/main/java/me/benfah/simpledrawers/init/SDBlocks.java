@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.benfah.simpledrawers.SimpleDrawersMod;
-import me.benfah.simpledrawers.block.BlockBasicDrawer;
+import me.benfah.simpledrawers.api.border.Border;
+import me.benfah.simpledrawers.block.BlockDrawer;
 import me.benfah.simpledrawers.block.BlockDrawerController;
-import me.benfah.simpledrawers.models.border.Border;
+import me.benfah.simpledrawers.block.BlockHalfDrawer;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
@@ -22,25 +23,44 @@ public class SDBlocks
 	{
 	}
 
-	public static BlockBasicDrawer OAK_DRAWER = new BlockBasicDrawer(
+	public static BlockDrawer OAK_DRAWER = new BlockDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.OAK_BORDER);
-	public static BlockBasicDrawer BIRCH_DRAWER = new BlockBasicDrawer(
+	public static BlockDrawer BIRCH_DRAWER = new BlockDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.BIRCH_BORDER);
-	public static BlockBasicDrawer SPRUCE_DRAWER = new BlockBasicDrawer(
+	public static BlockDrawer SPRUCE_DRAWER = new BlockDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.SPRUCE_BORDER);
-	public static BlockBasicDrawer JUNGLE_DRAWER = new BlockBasicDrawer(
+	public static BlockDrawer JUNGLE_DRAWER = new BlockDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.JUNGLE_BORDER);
-	public static BlockBasicDrawer ACACIA_DRAWER = new BlockBasicDrawer(
+	public static BlockDrawer ACACIA_DRAWER = new BlockDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.ACACIA_BORDER);
-	public static BlockBasicDrawer DARK_OAK_DRAWER = new BlockBasicDrawer(
+	public static BlockDrawer DARK_OAK_DRAWER = new BlockDrawer(
 			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
 			Border.DARK_OAK_BORDER);
 
+	public static BlockHalfDrawer HALF_OAK_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
+			Border.OAK_BORDER);
+	public static BlockHalfDrawer HALF_BIRCH_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
+			Border.BIRCH_BORDER);
+	public static BlockHalfDrawer HALF_SPRUCE_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
+			Border.SPRUCE_BORDER);
+	public static BlockHalfDrawer HALF_JUNGLE_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
+			Border.JUNGLE_BORDER);
+	public static BlockHalfDrawer HALF_ACACIA_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
+			Border.ACACIA_BORDER);
+	public static BlockHalfDrawer HALF_DARK_OAK_DRAWER = new BlockHalfDrawer(
+			FabricBlockSettings.of(Material.WOOD).strength(2f, 2f).sounds(BlockSoundGroup.WOOD).build(),
+			Border.DARK_OAK_BORDER);
+	
 	public static BlockDrawerController DRAWER_CONTROLLER = new BlockDrawerController(
 			FabricBlockSettings.of(Material.STONE).strength(1.5F, 6.0F).build());
 
@@ -53,8 +73,15 @@ public class SDBlocks
 		registerBlock("acacia_drawer", ACACIA_DRAWER);
 		registerBlock("dark_oak_drawer", DARK_OAK_DRAWER);
 		
+		registerBlock("half_oak_drawer", HALF_OAK_DRAWER);
+		registerBlock("half_spruce_drawer", HALF_SPRUCE_DRAWER);
+		registerBlock("half_birch_drawer", HALF_BIRCH_DRAWER);
+		registerBlock("half_jungle_drawer", HALF_JUNGLE_DRAWER);
+		registerBlock("half_acacia_drawer", HALF_ACACIA_DRAWER);
+		registerBlock("half_dark_oak_drawer", HALF_DARK_OAK_DRAWER);
+
 		registerBlock("drawer_controller", DRAWER_CONTROLLER);
-		
+
 	}
 
 	private static void registerBlock(String name, Block block)

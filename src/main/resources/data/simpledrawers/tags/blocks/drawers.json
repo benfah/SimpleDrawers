@@ -6,6 +6,12 @@
     "simpledrawers:spruce_drawer",
     "simpledrawers:jungle_drawer",
     "simpledrawers:acacia_drawer",
-    "simpledrawers:birch_drawer"
+    "simpledrawers:birch_drawer",
+    "simpledrawers:half_oak_drawer",
+    "simpledrawers:half_dark_oak_drawer",
+    "simpledrawers:half_spruce_drawer",
+    "simpledrawers:half_jungle_drawer",
+    "simpledrawers:half_acacia_drawer",
+    "simpledrawers:half_birch_drawer"
   ]
 }

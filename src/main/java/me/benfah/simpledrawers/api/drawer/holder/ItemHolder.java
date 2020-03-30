@@ -1,10 +1,11 @@
-package me.benfah.simpledrawers.block.entity.holder;
+package me.benfah.simpledrawers.api.drawer.holder;
 
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import me.benfah.simpledrawers.api.border.BorderRegistry;
+import me.benfah.simpledrawers.api.drawer.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
-import me.benfah.simpledrawers.models.border.BorderRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,13 +23,13 @@ public class ItemHolder
 	protected CompoundTag tag;
 	protected int amount;
 	protected int maxStacks;
-	protected BlockEntityBasicDrawer blockEntity;
+	protected BlockEntityAbstractDrawer blockEntity;
 
 	private InventoryHandler handler;
 
 	private boolean locked = false;
 
-	public ItemHolder(int maxStacks, BlockEntityBasicDrawer blockEntity)
+	public ItemHolder(int maxStacks, BlockEntityAbstractDrawer blockEntity)
 	{
 		this();
 		this.maxStacks = maxStacks;
@@ -151,7 +152,7 @@ public class ItemHolder
 		return tag;
 	}
 
-	public static ItemHolder fromNBT(CompoundTag tag, BlockEntityBasicDrawer blockEntity)
+	public static ItemHolder fromNBT(CompoundTag tag, BlockEntityAbstractDrawer blockEntity)
 	{
 		ItemHolder holder = new ItemHolder();
 

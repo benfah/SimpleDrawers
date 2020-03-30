@@ -1,73 +1,52 @@
 package me.benfah.simpledrawers.block.entity;
 
-import me.benfah.simpledrawers.block.entity.holder.ItemHolder;
+import java.util.Arrays;
+import java.util.List;
+
+import me.benfah.simpledrawers.api.drawer.BlockEntityAbstractDrawer;
+import me.benfah.simpledrawers.api.drawer.holder.CombinedInventoryHandler;
+import me.benfah.simpledrawers.api.drawer.holder.InventoryHandler;
+import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import me.benfah.simpledrawers.init.SDBlockEntities;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Tickable;
 
-public class BlockEntityBasicDrawer extends BlockEntity implements BlockEntityClientSerializable, Tickable
+public class BlockEntityBasicDrawer extends BlockEntityAbstractDrawer implements BlockEntityClientSerializable, Tickable
 {
 
 	private ItemHolder holder = new ItemHolder(32, this);
-
+	
+	private CombinedInventoryHandler handler = new CombinedInventoryHandler(() -> Arrays.asList(holder));
+	
 	public BlockEntityBasicDrawer()
 	{
 		super(SDBlockEntities.BASIC_DRAWER);
 	}
 
 	@Override
-	public void fromClientTag(CompoundTag tag)
-	{
-		if (tag.contains("Holder"))
-			holder = ItemHolder.fromNBT(tag.getCompound("Holder"), this);
-	}
-
-	@Override
-	public CompoundTag toClientTag(CompoundTag tag)
-	{
-		if (holder != null)
-			tag.put("Holder", holder.toNBT(new CompoundTag()));
-		return tag;
-	}
-
-	public ItemHolder getHolder()
+	public ItemHolder getItemHolderAt(float x, float y)
 	{
 		return holder;
 	}
 
-	public void setHolder(ItemHolder holder)
+	@Override
+	public List<ItemHolder> getItemHolders()
 	{
-		this.holder = holder;
+		return Arrays.asList(holder);
 	}
 
 	@Override
-	public void fromTag(CompoundTag tag)
+	protected void setItemHolders(List<ItemHolder> holders)
 	{
-		super.fromTag(tag);
-		fromClientTag(tag);
+		holder = holders.get(0);
 	}
 
 	@Override
-	public void sync()
+	public CombinedInventoryHandler getInventoryHandler()
 	{
-		BlockEntityClientSerializable.super.sync();
-		markDirty();
-	}
-
-	@Override
-	public CompoundTag toTag(CompoundTag tag)
-	{
-		super.toTag(tag);
-		return toClientTag(tag);
-	}
-
-	@Override
-	public void tick()
-	{
-		if(!world.isClient)
-		holder.getInventoryHandler().transferItems();
+		return handler;
 	}
 
 }

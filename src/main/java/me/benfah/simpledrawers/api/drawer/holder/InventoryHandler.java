@@ -1,5 +1,6 @@
-package me.benfah.simpledrawers.block.entity.holder;
+package me.benfah.simpledrawers.api.drawer.holder;
 
+import java.util.Arrays;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
@@ -7,12 +8,11 @@ import net.minecraft.util.math.Direction;
 
 public class InventoryHandler implements SidedInventory
 {
-
 	ItemHolder holder;
 
-	ItemStack[] prevStacks;
-
 	ItemStack[] stacks = new ItemStack[] { ItemStack.EMPTY, ItemStack.EMPTY };
+
+	ItemStack[] prevStacks;
 
 	public InventoryHandler(ItemHolder holder)
 	{
@@ -22,13 +22,13 @@ public class InventoryHandler implements SidedInventory
 	@Override
 	public int getInvSize()
 	{
-		return 2;
+		return stacks.length;
 	}
 
 	@Override
 	public boolean isInvEmpty()
 	{
-		return holder.isEmpty();
+		return Arrays.asList(stacks).stream().allMatch((stack) -> stack.isEmpty());
 	}
 
 	@Override
@@ -63,6 +63,7 @@ public class InventoryHandler implements SidedInventory
 	@Override
 	public void markDirty()
 	{
+		holder.blockEntity.sync();
 	}
 
 	@Override
@@ -86,7 +87,8 @@ public class InventoryHandler implements SidedInventory
 	@Override
 	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir)
 	{
-		return slot == 0 && (holder.shouldOffer(stack) && (holder.isEmpty() || holder.amount + stack.getCount() <= holder.getMaxAmount()));
+		return slot == 0 && (holder.shouldOffer(stack)
+				&& (holder.isEmpty() || holder.amount + stack.getCount() <= holder.getMaxAmount()));
 	}
 
 	@Override
@@ -98,13 +100,14 @@ public class InventoryHandler implements SidedInventory
 	public void transferItems()
 	{
 		boolean markDirty = false;
+
 		if (prevStacks != null)
 		{
 			int difference = prevStacks[1].getCount() - stacks[1].getCount();
 
 			if (difference > 0)
 			{
-				holder.amount = holder.amount - difference;
+				holder.amount -= difference;
 				markDirty = true;
 			}
 		}

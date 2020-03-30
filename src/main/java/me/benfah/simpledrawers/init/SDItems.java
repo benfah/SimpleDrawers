@@ -3,11 +3,11 @@ package me.benfah.simpledrawers.init;
 import com.mojang.datafixers.util.Either;
 
 import me.benfah.simpledrawers.SimpleDrawersMod;
+import me.benfah.simpledrawers.api.border.Border;
+import me.benfah.simpledrawers.api.border.Border.BorderType;
 import me.benfah.simpledrawers.item.ItemDrawerFullUpgrade;
 import me.benfah.simpledrawers.item.ItemDrawerUpgrade;
 import me.benfah.simpledrawers.item.ItemKey;
-import me.benfah.simpledrawers.models.border.Border;
-import me.benfah.simpledrawers.models.border.Border.BorderType;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -31,6 +31,13 @@ public class SDItems
 	public static BlockItem JUNGLE_DRAWER;
 	public static BlockItem ACACIA_DRAWER;
 	public static BlockItem DARK_OAK_DRAWER;
+	
+	public static BlockItem HALF_OAK_DRAWER;
+	public static BlockItem HALF_BIRCH_DRAWER;
+	public static BlockItem HALF_SPRUCE_DRAWER;
+	public static BlockItem HALF_JUNGLE_DRAWER;
+	public static BlockItem HALF_ACACIA_DRAWER;
+	public static BlockItem HALF_DARK_OAK_DRAWER;
 	
 	public static BlockItem DRAWER_CONTROLLER;
 
@@ -56,6 +63,13 @@ public class SDItems
 		JUNGLE_DRAWER = registerBlockItem(SDBlocks.JUNGLE_DRAWER);
 		ACACIA_DRAWER = registerBlockItem(SDBlocks.ACACIA_DRAWER);
 		DARK_OAK_DRAWER = registerBlockItem(SDBlocks.DARK_OAK_DRAWER);
+		
+		HALF_OAK_DRAWER = registerBlockItem(SDBlocks.HALF_OAK_DRAWER);
+		HALF_BIRCH_DRAWER = registerBlockItem(SDBlocks.HALF_BIRCH_DRAWER);
+		HALF_SPRUCE_DRAWER = registerBlockItem(SDBlocks.HALF_SPRUCE_DRAWER);
+		HALF_JUNGLE_DRAWER = registerBlockItem(SDBlocks.HALF_JUNGLE_DRAWER);
+		HALF_ACACIA_DRAWER = registerBlockItem(SDBlocks.HALF_ACACIA_DRAWER);
+		HALF_DARK_OAK_DRAWER = registerBlockItem(SDBlocks.HALF_DARK_OAK_DRAWER);
 		
 		DRAWER_CONTROLLER = registerBlockItem(SDBlocks.DRAWER_CONTROLLER);
 		

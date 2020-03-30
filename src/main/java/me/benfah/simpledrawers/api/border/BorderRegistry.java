@@ -1,4 +1,4 @@
-package me.benfah.simpledrawers.models.border;
+package me.benfah.simpledrawers.api.border;
 
 import java.util.Collection;
 import java.util.Optional;

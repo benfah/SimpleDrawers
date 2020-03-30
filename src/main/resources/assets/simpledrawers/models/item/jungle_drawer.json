@@ -1,8 +1,2 @@
 {
-	"parent": "simpledrawers:item/full_drawer_item",
-	"textures": {
-		"particle": "block/stripped_jungle_log",
-		"border": "block/jungle_log",
-		"base": "block/stripped_jungle_log"
-	}
 }

@@ -6,16 +6,20 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.InventoryProvider;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager.Builder;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.IWorld;
 
-public class BlockDrawerController extends BlockWithEntity
+public class BlockDrawerController extends BlockWithEntity implements InventoryProvider
 {
 	
 	public static DirectionProperty FACING = HorizontalFacingBlock.FACING;
@@ -58,6 +62,12 @@ public class BlockDrawerController extends BlockWithEntity
 	public BlockEntity createBlockEntity(BlockView view)
 	{
 		return new BlockEntityDrawerController();
+	}
+
+	@Override
+	public SidedInventory getInventory(BlockState state, IWorld world, BlockPos pos)
+	{
+		return ((BlockEntityDrawerController)world.getBlockEntity(pos)).getInventoryHandler();
 	}
 	
 }

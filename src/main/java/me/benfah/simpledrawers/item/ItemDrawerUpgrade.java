@@ -2,10 +2,12 @@ package me.benfah.simpledrawers.item;
 
 import com.mojang.datafixers.util.Either;
 
+import me.benfah.simpledrawers.api.border.Border;
+import me.benfah.simpledrawers.api.border.BorderRegistry;
+import me.benfah.simpledrawers.api.drawer.BlockEntityAbstractDrawer;
+import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
+import me.benfah.simpledrawers.api.border.Border.BorderType;
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
-import me.benfah.simpledrawers.models.border.Border;
-import me.benfah.simpledrawers.models.border.BorderRegistry;
-import me.benfah.simpledrawers.models.border.Border.BorderType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.sound.SoundEvents;
@@ -24,22 +26,22 @@ public class ItemDrawerUpgrade extends Item implements DrawerInteractable
 	}
 
 	@Override
-	public void interact(BlockEntityBasicDrawer holder, PlayerEntity player)
+	public void interact(BlockEntityAbstractDrawer blockEntity, PlayerEntity player, ItemHolder holder)
 	{
-		Border currentBorder = holder.getCachedState().get(BorderRegistry.BORDER_TYPE);
+		Border currentBorder = blockEntity.getCachedState().get(BorderRegistry.BORDER_TYPE);
 		upgradeFrom.ifLeft((border) -> {
 			if(currentBorder.equals(border))
-				upgrade(holder, player);
+				upgrade(blockEntity, player);
 		});
 		
 		upgradeFrom.ifRight((borderType) -> {
 			
 			if(currentBorder.getBorderType().equals(borderType))
-				upgrade(holder, player);
+				upgrade(blockEntity, player);
 		});
 	}
 	
-	public void upgrade(BlockEntityBasicDrawer holder, PlayerEntity player)
+	public void upgrade(BlockEntityAbstractDrawer holder, PlayerEntity player)
 	{
 		holder.getWorld().setBlockState(holder.getPos(), holder.getCachedState().with(BorderRegistry.BORDER_TYPE, upgradeTo));
 		player.getMainHandStack().decrement(1);
