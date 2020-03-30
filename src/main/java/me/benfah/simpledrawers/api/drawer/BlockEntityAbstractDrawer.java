@@ -1,5 +1,6 @@
 package me.benfah.simpledrawers.api.drawer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -58,11 +59,20 @@ public abstract class BlockEntityAbstractDrawer extends BlockEntity implements B
 
 	@Override
 	public void fromClientTag(CompoundTag tag)
-	{
-		ListTag listTag = tag.getList("Holders", 10);
-		List<ItemHolder> holders = listTag.stream()
-				.map((holderTag) -> ItemHolder.fromNBT((CompoundTag) holderTag, this)).collect(Collectors.toList());
-		setItemHolders(holders);
+	{	
+		List<ItemHolder> holders = new ArrayList<>();
+		if(tag.contains("Holder"))
+		{
+			holders.add(ItemHolder.fromNBT(tag.getCompound("Holder"), this));
+		}
+		else if(tag.contains("Holders"))
+		{
+			ListTag listTag = tag.getList("Holders", 10);
+			holders.addAll(listTag.stream()
+			.map((holderTag) -> ItemHolder.fromNBT((CompoundTag) holderTag, this)).collect(Collectors.toList()));
+		}
+		if(!holders.isEmpty())
+			setItemHolders(holders);
 	}
 
 	@Override
