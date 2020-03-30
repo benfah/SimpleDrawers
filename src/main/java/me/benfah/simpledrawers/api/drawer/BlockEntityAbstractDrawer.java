@@ -9,6 +9,7 @@ import me.benfah.simpledrawers.api.drawer.holder.CombinedInventoryHandler;
 import me.benfah.simpledrawers.api.drawer.holder.InventoryHandler;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
@@ -44,10 +45,10 @@ public abstract class BlockEntityAbstractDrawer extends BlockEntity implements B
 	}
 	
 	@Override
-	public void fromTag(CompoundTag tag)
+	public void fromTag(BlockState state, CompoundTag tag)
 	{
 		fromClientTag(tag);
-		super.fromTag(tag);
+		super.fromTag(state, tag);
 	}
 
 	@Override

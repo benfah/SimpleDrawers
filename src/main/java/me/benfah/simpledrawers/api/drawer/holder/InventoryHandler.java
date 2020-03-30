@@ -20,25 +20,25 @@ public class InventoryHandler implements SidedInventory
 	}
 
 	@Override
-	public int getInvSize()
+	public int size()
 	{
 		return stacks.length;
 	}
 
 	@Override
-	public boolean isInvEmpty()
+	public boolean isEmpty()
 	{
 		return Arrays.asList(stacks).stream().allMatch((stack) -> stack.isEmpty());
 	}
 
 	@Override
-	public ItemStack getInvStack(int slot)
+	public ItemStack getStack(int slot)
 	{
 		return stacks[slot];
 	}
 
 	@Override
-	public ItemStack takeInvStack(int slot, int amount)
+	public ItemStack removeStack(int slot, int amount)
 	{
 		ItemStack stack = stacks[slot].copy();
 		stack.setCount(amount);
@@ -47,7 +47,7 @@ public class InventoryHandler implements SidedInventory
 	}
 
 	@Override
-	public ItemStack removeInvStack(int slot)
+	public ItemStack removeStack(int slot)
 	{
 		ItemStack stack = stacks[slot].copy();
 		stacks[slot].setCount(0);
@@ -55,7 +55,7 @@ public class InventoryHandler implements SidedInventory
 	}
 
 	@Override
-	public void setInvStack(int slot, ItemStack stack)
+	public void setStack(int slot, ItemStack stack)
 	{
 		stacks[slot] = stack;
 	}
@@ -67,7 +67,7 @@ public class InventoryHandler implements SidedInventory
 	}
 
 	@Override
-	public boolean canPlayerUseInv(PlayerEntity player)
+	public boolean canPlayerUse(PlayerEntity player)
 	{
 		return false;
 	}
@@ -79,20 +79,20 @@ public class InventoryHandler implements SidedInventory
 	}
 
 	@Override
-	public int[] getInvAvailableSlots(Direction side)
+	public int[] getAvailableSlots(Direction side)
 	{
 		return new int[] { 0, 1 };
 	}
 
 	@Override
-	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir)
+	public boolean canInsert(int slot, ItemStack stack, Direction dir)
 	{
 		return slot == 0 && (holder.shouldOffer(stack)
 				&& (holder.isEmpty() || holder.amount + stack.getCount() <= holder.getMaxAmount()));
 	}
 
 	@Override
-	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir)
+	public boolean canExtract(int slot, ItemStack stack, Direction dir)
 	{
 		return slot == 1 && !holder.isEmpty();
 	}

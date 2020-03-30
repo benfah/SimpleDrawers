@@ -30,54 +30,54 @@ public class CombinedInventoryHandler implements SidedInventory
 		slotMap.clear();
 		for (ItemHolder holder : holderSupplier.get())
 		{
-			for (int i : holder.getInventoryHandler().getInvAvailableSlots(null))
+			for (int i : holder.getInventoryHandler().getAvailableSlots(null))
 				slotMap.add(new Pair<>(holder, i));
 		}
 
 	}
 
 	@Override
-	public int getInvSize()
+	public int size()
 	{
 		return slotMap.size();
 	}
 
 	@Override
-	public boolean isInvEmpty()
+	public boolean isEmpty()
 	{
-		return holderSupplier.get().stream().allMatch((holder) -> holder.getInventoryHandler().isInvEmpty());
+		return holderSupplier.get().stream().allMatch((holder) -> holder.getInventoryHandler().isEmpty());
 	} 
 
 	@Override
-	public ItemStack getInvStack(int slot)
+	public ItemStack getStack(int slot)
 	{
 		Pair<ItemHolder, Integer> pair = slotMap.get(slot);
-		return pair.getFirst().getInventoryHandler().getInvStack(pair.getSecond());
+		return pair.getFirst().getInventoryHandler().getStack(pair.getSecond());
 	}
 
 	@Override
-	public ItemStack takeInvStack(int slot, int amount)
+	public ItemStack removeStack(int slot, int amount)
 	{
 		Pair<ItemHolder, Integer> pair = slotMap.get(slot);
-		return pair.getFirst().getInventoryHandler().takeInvStack(pair.getSecond(), amount);
+		return pair.getFirst().getInventoryHandler().removeStack(pair.getSecond(), amount);
 	}
 
 	@Override
-	public ItemStack removeInvStack(int slot)
+	public ItemStack removeStack(int slot)
 	{
 		Pair<ItemHolder, Integer> pair = slotMap.get(slot);
-		return pair.getFirst().getInventoryHandler().removeInvStack(pair.getSecond());
+		return pair.getFirst().getInventoryHandler().removeStack(pair.getSecond());
 	}
 
 	@Override
-	public void setInvStack(int slot, ItemStack stack)
+	public void setStack(int slot, ItemStack stack)
 	{
 		Pair<ItemHolder, Integer> pair = slotMap.get(slot);
-		pair.getFirst().getInventoryHandler().setInvStack(pair.getSecond(), stack);
+		pair.getFirst().getInventoryHandler().setStack(pair.getSecond(), stack);
 	}
 
 	@Override
-	public boolean canPlayerUseInv(PlayerEntity player)
+	public boolean canPlayerUse(PlayerEntity player)
 	{
 		return false;
 	}
@@ -89,23 +89,23 @@ public class CombinedInventoryHandler implements SidedInventory
 	}
 
 	@Override
-	public int[] getInvAvailableSlots(Direction side)
+	public int[] getAvailableSlots(Direction side)
 	{
 		return IntStream.rangeClosed(1, slotMap.size()).map((i) -> i - 1).toArray();
 	}
 
 	@Override
-	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir)
+	public boolean canInsert(int slot, ItemStack stack, Direction dir)
 	{
 		Pair<ItemHolder, Integer> pair = slotMap.get(slot);
-		return pair.getFirst().getInventoryHandler().canInsertInvStack(pair.getSecond(), stack, dir);
+		return pair.getFirst().getInventoryHandler().canInsert(pair.getSecond(), stack, dir);
 	}
 
 	@Override
-	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir)
+	public boolean canExtract(int slot, ItemStack stack, Direction dir)
 	{
 		Pair<ItemHolder, Integer> pair = slotMap.get(slot);
-		return pair.getFirst().getInventoryHandler().canExtractInvStack(pair.getSecond(), stack, dir);
+		return pair.getFirst().getInventoryHandler().canExtract(pair.getSecond(), stack, dir);
 	}
 
 	@Override
