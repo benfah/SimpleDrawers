@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"SCS",
+		"WWW",
+		"SCS"
+	],
+	"key": {
+		"W": {
+			"item": "minecraft:crimson_planks"
+		},
+		"S": {
+			"item": "minecraft:crimson_slab"
+		},
+		"C": {
+			"item": "minecraft:chest"
+		}
+	},
+	"result": {
+		"item": "simpledrawers:quad_crimson_drawer",
+		"count": 1
+	}
+}

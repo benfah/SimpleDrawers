@@ -23,5 +23,13 @@
 	"block.simpledrawers.half_acacia_drawer": "Doppel-Akazienschublade",
 	"block.simpledrawers.half_dark_oak_drawer": "Doppel-Schwarzeichenschublade",
 	"block.simpledrawers.half_crimson_drawer": "Doppel-Karmesinschublade",
-	"block.simpledrawers.half_warped_drawer": "Doppel-Wirrschublade"
+	"block.simpledrawers.half_warped_drawer": "Doppel-Wirrschublade",
+	"block.simpledrawers.quad_oak_drawer": "Vierfach-Eichenschublade",
+	"block.simpledrawers.quad_birch_drawer": "Vierfach-Birkenschublade",
+	"block.simpledrawers.quad_spruce_drawer": "Vierfach-Fichtenschublade",
+	"block.simpledrawers.quad_jungle_drawer": "Vierfach-Tropenbaumschublade",
+	"block.simpledrawers.quad_acacia_drawer": "Vierfach-Akazienschublade",
+	"block.simpledrawers.quad_dark_oak_drawer": "Vierfach-Schwarzeichenschublade",
+	"block.simpledrawers.quad_crimson_drawer": "Vierfach-Karmesinschublade",
+	"block.simpledrawers.quad_warped_drawer": "Vierfach-Wirrschublade"
 }

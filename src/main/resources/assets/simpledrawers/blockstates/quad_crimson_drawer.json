@@ -1,0 +1,8 @@
+{
+	"variants": {
+		"facing=north": { "model": "simpledrawers:block/crimson_drawer" },
+		"facing=east": { "model": "simpledrawers:block/crimson_drawer", "y": 90 },
+		"facing=south": { "model": "simpledrawers:block/crimson_drawer", "y": 180  },
+		"facing=west": { "model": "simpledrawers:block/crimson_drawer", "y": 270  }
+	}
+}

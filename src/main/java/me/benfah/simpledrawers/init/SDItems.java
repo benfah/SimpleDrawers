@@ -43,6 +43,15 @@ public class SDItems
 	public static BlockItem HALF_CRIMSON_DRAWER;
 	public static BlockItem HALF_WARPED_DRAWER;
 	
+	public static BlockItem QUAD_OAK_DRAWER;
+	public static BlockItem QUAD_BIRCH_DRAWER;
+	public static BlockItem QUAD_SPRUCE_DRAWER;
+	public static BlockItem QUAD_JUNGLE_DRAWER;
+	public static BlockItem QUAD_ACACIA_DRAWER;
+	public static BlockItem QUAD_DARK_OAK_DRAWER;
+	public static BlockItem QUAD_CRIMSON_DRAWER;
+	public static BlockItem QUAD_WARPED_DRAWER;
+	
 	public static BlockItem DRAWER_CONTROLLER;
 
 	public static ItemGroup SD_GROUP;
@@ -78,6 +87,15 @@ public class SDItems
 		HALF_DARK_OAK_DRAWER = registerBlockItem(SDBlocks.HALF_DARK_OAK_DRAWER);
 		HALF_CRIMSON_DRAWER = registerBlockItem(SDBlocks.HALF_CRIMSON_DRAWER);
 		HALF_WARPED_DRAWER = registerBlockItem(SDBlocks.HALF_WARPED_DRAWER);
+		
+		QUAD_OAK_DRAWER = registerBlockItem(SDBlocks.QUAD_OAK_DRAWER);
+		QUAD_BIRCH_DRAWER = registerBlockItem(SDBlocks.QUAD_BIRCH_DRAWER);
+		QUAD_SPRUCE_DRAWER = registerBlockItem(SDBlocks.QUAD_SPRUCE_DRAWER);
+		QUAD_JUNGLE_DRAWER = registerBlockItem(SDBlocks.QUAD_JUNGLE_DRAWER);
+		QUAD_ACACIA_DRAWER = registerBlockItem(SDBlocks.QUAD_ACACIA_DRAWER);
+		QUAD_DARK_OAK_DRAWER = registerBlockItem(SDBlocks.QUAD_DARK_OAK_DRAWER);
+		QUAD_CRIMSON_DRAWER = registerBlockItem(SDBlocks.QUAD_CRIMSON_DRAWER);
+		QUAD_WARPED_DRAWER = registerBlockItem(SDBlocks.QUAD_WARPED_DRAWER);
 		
 		DRAWER_CONTROLLER = registerBlockItem(SDBlocks.DRAWER_CONTROLLER);
 		
