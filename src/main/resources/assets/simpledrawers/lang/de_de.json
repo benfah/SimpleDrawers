@@ -19,5 +19,11 @@
 	"block.simpledrawers.half_spruce_drawer": "Doppel-Fichtenschublade",
 	"block.simpledrawers.half_jungle_drawer": "Doppel-Tropenbaumschublade",
 	"block.simpledrawers.half_acacia_drawer": "Doppel-Akazienschublade",
-	"block.simpledrawers.half_dark_oak_drawer": "Doppel-Schwarzeichenschublade"
+	"block.simpledrawers.half_dark_oak_drawer": "Doppel-Schwarzeichenschublade",
+	"block.simpledrawers.quad_oak_drawer": "Vierfach-Eichenschublade",
+	"block.simpledrawers.quad_birch_drawer": "Vierfach-Birkenschublade",
+	"block.simpledrawers.quad_spruce_drawer": "Vierfach-Fichtenschublade",
+	"block.simpledrawers.quad_jungle_drawer": "Vierfach-Tropenbaumschublade",
+	"block.simpledrawers.quad_acacia_drawer": "Vierfach-Akazienschublade",
+	"block.simpledrawers.quad_dark_oak_drawer": "Vierfach-Schwarzeichenschublade"
 }

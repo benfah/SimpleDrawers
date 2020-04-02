@@ -21,7 +21,7 @@ public class BorderLoader implements ModelAppender, ModelVariantProvider
 	@Override
 	public void appendAll(ResourceManager manager, Consumer<ModelIdentifier> out)
 	{
-		BorderRegistry.getBorders().stream().flatMap((border) -> border.getModelIdentifiers().stream())
+		BorderRegistry.getBorders().stream().flatMap((border) -> border.getModelMap().values().stream())
 				.forEach(modelIdentifier -> out.accept(new ModelIdentifier(modelIdentifier, "")));
 	}
 
@@ -30,7 +30,7 @@ public class BorderLoader implements ModelAppender, ModelVariantProvider
 			throws ModelProviderException
 	{
 		for (Identifier id : BorderRegistry.getBorders().stream()
-				.flatMap((border) -> border.getModelIdentifiers().stream()).collect(Collectors.toSet()))
+				.flatMap((border) -> border.getModelMap().values().stream()).collect(Collectors.toSet()))
 		{
 			if (ModelUtils.identifiersEqual(modelId, id))
 			{

@@ -37,20 +37,11 @@ public class ModelMerger implements ModelPostBakeCallback, ModelPreBakeCallback
 				Map<String, String> variantMap = variantToMap(modelEntry.getKey().getVariant());
 				if (variantMap.containsKey("border_type"))
 				{
+					
 					String borderType = variantMap.get("border_type");
 					Border border = BorderRegistry.getBorder(borderType);
 					
-					Identifier borderIdentifier = null;
-					
-					if(variantMap.get("drawer_type").equals(DrawerType.FULL.asString()))
-					{
-						borderIdentifier = border.getFullModelIdentifier();
-					}
-					
-					if(variantMap.get("drawer_type").equals(DrawerType.HALF.asString()))
-					{
-						borderIdentifier = border.getHalfModelIdentifier();
-					}
+					Identifier borderIdentifier = border.getModelMap().get(DrawerType.DRAWER_TYPE.parse(variantMap.get("drawer_type")).orElse(DrawerType.FULL));
 					
 					BakedModel borderModel = baked.get(
 							new ModelIdentifier(borderIdentifier, "facing=" + variantMap.get("facing")));
@@ -65,7 +56,7 @@ public class ModelMerger implements ModelPostBakeCallback, ModelPreBakeCallback
 			BiFunction<Identifier, ModelBakeSettings, BakedModel> bakeFunction, Map<ModelIdentifier, BakedModel> baked)
 	{
 		List<Identifier> toBake = BorderRegistry.getBorders().stream()
-				.flatMap((border) -> border.getModelIdentifiers().stream()).collect(Collectors.toList());
+				.flatMap((border) -> border.getModelMap().values().stream()).collect(Collectors.toList());
 
 		for (Identifier borderIdentifier : toBake)
 		{

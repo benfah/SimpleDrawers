@@ -1,9 +1,12 @@
 package me.benfah.simpledrawers.api.border;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.benfah.simpledrawers.SimpleDrawersMod;
+import me.benfah.simpledrawers.api.drawer.DrawerType;
 import net.minecraft.util.Identifier;
 
 public class Border implements Comparable<Border>
@@ -15,37 +18,38 @@ public class Border implements Comparable<Border>
 	private static final String BORDER_LOCATION_PREFIX = "block/";
 
 	private int stackMultiplier;
+	
 	private Identifier fullIdentifier;
 	private Identifier halfIdentifier;
-
+	private Identifier quadIdentifier;
+	
+	private Map<DrawerType, Identifier> identifierMap = new HashMap<>();
+	
 	BorderType borderType;
 
 	public Border(int stackMultiplier, String modid, String name, BorderType type)
 	{
 		this.stackMultiplier = stackMultiplier;
-		this.fullIdentifier = new Identifier(modid, BORDER_LOCATION_PREFIX + "border/" + name);
-		this.halfIdentifier = new Identifier(modid, BORDER_LOCATION_PREFIX + "half_border/" + name);
+		initIdentifierMap(modid, name);
 		this.borderType = type;
 	}
-
+	
+	private void initIdentifierMap(String modid, String name)
+	{
+		for(DrawerType type : DrawerType.values())
+		{
+			identifierMap.put(type, new Identifier(modid, BORDER_LOCATION_PREFIX + type.getAssetsPath() + "/" + name));
+		}
+	}
+	
 	public int getStackMultiplier()
 	{
 		return stackMultiplier;
 	}
-
-	public Identifier getFullModelIdentifier()
-	{
-		return fullIdentifier;
-	}
-
-	public Identifier getHalfModelIdentifier()
-	{
-		return halfIdentifier;
-	}
 	
-	public List<Identifier> getModelIdentifiers()
+	public Map<DrawerType, Identifier> getModelMap()
 	{
-		return Arrays.asList(fullIdentifier, halfIdentifier);
+		return identifierMap;
 	}
 	
 	public BorderType getBorderType()

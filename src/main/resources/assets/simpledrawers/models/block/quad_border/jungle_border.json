@@ -1,0 +1,6 @@
+{
+	"parent": "simpledrawers:block/quad_border/drawer_border",
+	"textures": {
+		"border": "block/jungle_log"
+	}
+}

@@ -20,5 +20,11 @@
 	"block.simpledrawers.half_spruce_drawer": "Double Spruce Drawer",
 	"block.simpledrawers.half_jungle_drawer": "Double Jungle Drawer",
 	"block.simpledrawers.half_acacia_drawer": "Double Acacia Drawer",
-	"block.simpledrawers.half_dark_oak_drawer": "Double Dark Oak Drawer"
+	"block.simpledrawers.half_dark_oak_drawer": "Double Dark Oak Drawer",
+	"block.simpledrawers.quad_oak_drawer": "Quadruple Oak Drawer",
+	"block.simpledrawers.quad_birch_drawer": "Quadruple Birch Drawer",
+	"block.simpledrawers.quad_spruce_drawer": "Quadruple Spruce Drawer",
+	"block.simpledrawers.quad_jungle_drawer": "Quadruple Jungle Drawer",
+	"block.simpledrawers.quad_acacia_drawer": "Quadruple Acacia Drawer",
+	"block.simpledrawers.quad_dark_oak_drawer": "Quadruple Dark Oak Drawer"
 }

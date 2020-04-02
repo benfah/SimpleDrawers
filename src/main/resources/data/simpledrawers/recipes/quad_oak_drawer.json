@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"SCS",
+		"WWW",
+		"SCS"
+	],
+	"key": {
+		"W": {
+			"item": "minecraft:oak_planks"
+		},
+		"S": {
+			"item": "minecraft:oak_slab"
+		},
+		"C": {
+			"item": "minecraft:chest"
+		}
+	},
+	"result": {
+		"item": "simpledrawers:quad_oak_drawer",
+		"count": 1
+	}
+}
