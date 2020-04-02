@@ -33,6 +33,7 @@ public abstract class BlockEntityAbstractDrawer extends BlockEntity implements B
 	
 	public void tick()
 	{
+		if(!world.isClient)
 		getItemHolders().forEach((holder) -> holder.getInventoryHandler().transferItems());
 	}
 	

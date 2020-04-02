@@ -41,6 +41,7 @@ public class BlockEntityBasicDrawer extends BlockEntityAbstractDrawer implements
 	protected void setItemHolders(List<ItemHolder> holders)
 	{
 		holder = holders.get(0);
+		handler.generateSlotList();
 	}
 
 	@Override
