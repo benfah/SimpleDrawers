@@ -52,6 +52,7 @@ public class BlockEntityHalfDrawer extends BlockEntityAbstractDrawer implements 
 	{
 		this.holderList.clear();
 		this.holderList.addAll(holders);
+		handler.generateSlotList();
 	}
 
 	@Override

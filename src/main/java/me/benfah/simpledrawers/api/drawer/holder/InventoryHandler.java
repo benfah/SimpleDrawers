@@ -1,6 +1,5 @@
 package me.benfah.simpledrawers.api.drawer.holder;
 
-import java.util.Arrays;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
@@ -8,11 +7,12 @@ import net.minecraft.util.math.Direction;
 
 public class InventoryHandler implements SidedInventory
 {
+
 	ItemHolder holder;
 
-	ItemStack[] stacks = new ItemStack[] { ItemStack.EMPTY, ItemStack.EMPTY };
-
 	ItemStack[] prevStacks;
+
+	ItemStack[] stacks = new ItemStack[] { ItemStack.EMPTY, ItemStack.EMPTY };
 
 	public InventoryHandler(ItemHolder holder)
 	{
@@ -22,13 +22,13 @@ public class InventoryHandler implements SidedInventory
 	@Override
 	public int size()
 	{
-		return stacks.length;
+		return 2;
 	}
 
 	@Override
 	public boolean isEmpty()
 	{
-		return Arrays.asList(stacks).stream().allMatch((stack) -> stack.isEmpty());
+		return holder.isEmpty();
 	}
 
 	@Override
@@ -63,7 +63,6 @@ public class InventoryHandler implements SidedInventory
 	@Override
 	public void markDirty()
 	{
-		holder.blockEntity.sync();
 	}
 
 	@Override
@@ -87,8 +86,7 @@ public class InventoryHandler implements SidedInventory
 	@Override
 	public boolean canInsert(int slot, ItemStack stack, Direction dir)
 	{
-		return slot == 0 && (holder.shouldOffer(stack)
-				&& (holder.isEmpty() || holder.amount + stack.getCount() <= holder.getMaxAmount()));
+		return slot == 0 && (holder.shouldOffer(stack) && (holder.isEmpty() || holder.amount + stack.getCount() <= holder.getMaxAmount()));
 	}
 
 	@Override
@@ -100,14 +98,13 @@ public class InventoryHandler implements SidedInventory
 	public void transferItems()
 	{
 		boolean markDirty = false;
-
 		if (prevStacks != null)
 		{
 			int difference = prevStacks[1].getCount() - stacks[1].getCount();
 
 			if (difference > 0)
 			{
-				holder.amount -= difference;
+				holder.amount = holder.amount - difference;
 				markDirty = true;
 			}
 		}
@@ -135,7 +132,7 @@ public class InventoryHandler implements SidedInventory
 	{
 		ItemStack[] result = new ItemStack[stacks.length];
 		for (int i = 0; i < stacks.length; i++)
-			result[i] = stacks[i] != null ? stacks[i].copy() : null;
+			result[i] = stacks[i].copy();
 
 		return result;
 	}
