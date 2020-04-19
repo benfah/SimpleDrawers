@@ -1,12 +1,12 @@
 package me.benfah.simpledrawers.api.drawer.holder;
 
+import net.minecraft.util.math.Vec2f;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
-
-import net.minecraft.util.math.Vec2f;
 
 public class AreaHelper
 {

@@ -1,13 +1,9 @@
 package me.benfah.simpledrawers.block.entity.renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-
-import me.benfah.simpledrawers.api.drawer.BlockEntityAbstractDrawer;
-import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
-import me.benfah.simpledrawers.block.BlockDrawer;
-import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
+import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
+import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.utils.ModelUtils;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -53,7 +49,7 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
 	// render method gives a light argument with 0, so i have to get it somewhere else
 	protected int calcLight(BlockEntityAbstractDrawer blockEntity)
 	{
-		Direction d = blockEntity.getCachedState().get(BlockDrawer.FACING);
+		Direction d = blockEntity.getCachedState().get(BlockAbstractDrawer.FACING);
 		BlockPos pos = blockEntity.getPos().add(d.getVector());
 		int skyLight = blockEntity.getWorld().getLightLevel(LightType.SKY, pos);
 		int blockLight = blockEntity.getWorld().getLightLevel(LightType.BLOCK, pos);

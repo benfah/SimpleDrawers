@@ -1,9 +1,5 @@
 package me.benfah.simpledrawers.models.border;
 
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
-import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.api.border.BorderRegistry;
 import me.benfah.simpledrawers.utils.ModelUtils;
 import net.fabricmc.fabric.api.client.model.ModelAppender;
@@ -14,6 +10,9 @@ import net.minecraft.client.render.model.UnbakedModel;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
+
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class BorderLoader implements ModelAppender, ModelVariantProvider
 {

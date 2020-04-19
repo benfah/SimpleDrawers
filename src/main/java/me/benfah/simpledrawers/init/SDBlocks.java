@@ -1,9 +1,5 @@
 package me.benfah.simpledrawers.init;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import me.benfah.simpledrawers.SimpleDrawersMod;
 import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.block.BlockDrawer;
@@ -16,6 +12,10 @@ import net.minecraft.block.Material;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SDBlocks
 {

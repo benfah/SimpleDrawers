@@ -1,13 +1,13 @@
 package me.benfah.simpledrawers;
 
-import me.benfah.simpledrawers.block.entity.renderer.BlockEntityAbstractDrawerRenderer;
 import me.benfah.simpledrawers.block.entity.renderer.BlockEntityFullDrawerRenderer;
 import me.benfah.simpledrawers.block.entity.renderer.BlockEntityHalfDrawerRenderer;
 import me.benfah.simpledrawers.block.entity.renderer.BlockEntityQuadDrawerRenderer;
-import me.benfah.simpledrawers.callback.RedirectModelCallback;
 import me.benfah.simpledrawers.callback.ModelPostBakeCallback;
 import me.benfah.simpledrawers.callback.ModelPreBakeCallback;
+import me.benfah.simpledrawers.callback.RedirectModelCallback;
 import me.benfah.simpledrawers.init.SDBlockEntities;
+import me.benfah.simpledrawers.init.SDContainers;
 import me.benfah.simpledrawers.models.DrawerItemModelReplacer;
 import me.benfah.simpledrawers.models.ModelMerger;
 import me.benfah.simpledrawers.models.border.BorderLoader;
@@ -40,6 +40,8 @@ public class SimpleDrawersModClient implements ClientModInitializer
 		
 		BlockEntityRendererRegistry.INSTANCE.register(SDBlockEntities.QUAD_DRAWER,
 				BlockEntityQuadDrawerRenderer::new);
+		
+		SDContainers.initClient();
 	}
 
 }

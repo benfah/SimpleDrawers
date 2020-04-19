@@ -1,16 +1,15 @@
 package me.benfah.simpledrawers.api.drawer.holder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
-import java.util.stream.IntStream;
-
 import com.mojang.datafixers.util.Pair;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.IntStream;
 
 public class CombinedInventoryHandler implements SidedInventory
 {
