@@ -1,21 +1,16 @@
 package me.benfah.simpledrawers.block.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import me.benfah.simpledrawers.api.drawer.BlockEntityAbstractDrawer;
+import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.holder.AreaHelper;
 import me.benfah.simpledrawers.api.drawer.holder.CombinedInventoryHandler;
-import me.benfah.simpledrawers.api.drawer.holder.InventoryHandler;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import me.benfah.simpledrawers.init.SDBlockEntities;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Vec2f;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockEntityQuadDrawer extends BlockEntityAbstractDrawer implements BlockEntityClientSerializable, Tickable
 {

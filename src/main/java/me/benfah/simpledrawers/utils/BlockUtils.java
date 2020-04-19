@@ -3,6 +3,7 @@ package me.benfah.simpledrawers.utils;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec2f;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;

@@ -1,21 +1,19 @@
 package me.benfah.simpledrawers.block.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.mojang.datafixers.util.Pair;
-
-import me.benfah.simpledrawers.api.drawer.BlockEntityAbstractDrawer;
+import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
+import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.holder.CombinedInventoryHandler;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
-import me.benfah.simpledrawers.block.BlockDrawer;
 import me.benfah.simpledrawers.block.BlockDrawerController;
 import me.benfah.simpledrawers.init.SDBlockEntities;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlockEntityDrawerController extends BlockEntity implements Tickable
 {
@@ -44,7 +42,7 @@ public class BlockEntityDrawerController extends BlockEntity implements Tickable
 				else
 					drawerPos = new BlockPos(pos.getX(), pos.getY() + offsetY, pos.getZ() + offset);
 
-				if (getWorld().getBlockState(drawerPos).getBlock() instanceof BlockDrawer)
+				if (getWorld().getBlockState(drawerPos).getBlock() instanceof BlockAbstractDrawer)
 				{
 					drawerPositions.add(drawerPos);
 				}

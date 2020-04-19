@@ -29,6 +29,12 @@
     "fabric": "*",
     "minecraft": "1.15.x"
   },
+  "custom": {
+    "waila:plugins": {
+      "id": "simpledrawers:hwyla_plugin",
+      "initializer": "me.benfah.simpledrawers.plugin.hwyla.HwylaPlugin"
+    }
+  },
   "suggests": {
     "flamingo": "*"
   }

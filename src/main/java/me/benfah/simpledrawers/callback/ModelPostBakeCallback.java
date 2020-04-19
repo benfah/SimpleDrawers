@@ -1,11 +1,11 @@
 package me.benfah.simpledrawers.callback;
 
-import java.util.Map;
-
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.ModelIdentifier;
+
+import java.util.Map;
 
 public interface ModelPostBakeCallback
 {

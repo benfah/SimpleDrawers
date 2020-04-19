@@ -1,13 +1,12 @@
 package me.benfah.simpledrawers.api.border;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import net.minecraft.state.property.AbstractProperty;
+
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
-
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-
-import net.minecraft.state.property.AbstractProperty;
 
 public class BorderRegistry
 {

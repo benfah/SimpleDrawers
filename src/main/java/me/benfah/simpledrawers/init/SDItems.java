@@ -1,7 +1,6 @@
 package me.benfah.simpledrawers.init;
 
 import com.mojang.datafixers.util.Either;
-
 import me.benfah.simpledrawers.SimpleDrawersMod;
 import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.api.border.Border.BorderType;

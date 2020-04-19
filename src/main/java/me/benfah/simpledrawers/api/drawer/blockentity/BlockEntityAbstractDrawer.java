@@ -1,12 +1,6 @@
-package me.benfah.simpledrawers.api.drawer;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+package me.benfah.simpledrawers.api.drawer.blockentity;
 
 import me.benfah.simpledrawers.api.drawer.holder.CombinedInventoryHandler;
-import me.benfah.simpledrawers.api.drawer.holder.InventoryHandler;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
@@ -14,6 +8,10 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.Tickable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class BlockEntityAbstractDrawer extends BlockEntity implements BlockEntityClientSerializable, Tickable
 {

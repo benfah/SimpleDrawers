@@ -1,8 +1,5 @@
 package me.benfah.simpledrawers.callback;
 
-import java.util.Map;
-import java.util.function.BiFunction;
-
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.render.model.BakedModel;
@@ -10,6 +7,9 @@ import net.minecraft.client.render.model.ModelBakeSettings;
 import net.minecraft.client.render.model.UnbakedModel;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.util.Identifier;
+
+import java.util.Map;
+import java.util.function.BiFunction;
 
 public interface ModelPreBakeCallback
 {

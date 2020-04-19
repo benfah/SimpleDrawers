@@ -1,13 +1,11 @@
 package me.benfah.simpledrawers.api.border;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import me.benfah.simpledrawers.SimpleDrawersMod;
 import me.benfah.simpledrawers.api.drawer.DrawerType;
 import net.minecraft.util.Identifier;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Border implements Comparable<Border>
 {
@@ -18,10 +16,6 @@ public class Border implements Comparable<Border>
 	private static final String BORDER_LOCATION_PREFIX = "block/";
 
 	private int stackMultiplier;
-	
-	private Identifier fullIdentifier;
-	private Identifier halfIdentifier;
-	private Identifier quadIdentifier;
 	
 	private Map<DrawerType, Identifier> identifierMap = new HashMap<>();
 	
@@ -98,7 +92,7 @@ public class Border implements Comparable<Border>
 
 	}
 
-	public static enum BorderType
+	public enum BorderType
 	{
 		BASIC, UPGRADED;
 	}

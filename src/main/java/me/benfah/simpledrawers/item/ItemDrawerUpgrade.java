@@ -1,13 +1,11 @@
 package me.benfah.simpledrawers.item;
 
 import com.mojang.datafixers.util.Either;
-
 import me.benfah.simpledrawers.api.border.Border;
-import me.benfah.simpledrawers.api.border.BorderRegistry;
-import me.benfah.simpledrawers.api.drawer.BlockEntityAbstractDrawer;
-import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import me.benfah.simpledrawers.api.border.Border.BorderType;
-import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
+import me.benfah.simpledrawers.api.border.BorderRegistry;
+import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
+import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.sound.SoundEvents;

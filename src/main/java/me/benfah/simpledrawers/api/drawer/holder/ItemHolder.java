@@ -1,11 +1,8 @@
 package me.benfah.simpledrawers.api.drawer.holder;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 import me.benfah.simpledrawers.api.border.BorderRegistry;
-import me.benfah.simpledrawers.api.drawer.BlockEntityAbstractDrawer;
-import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
+import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
+import me.benfah.simpledrawers.utils.NumberUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,7 +14,6 @@ import net.minecraft.util.registry.Registry;
 
 public class ItemHolder
 {
-	public static NumberFormat FORMAT = NumberFormat.getInstance(Locale.US);
 
 	protected Item itemType;
 	protected CompoundTag tag;
@@ -43,7 +39,7 @@ public class ItemHolder
 
 	public String getDisplayAmount()
 	{
-		return FORMAT.format(amount);
+		return NumberUtils.displayNumber(amount);
 	}
 
 	public ActionResult offer(ItemStack stack)
@@ -230,11 +226,6 @@ public class ItemHolder
 			return tag1.equals(tag2);
 		}
 		return false;
-	}
-
-	static
-	{
-		FORMAT.setGroupingUsed(true);
 	}
 
 }

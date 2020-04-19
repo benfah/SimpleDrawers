@@ -1,9 +1,8 @@
 package me.benfah.simpledrawers.block.entity.renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-
+import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
-import me.benfah.simpledrawers.block.BlockDrawer;
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -25,7 +24,7 @@ public class BlockEntityFullDrawerRenderer extends BlockEntityAbstractDrawerRend
 		light = calcLight(blockEntity);
 			
 		
-		Direction facing = blockEntity.getCachedState().get(BlockDrawer.FACING);
+		Direction facing = blockEntity.getCachedState().get(BlockAbstractDrawer.FACING);
 		ItemHolder holder = blockEntity.getItemHolderAt(0, 0);
 		if(holder.isLocked())
 			drawLock(8, 13.5, matrices, vertexConsumers, light, overlay, facing);
