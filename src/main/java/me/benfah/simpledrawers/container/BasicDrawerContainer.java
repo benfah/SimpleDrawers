@@ -1,7 +1,6 @@
 package me.benfah.simpledrawers.container;
 
 import me.benfah.simpledrawers.api.container.DrawerContainer;
-import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.holder.HolderSlot;
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
 import net.minecraft.entity.player.PlayerEntity;

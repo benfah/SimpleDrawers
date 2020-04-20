@@ -1,7 +1,6 @@
 package me.benfah.simpledrawers.api.container.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import me.benfah.simpledrawers.api.container.DrawerContainer;
 import me.benfah.simpledrawers.api.drawer.holder.HolderSlot;
 import me.benfah.simpledrawers.utils.NumberUtils;
@@ -66,8 +65,8 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
 	{
 		int i = this.x;
 		int j = this.y;
-		pointX -= (double) i;
-		pointY -= (double) j;
+		pointX -= i;
+		pointY -= j;
 		return pointX >= (double) (xPosition - 1) && pointX < (double) (xPosition + width + 1)
 				&& pointY >= (double) (yPosition - 1) && pointY < (double) (yPosition + height + 1);
 	}

@@ -4,18 +4,13 @@ import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.api.border.BorderRegistry;
 import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer.DeserializedInfo;
-import me.benfah.simpledrawers.api.drawer.DrawerType;
 import me.benfah.simpledrawers.callback.RedirectModelCallback;
 import me.benfah.simpledrawers.utils.ModelUtils;
 import net.minecraft.block.Block;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation.Mode;
-import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class DrawerItemModelReplacer implements RedirectModelCallback
 {

@@ -2,14 +2,12 @@ package me.benfah.simpledrawers.api.container;
 
 import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.holder.HolderSlot;
-import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class DrawerContainer<T extends BlockEntityAbstractDrawer> extends ScreenHandler

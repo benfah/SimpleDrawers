@@ -1,20 +1,17 @@
 package me.benfah.simpledrawers.utils;
 
+import me.benfah.simpledrawers.api.border.BorderRegistry;
+import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.DiffuseLighting;
-import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -22,13 +19,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-
-import me.benfah.simpledrawers.api.border.BorderRegistry;
-import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
-
 import java.util.Random;
 
 public class ModelUtils
@@ -81,7 +71,7 @@ public class ModelUtils
 		
 		private ModelIdentifier identifier;
 
-		private SpecialModel(ModelIdentifier identifier)
+		SpecialModel(ModelIdentifier identifier)
 		{
 			this.identifier = identifier;
 		}
