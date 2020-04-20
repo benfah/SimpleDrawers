@@ -6,7 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public interface DrawerInteractable
 {
-	
-	public void interact(BlockEntityAbstractDrawer blockEntity, PlayerEntity player, ItemHolder holder);
-	
+
+    public void interact(BlockEntityAbstractDrawer blockEntity, PlayerEntity player, ItemHolder holder);
+
 }

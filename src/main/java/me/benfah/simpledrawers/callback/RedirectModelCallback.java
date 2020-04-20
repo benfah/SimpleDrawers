@@ -8,15 +8,15 @@ import net.minecraft.item.ItemStack;
 
 public interface RedirectModelCallback
 {
-	Event<RedirectModelCallback> EVENT = EventFactory.createArrayBacked(RedirectModelCallback.class,
-			(listeners) -> (stack, renderMode, leftHanded, model) ->
-			{
-				for (RedirectModelCallback event : listeners)
-				{
-					return event.onRender(stack, renderMode, leftHanded, model);
-				}
-				return model;
-			});
+    Event<RedirectModelCallback> EVENT = EventFactory.createArrayBacked(RedirectModelCallback.class,
+            (listeners) -> (stack, renderMode, leftHanded, model) ->
+            {
+                for(RedirectModelCallback event : listeners)
+                {
+                    return event.onRender(stack, renderMode, leftHanded, model);
+                }
+                return model;
+            });
 
-	BakedModel onRender(ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, BakedModel model);
+    BakedModel onRender(ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, BakedModel model);
 }

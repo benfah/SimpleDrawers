@@ -10,15 +10,15 @@ import java.util.Map;
 public interface ModelPostBakeCallback
 {
 
-	Event<ModelPostBakeCallback> EVENT = EventFactory.createArrayBacked(ModelPostBakeCallback.class,
-			(listeners) -> (bakedModels) ->
-			{
-				for (ModelPostBakeCallback event : listeners)
-				{
-					event.onPostBake(bakedModels);
-				}
-			});
+    Event<ModelPostBakeCallback> EVENT = EventFactory.createArrayBacked(ModelPostBakeCallback.class,
+            (listeners) -> (bakedModels) ->
+            {
+                for(ModelPostBakeCallback event : listeners)
+                {
+                    event.onPostBake(bakedModels);
+                }
+            });
 
-	void onPostBake(Map<ModelIdentifier, BakedModel> baked);
+    void onPostBake(Map<ModelIdentifier, BakedModel> baked);
 
 }

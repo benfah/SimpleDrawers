@@ -13,38 +13,38 @@ import java.util.List;
 public class BlockEntityBasicDrawer extends BlockEntityAbstractDrawer implements BlockEntityClientSerializable, Tickable
 {
 
-	private ItemHolder holder = new ItemHolder(32, this);
-	
-	private CombinedInventoryHandler handler = new CombinedInventoryHandler(() -> Arrays.asList(holder));
-	
-	public BlockEntityBasicDrawer()
-	{
-		super(SDBlockEntities.BASIC_DRAWER);
-	}
+    private ItemHolder holder = new ItemHolder(32, this);
 
-	@Override
-	public ItemHolder getItemHolderAt(float x, float y)
-	{
-		return holder;
-	}
+    private CombinedInventoryHandler handler = new CombinedInventoryHandler(() -> Arrays.asList(holder));
 
-	@Override
-	public List<ItemHolder> getItemHolders()
-	{
-		return Arrays.asList(holder);
-	}
+    public BlockEntityBasicDrawer()
+    {
+        super(SDBlockEntities.BASIC_DRAWER);
+    }
 
-	@Override
-	protected void setItemHolders(List<ItemHolder> holders)
-	{
-		holder = holders.get(0);
-		handler.generateSlotList();
-	}
+    @Override
+    public ItemHolder getItemHolderAt(float x, float y)
+    {
+        return holder;
+    }
 
-	@Override
-	public CombinedInventoryHandler getInventoryHandler()
-	{
-		return handler;
-	}
+    @Override
+    public List<ItemHolder> getItemHolders()
+    {
+        return Arrays.asList(holder);
+    }
+
+    @Override
+    protected void setItemHolders(List<ItemHolder> holders)
+    {
+        holder = holders.get(0);
+        handler.generateSlotList();
+    }
+
+    @Override
+    public CombinedInventoryHandler getInventoryHandler()
+    {
+        return handler;
+    }
 
 }

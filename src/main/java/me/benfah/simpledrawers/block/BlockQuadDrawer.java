@@ -13,22 +13,22 @@ import net.minecraft.world.BlockView;
 public class BlockQuadDrawer extends BlockAbstractDrawer
 {
 
-	public BlockQuadDrawer(Settings settings, Border border)
-	{
-		super(settings);
-		this.setDefaultState(getDefaultState().with(DrawerType.DRAWER_TYPE, DrawerType.QUAD).with(BorderRegistry.BORDER_TYPE, border));
-	}
+    public BlockQuadDrawer(Settings settings, Border border)
+    {
+        super(settings);
+        this.setDefaultState(getDefaultState().with(DrawerType.DRAWER_TYPE, DrawerType.QUAD).with(BorderRegistry.BORDER_TYPE, border));
+    }
 
-	@Override
-	public BlockEntity createBlockEntity(BlockView arg0)
-	{
-		return new BlockEntityQuadDrawer();
-	}
+    @Override
+    public BlockEntity createBlockEntity(BlockView arg0)
+    {
+        return new BlockEntityQuadDrawer();
+    }
 
-	@Override
-	public Identifier getContainerIdentifier()
-	{
-		return SDContainers.QUAD_DRAWER_CONTAINER;
-	}
+    @Override
+    public Identifier getContainerIdentifier()
+    {
+        return SDContainers.QUAD_DRAWER_CONTAINER;
+    }
 
 }

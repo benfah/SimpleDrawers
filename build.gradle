@@ -21,9 +21,9 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	modCompile "me.sargunvohra.mcmods:autoconfig1u:2.0.1"
-	modImplementation "mcp.mobius.waila:Hwyla:1.15.2-1.9.21-72"
+	modImplementation "mcp.mobius.waila:Hwyla:${project.hwyla_version}"
 
-	modCompile "io.github.prospector:modmenu:1.10.1+build.30"
+	modCompile "io.github.prospector:modmenu:${project.modmenu_version}"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"

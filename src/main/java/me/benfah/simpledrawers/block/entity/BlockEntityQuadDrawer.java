@@ -15,51 +15,51 @@ import java.util.List;
 public class BlockEntityQuadDrawer extends BlockEntityAbstractDrawer implements BlockEntityClientSerializable, Tickable
 {
 
-	List<ItemHolder> holderList = new ArrayList<>();
-	AreaHelper helper;
+    List<ItemHolder> holderList = new ArrayList<>();
+    AreaHelper helper;
 
-	private CombinedInventoryHandler handler;
+    private CombinedInventoryHandler handler;
 
-	public BlockEntityQuadDrawer()
-	{
-		super(SDBlockEntities.QUAD_DRAWER);
-		holderList.add(new ItemHolder(8, this));
-		holderList.add(new ItemHolder(8, this));
-		holderList.add(new ItemHolder(8, this));
-		holderList.add(new ItemHolder(8, this));
-		helper = new AreaHelper(() -> holderList,
-				new AreaHelper.Area(new Vec2f(0F, 0F), new Vec2f(0.5F, 0.5F)),
-				new AreaHelper.Area(new Vec2f(0.5F, 0F), new Vec2f(1F, 0.5F)),
-				new AreaHelper.Area(new Vec2f(0, 0.5F), new Vec2f(0.5F, 1F)),
-				new AreaHelper.Area(new Vec2f(0.5F, 0.5F), new Vec2f(1F, 1F)));
+    public BlockEntityQuadDrawer()
+    {
+        super(SDBlockEntities.QUAD_DRAWER);
+        holderList.add(new ItemHolder(8, this));
+        holderList.add(new ItemHolder(8, this));
+        holderList.add(new ItemHolder(8, this));
+        holderList.add(new ItemHolder(8, this));
+        helper = new AreaHelper(() -> holderList,
+                new AreaHelper.Area(new Vec2f(0F, 0F), new Vec2f(0.5F, 0.5F)),
+                new AreaHelper.Area(new Vec2f(0.5F, 0F), new Vec2f(1F, 0.5F)),
+                new AreaHelper.Area(new Vec2f(0, 0.5F), new Vec2f(0.5F, 1F)),
+                new AreaHelper.Area(new Vec2f(0.5F, 0.5F), new Vec2f(1F, 1F)));
 
-		handler = new CombinedInventoryHandler(() -> holderList);
-	}
+        handler = new CombinedInventoryHandler(() -> holderList);
+    }
 
-	@Override
-	public ItemHolder getItemHolderAt(float x, float y)
-	{
-		return helper.get(new Vec2f(x, y));
-	}
+    @Override
+    public ItemHolder getItemHolderAt(float x, float y)
+    {
+        return helper.get(new Vec2f(x, y));
+    }
 
-	@Override
-	public List<ItemHolder> getItemHolders()
-	{
-		return holderList;
-	}
+    @Override
+    public List<ItemHolder> getItemHolders()
+    {
+        return holderList;
+    }
 
-	@Override
-	protected void setItemHolders(List<ItemHolder> holders)
-	{
-		this.holderList.clear();
-		this.holderList.addAll(holders);
-		handler.generateSlotList();
-	}
+    @Override
+    protected void setItemHolders(List<ItemHolder> holders)
+    {
+        this.holderList.clear();
+        this.holderList.addAll(holders);
+        handler.generateSlotList();
+    }
 
-	@Override
-	public CombinedInventoryHandler getInventoryHandler()
-	{
-		return handler;
-	}
+    @Override
+    public CombinedInventoryHandler getInventoryHandler()
+    {
+        return handler;
+    }
 
 }

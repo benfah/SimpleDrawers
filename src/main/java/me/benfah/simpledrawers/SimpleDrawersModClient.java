@@ -19,29 +19,29 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegi
 public class SimpleDrawersModClient implements ClientModInitializer
 {
 
-	@Override
-	public void onInitializeClient()
-	{
-		ModelPostBakeCallback.EVENT.register(new ModelMerger());
-		ModelPreBakeCallback.EVENT.register(new ModelMerger());
-		
-		RedirectModelCallback.EVENT.register(new DrawerItemModelReplacer());
-		
-		ModelUtils.loadSpecialModels();
-		
-		ModelLoadingRegistry.INSTANCE.registerAppender(new BorderLoader());
-		ModelLoadingRegistry.INSTANCE.registerVariantProvider((resourceManager) -> new BorderLoader());
+    @Override
+    public void onInitializeClient()
+    {
+        ModelPostBakeCallback.EVENT.register(new ModelMerger());
+        ModelPreBakeCallback.EVENT.register(new ModelMerger());
 
-		BlockEntityRendererRegistry.INSTANCE.register(SDBlockEntities.BASIC_DRAWER,
-				BlockEntityFullDrawerRenderer::new);
-		
-		BlockEntityRendererRegistry.INSTANCE.register(SDBlockEntities.HALF_DRAWER,
-				BlockEntityHalfDrawerRenderer::new);
-		
-		BlockEntityRendererRegistry.INSTANCE.register(SDBlockEntities.QUAD_DRAWER,
-				BlockEntityQuadDrawerRenderer::new);
-		
-		SDContainers.initClient();
-	}
+        RedirectModelCallback.EVENT.register(new DrawerItemModelReplacer());
+
+        ModelUtils.loadSpecialModels();
+
+        ModelLoadingRegistry.INSTANCE.registerAppender(new BorderLoader());
+        ModelLoadingRegistry.INSTANCE.registerVariantProvider((resourceManager) -> new BorderLoader());
+
+        BlockEntityRendererRegistry.INSTANCE.register(SDBlockEntities.BASIC_DRAWER,
+                BlockEntityFullDrawerRenderer::new);
+
+        BlockEntityRendererRegistry.INSTANCE.register(SDBlockEntities.HALF_DRAWER,
+                BlockEntityHalfDrawerRenderer::new);
+
+        BlockEntityRendererRegistry.INSTANCE.register(SDBlockEntities.QUAD_DRAWER,
+                BlockEntityQuadDrawerRenderer::new);
+
+        SDContainers.initClient();
+    }
 
 }

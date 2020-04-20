@@ -14,16 +14,16 @@ import java.util.function.BiFunction;
 public interface ModelPreBakeCallback
 {
 
-	Event<ModelPreBakeCallback> EVENT = EventFactory.createArrayBacked(ModelPreBakeCallback.class,
-			(listeners) -> (unbakedModels, bakeFunction, bakedModels) ->
-			{
-				for (ModelPreBakeCallback event : listeners)
-				{
-					event.onPreBake(unbakedModels, bakeFunction, bakedModels);
-				}
-			});
+    Event<ModelPreBakeCallback> EVENT = EventFactory.createArrayBacked(ModelPreBakeCallback.class,
+            (listeners) -> (unbakedModels, bakeFunction, bakedModels) ->
+            {
+                for(ModelPreBakeCallback event : listeners)
+                {
+                    event.onPreBake(unbakedModels, bakeFunction, bakedModels);
+                }
+            });
 
-	void onPreBake(Map<Identifier, UnbakedModel> unbaked, BiFunction<Identifier, ModelBakeSettings, BakedModel> bakeFunction,
-			Map<ModelIdentifier, BakedModel> baked);
+    void onPreBake(Map<Identifier, UnbakedModel> unbaked, BiFunction<Identifier, ModelBakeSettings, BakedModel> bakeFunction,
+                   Map<ModelIdentifier, BakedModel> baked);
 
 }

@@ -17,51 +17,51 @@ import net.minecraft.util.math.BlockPos;
 
 public class SDContainers
 {
-	
-	public static Identifier BASIC_DRAWER_CONTAINER = new Identifier(SimpleDrawersMod.MOD_ID, "basic_drawer");
-	public static Identifier DOUBLE_DRAWER_CONTAINER = new Identifier(SimpleDrawersMod.MOD_ID, "double_drawer");
-	public static Identifier QUAD_DRAWER_CONTAINER = new Identifier(SimpleDrawersMod.MOD_ID, "quad_drawer");
 
-	public SDContainers()
-	{
-	}
-	
-	public static void init()
-	{
-		ContainerProviderRegistry.INSTANCE.registerFactory(BASIC_DRAWER_CONTAINER, (syncId, identifier, player, buf) ->
-		{
-			BlockPos blockPos = buf.readBlockPos();
+    public static Identifier BASIC_DRAWER_CONTAINER = new Identifier(SimpleDrawersMod.MOD_ID, "basic_drawer");
+    public static Identifier DOUBLE_DRAWER_CONTAINER = new Identifier(SimpleDrawersMod.MOD_ID, "double_drawer");
+    public static Identifier QUAD_DRAWER_CONTAINER = new Identifier(SimpleDrawersMod.MOD_ID, "quad_drawer");
 
-			BlockEntityAbstractDrawer blockEntity = (BlockEntityAbstractDrawer) player.world.getBlockEntity(blockPos);
+    public SDContainers()
+    {
+    }
 
-			return new BasicDrawerContainer(syncId, player, (BlockEntityBasicDrawer) blockEntity);
-		});
+    public static void init()
+    {
+        ContainerProviderRegistry.INSTANCE.registerFactory(BASIC_DRAWER_CONTAINER, (syncId, identifier, player, buf) ->
+        {
+            BlockPos blockPos = buf.readBlockPos();
 
-		ContainerProviderRegistry.INSTANCE.registerFactory(DOUBLE_DRAWER_CONTAINER, (syncId, identifier, player, buf) ->
-		{
-			BlockPos blockPos = buf.readBlockPos();
+            BlockEntityAbstractDrawer blockEntity = (BlockEntityAbstractDrawer) player.world.getBlockEntity(blockPos);
 
-			BlockEntityAbstractDrawer blockEntity = (BlockEntityAbstractDrawer) player.world.getBlockEntity(blockPos);
+            return new BasicDrawerContainer(syncId, player, (BlockEntityBasicDrawer) blockEntity);
+        });
 
-			return new DoubleDrawerContainer(syncId, player, (BlockEntityHalfDrawer) blockEntity);
-		});
+        ContainerProviderRegistry.INSTANCE.registerFactory(DOUBLE_DRAWER_CONTAINER, (syncId, identifier, player, buf) ->
+        {
+            BlockPos blockPos = buf.readBlockPos();
 
-		ContainerProviderRegistry.INSTANCE.registerFactory(QUAD_DRAWER_CONTAINER, (syncId, identifier, player, buf) ->
-		{
-			BlockPos blockPos = buf.readBlockPos();
+            BlockEntityAbstractDrawer blockEntity = (BlockEntityAbstractDrawer) player.world.getBlockEntity(blockPos);
 
-			BlockEntityAbstractDrawer blockEntity = (BlockEntityAbstractDrawer) player.world.getBlockEntity(blockPos);
+            return new DoubleDrawerContainer(syncId, player, (BlockEntityHalfDrawer) blockEntity);
+        });
 
-			return new QuadDrawerContainer(syncId, player, (BlockEntityQuadDrawer) blockEntity);
-		});
-	}
+        ContainerProviderRegistry.INSTANCE.registerFactory(QUAD_DRAWER_CONTAINER, (syncId, identifier, player, buf) ->
+        {
+            BlockPos blockPos = buf.readBlockPos();
 
-	public static void initClient()
-	{
-		ScreenProviderRegistry.INSTANCE.registerFactory(BASIC_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_1.png")));
-		ScreenProviderRegistry.INSTANCE.registerFactory(DOUBLE_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_2.png")));
-		ScreenProviderRegistry.INSTANCE.registerFactory(QUAD_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_4.png")));
+            BlockEntityAbstractDrawer blockEntity = (BlockEntityAbstractDrawer) player.world.getBlockEntity(blockPos);
 
-	}
-	
+            return new QuadDrawerContainer(syncId, player, (BlockEntityQuadDrawer) blockEntity);
+        });
+    }
+
+    public static void initClient()
+    {
+        ScreenProviderRegistry.INSTANCE.registerFactory(BASIC_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_1.png")));
+        ScreenProviderRegistry.INSTANCE.registerFactory(DOUBLE_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_2.png")));
+        ScreenProviderRegistry.INSTANCE.registerFactory(QUAD_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_4.png")));
+
+    }
+
 }
