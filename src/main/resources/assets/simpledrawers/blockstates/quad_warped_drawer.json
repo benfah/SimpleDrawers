@@ -1,8 +1,19 @@
 {
-	"variants": {
-		"facing=north": { "model": "simpledrawers:block/warped_drawer" },
-		"facing=east": { "model": "simpledrawers:block/warped_drawer", "y": 90 },
-		"facing=south": { "model": "simpledrawers:block/warped_drawer", "y": 180  },
-		"facing=west": { "model": "simpledrawers:block/warped_drawer", "y": 270  }
-	}
+  "variants": {
+    "facing=north": {
+      "model": "simpledrawers:block/warped_drawer"
+    },
+    "facing=east": {
+      "model": "simpledrawers:block/warped_drawer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "simpledrawers:block/warped_drawer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "simpledrawers:block/warped_drawer",
+      "y": 270
+    }
+  }
 }

@@ -1,6 +1,6 @@
 {
-	"parent": "simpledrawers:block/quad_border/drawer_border",
-	"textures": {
-		"border": "block/oak_log"
-	}
+  "parent": "simpledrawers:block/quad_border/drawer_border",
+  "textures": {
+    "border": "block/oak_log"
+  }
 }

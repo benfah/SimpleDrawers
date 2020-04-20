@@ -32,211 +32,214 @@ import net.minecraft.world.World;
 public abstract class BlockAbstractDrawer extends BlockWithEntity implements InventoryProvider, BorderModelProvider
 {
 
-	protected BlockAbstractDrawer(Settings settings)
-	{
-		super(settings);
-	}
+    protected BlockAbstractDrawer(Settings settings)
+    {
+        super(settings);
+    }
 
-	public static DirectionProperty FACING = HorizontalFacingBlock.FACING;
-	public static BorderProperty BORDER_TYPE = BorderRegistry.BORDER_TYPE;
-	public static EnumProperty<DrawerType> DRAWER_TYPE = DrawerType.DRAWER_TYPE;
+    public static DirectionProperty FACING = HorizontalFacingBlock.FACING;
+    public static BorderProperty BORDER_TYPE = BorderRegistry.BORDER_TYPE;
+    public static EnumProperty<DrawerType> DRAWER_TYPE = DrawerType.DRAWER_TYPE;
 
-	public Identifier borderIdentifier;
+    public Identifier borderIdentifier;
 
 
-	public BlockState rotate(BlockState state, BlockRotation rotation)
-	{
-		return (BlockState) state.with(FACING, rotation.rotate((Direction) state.get(FACING)));
-	}
+    public BlockState rotate(BlockState state, BlockRotation rotation)
+    {
+        return (BlockState) state.with(FACING, rotation.rotate((Direction) state.get(FACING)));
+    }
 
-	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
-			BlockHitResult hit)
-	{
-		if (!world.isClient)
-		{
-			if(player.isSneaking())
-			{
-				ContainerProviderRegistry.INSTANCE.openContainer(getContainerIdentifier(), player, (buf) -> {buf.writeBlockPos(pos);});
-				return ActionResult.CONSUME;
-			}
-			if (hand.equals(Hand.MAIN_HAND) && !player.getMainHandStack().isEmpty()
-					&& state.get(FACING).equals(hit.getSide()))
-			{
-				
-				BlockEntityAbstractDrawer drawer = (BlockEntityAbstractDrawer) world.getBlockEntity(pos);
-				Vec2f interactPos = BlockUtils.getCoordinatesFromHitResult(hit);
-				if (player.getMainHandStack().getItem() instanceof DrawerInteractable)
-				{
-					((DrawerInteractable) player.getMainHandStack().getItem()).interact(drawer, player,
-							drawer.getItemHolderAt(interactPos.x, interactPos.y));
-					return ActionResult.SUCCESS;
-				}
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
+                              BlockHitResult hit)
+    {
+        if(!world.isClient)
+        {
+            if(player.isSneaking())
+            {
+                ContainerProviderRegistry.INSTANCE.openContainer(getContainerIdentifier(), player, (buf) ->
+                {
+                    buf.writeBlockPos(pos);
+                });
+                return ActionResult.CONSUME;
+            }
+            if(hand.equals(Hand.MAIN_HAND) && !player.getMainHandStack().isEmpty()
+                    && state.get(FACING).equals(hit.getSide()))
+            {
 
-				return drawer.getItemHolderAt(interactPos.x, interactPos.y).offer(player.getMainHandStack());
-			}
-		}
-		return ActionResult.CONSUME;
-	}
+                BlockEntityAbstractDrawer drawer = (BlockEntityAbstractDrawer) world.getBlockEntity(pos);
+                Vec2f interactPos = BlockUtils.getCoordinatesFromHitResult(hit);
+                if(player.getMainHandStack().getItem() instanceof DrawerInteractable)
+                {
+                    ((DrawerInteractable) player.getMainHandStack().getItem()).interact(drawer, player,
+                            drawer.getItemHolderAt(interactPos.x, interactPos.y));
+                    return ActionResult.SUCCESS;
+                }
 
-	@Override
-	public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player)
-	{
-		if (!world.isClient)
-		{
-			BlockHitResult result = rayTrace(player);
+                return drawer.getItemHolderAt(interactPos.x, interactPos.y).offer(player.getMainHandStack());
+            }
+        }
+        return ActionResult.CONSUME;
+    }
 
-			if (!result.getSide().equals(state.get(FACING)))
-				return;
+    @Override
+    public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player)
+    {
+        if(!world.isClient)
+        {
+            BlockHitResult result = rayTrace(player);
 
-			Vec2f interactPos = BlockUtils.getCoordinatesFromHitResult(result);
-			BlockEntityAbstractDrawer blockEntity = (BlockEntityAbstractDrawer) world.getBlockEntity(pos);
+            if(!result.getSide().equals(state.get(FACING)))
+                return;
 
-			blockEntity.getItemHolderAt(interactPos.x, interactPos.y).tryInsertIntoInventory(player,
-					!player.isSneaking());
-		}
-	}
+            Vec2f interactPos = BlockUtils.getCoordinatesFromHitResult(result);
+            BlockEntityAbstractDrawer blockEntity = (BlockEntityAbstractDrawer) world.getBlockEntity(pos);
 
-	@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player)
-	{
-		BlockEntityAbstractDrawer drawer = (BlockEntityAbstractDrawer) world.getBlockEntity(pos);
+            blockEntity.getItemHolderAt(interactPos.x, interactPos.y).tryInsertIntoInventory(player,
+                    !player.isSneaking());
+        }
+    }
 
-		if (!player.isCreative())
-		{
-			ItemEntity drawerEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
-					getStack(this, state.get(BORDER_TYPE)));
-			drawerEntity.setToDefaultPickupDelay();
-			world.spawnEntity(drawerEntity);
-		}
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player)
+    {
+        BlockEntityAbstractDrawer drawer = (BlockEntityAbstractDrawer) world.getBlockEntity(pos);
 
-		drawer.getItemHolders().stream().filter((holder) -> !holder.isEmpty()).forEach((holder) ->
-		{
-			ItemStack stack = new ItemStack(holder.getItemType(), holder.getAmount());
-			if (holder.getTag() != null)
-				stack.setTag(holder.getTag());
+        if(!player.isCreative())
+        {
+            ItemEntity drawerEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
+                    getStack(this, state.get(BORDER_TYPE)));
+            drawerEntity.setToDefaultPickupDelay();
+            world.spawnEntity(drawerEntity);
+        }
 
-			ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
-			itemEntity.setToDefaultPickupDelay();
-			world.spawnEntity(itemEntity);
-		});
+        drawer.getItemHolders().stream().filter((holder) -> !holder.isEmpty()).forEach((holder) ->
+        {
+            ItemStack stack = new ItemStack(holder.getItemType(), holder.getAmount());
+            if(holder.getTag() != null)
+                stack.setTag(holder.getTag());
 
-		super.onBreak(world, pos, state, player);
-	}
+            ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
+            itemEntity.setToDefaultPickupDelay();
+            world.spawnEntity(itemEntity);
+        });
 
-	@Override
-	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack)
-	{
-		if (itemStack != null && !itemStack.equals(ItemStack.EMPTY))
-			state = deserializeStack(itemStack, state);
+        super.onBreak(world, pos, state, player);
+    }
 
-		world.setBlockState(pos, state);
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack)
+    {
+        if(itemStack != null && !itemStack.equals(ItemStack.EMPTY))
+            state = deserializeStack(itemStack, state);
 
-		super.onPlaced(world, pos, state, placer, itemStack);
-	}
+        world.setBlockState(pos, state);
 
-	@Override
-	public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos)
-	{
-		BlockHitResult result = rayTrace(player);
+        super.onPlaced(world, pos, state, placer, itemStack);
+    }
 
-		if (result.getSide().equals(state.get(FACING)) && !(player.getMainHandStack().getItem() instanceof AxeItem))
-			return 0;
+    @Override
+    public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos)
+    {
+        BlockHitResult result = rayTrace(player);
 
-		return super.calcBlockBreakingDelta(state, player, world, pos);
-	}
+        if(result.getSide().equals(state.get(FACING)) && !(player.getMainHandStack().getItem() instanceof AxeItem))
+            return 0;
 
-	public BlockRenderType getRenderType(BlockState state)
-	{
-		return BlockRenderType.MODEL;
-	}
+        return super.calcBlockBreakingDelta(state, player, world, pos);
+    }
 
-	public BlockState mirror(BlockState state, BlockMirror mirror)
-	{
-		return state.rotate(mirror.getRotation((Direction) state.get(FACING)));
-	}
+    public BlockRenderType getRenderType(BlockState state)
+    {
+        return BlockRenderType.MODEL;
+    }
 
-	public BlockState getPlacementState(ItemPlacementContext ctx)
-	{
-		return (BlockState) this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
-	}
+    public BlockState mirror(BlockState state, BlockMirror mirror)
+    {
+        return state.rotate(mirror.getRotation((Direction) state.get(FACING)));
+    }
 
-	@Override
-	public void appendProperties(Builder<Block, BlockState> builder)
-	{
-		builder.add(FACING).add(BORDER_TYPE).add(DRAWER_TYPE);
-	}
+    public BlockState getPlacementState(ItemPlacementContext ctx)
+    {
+        return (BlockState) this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
+    }
 
-	@Override
-	public SidedInventory getInventory(BlockState state, IWorld world, BlockPos pos)
-	{
-		return ((BlockEntityAbstractDrawer) world.getBlockEntity(pos)).getInventoryHandler();
-	}
+    @Override
+    public void appendProperties(Builder<Block, BlockState> builder)
+    {
+        builder.add(FACING).add(BORDER_TYPE).add(DRAWER_TYPE);
+    }
 
-	@Override
-	public Identifier getBorderModel()
-	{
-		return borderIdentifier;
-	}
+    @Override
+    public SidedInventory getInventory(BlockState state, IWorld world, BlockPos pos)
+    {
+        return ((BlockEntityAbstractDrawer) world.getBlockEntity(pos)).getInventoryHandler();
+    }
 
-	private BlockHitResult rayTrace(PlayerEntity player)
-	{
-		return (BlockHitResult) player.rayTrace(4.5, 0, false);
-	}
+    @Override
+    public Identifier getBorderModel()
+    {
+        return borderIdentifier;
+    }
 
-	private static BlockState deserializeStack(ItemStack stack, BlockState state)
-	{
-		DeserializedInfo info = deserializeInfo(stack);
+    private BlockHitResult rayTrace(PlayerEntity player)
+    {
+        return (BlockHitResult) player.rayTrace(4.5, 0, false);
+    }
 
-		if (info.getBorder() != null)
-			state = state.with(BORDER_TYPE, info.getBorder());
-		return state;
-	}
+    private static BlockState deserializeStack(ItemStack stack, BlockState state)
+    {
+        DeserializedInfo info = deserializeInfo(stack);
 
-	public static DeserializedInfo deserializeInfo(ItemStack stack)
-	{
-		if (stack.getSubTag("DrawerInfo") != null)
-		{
-			CompoundTag data = stack.getSubTag("DrawerInfo");
+        if(info.getBorder() != null)
+            state = state.with(BORDER_TYPE, info.getBorder());
+        return state;
+    }
 
-			String border = data.getString("Border");
-			if (border != null)
-			{
-				Border b = BorderRegistry.getBorder(border);
-				return new DeserializedInfo(b);
-			}
-		}
-		return new DeserializedInfo(null);
-	}
+    public static DeserializedInfo deserializeInfo(ItemStack stack)
+    {
+        if(stack.getSubTag("DrawerInfo") != null)
+        {
+            CompoundTag data = stack.getSubTag("DrawerInfo");
 
-	public abstract Identifier getContainerIdentifier();
+            String border = data.getString("Border");
+            if(border != null)
+            {
+                Border b = BorderRegistry.getBorder(border);
+                return new DeserializedInfo(b);
+            }
+        }
+        return new DeserializedInfo(null);
+    }
 
-	public static ItemStack getStack(BlockAbstractDrawer drawer, Border border)
-	{
-		ItemStack result = new ItemStack(drawer.asItem());
-		CompoundTag data = new CompoundTag();
+    public abstract Identifier getContainerIdentifier();
 
-		data.putString("Border", BorderRegistry.getName(border));
+    public static ItemStack getStack(BlockAbstractDrawer drawer, Border border)
+    {
+        ItemStack result = new ItemStack(drawer.asItem());
+        CompoundTag data = new CompoundTag();
 
-		result.putSubTag("DrawerInfo", data);
-		return result;
-	}
+        data.putString("Border", BorderRegistry.getName(border));
 
-	public static class DeserializedInfo
-	{
+        result.putSubTag("DrawerInfo", data);
+        return result;
+    }
 
-		private Border border;
+    public static class DeserializedInfo
+    {
 
-		private DeserializedInfo(Border border)
-		{
-			this.border = border;
-		}
+        private Border border;
 
-		public Border getBorder()
-		{
-			return border;
-		}
+        private DeserializedInfo(Border border)
+        {
+            this.border = border;
+        }
 
-	}
+        public Border getBorder()
+        {
+            return border;
+        }
+
+    }
 
 }

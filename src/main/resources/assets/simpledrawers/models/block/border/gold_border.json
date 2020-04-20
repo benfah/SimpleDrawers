@@ -1,6 +1,6 @@
 {
-	"parent": "simpledrawers:block/border/drawer_border",
-	"textures": {
-		"border": "block/gold_block"
-	}
+  "parent": "simpledrawers:block/border/drawer_border",
+  "textures": {
+    "border": "block/gold_block"
+  }
 }

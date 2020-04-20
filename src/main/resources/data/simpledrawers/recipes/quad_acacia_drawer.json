@@ -1,23 +1,23 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"pattern": [
-		"SCS",
-		"WWW",
-		"SCS"
-	],
-	"key": {
-		"W": {
-			"item": "minecraft:acacia_planks"
-		},
-		"S": {
-			"item": "minecraft:acacia_slab"
-		},
-		"C": {
-			"item": "minecraft:chest"
-		}
-	},
-	"result": {
-		"item": "simpledrawers:quad_acacia_drawer",
-		"count": 1
-	}
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "WWW",
+    "SCS"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:acacia_planks"
+    },
+    "S": {
+      "item": "minecraft:acacia_slab"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    }
+  },
+  "result": {
+    "item": "simpledrawers:quad_acacia_drawer",
+    "count": 1
+  }
 }

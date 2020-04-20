@@ -1,20 +1,20 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"pattern": [
-		" I ",
-		"IDI",
-		" I "
-	],
-	"key": {
-		"I": {
-			"item": "minecraft:emerald"
-		},
-		"D": {
-			"item": "simpledrawers:full_diamond_upgrade"
-		}
-	},
-	"result": {
-		"item": "simpledrawers:full_emerald_upgrade",
-		"count": 1
-	}
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "IDI",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:emerald"
+    },
+    "D": {
+      "item": "simpledrawers:full_diamond_upgrade"
+    }
+  },
+  "result": {
+    "item": "simpledrawers:full_emerald_upgrade",
+    "count": 1
+  }
 }

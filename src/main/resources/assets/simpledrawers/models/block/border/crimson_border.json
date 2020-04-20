@@ -1,6 +1,6 @@
 {
-	"parent": "simpledrawers:block/border/drawer_border",
-	"textures": {
-		"border": "block/crimson_stem"
-	}
+  "parent": "simpledrawers:block/border/drawer_border",
+  "textures": {
+    "border": "block/crimson_stem"
+  }
 }

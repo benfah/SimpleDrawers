@@ -15,23 +15,23 @@ import net.minecraft.item.ItemStack;
 public class DrawerItemModelReplacer implements RedirectModelCallback
 {
 
-	@Override
-	public BakedModel onRender(ItemStack stack, Mode renderMode, boolean leftHanded, BakedModel model)
-	{
-		if(stack.getItem() instanceof BlockItem)
-		{
-			Block block = ((BlockItem)stack.getItem()).getBlock();
-			if(block instanceof BlockAbstractDrawer)
-			{
-				DeserializedInfo info = BlockAbstractDrawer.deserializeInfo(stack);
-				Border b = info.getBorder();
-				if(b == null)
-				b = block.getDefaultState().get(BorderRegistry.BORDER_TYPE);
-				
-				return ModelUtils.getBakedDrawerModel(block.getDefaultState().with(BorderRegistry.BORDER_TYPE, b));
-			}
-		}
-		return model;
-	}
+    @Override
+    public BakedModel onRender(ItemStack stack, Mode renderMode, boolean leftHanded, BakedModel model)
+    {
+        if(stack.getItem() instanceof BlockItem)
+        {
+            Block block = ((BlockItem) stack.getItem()).getBlock();
+            if(block instanceof BlockAbstractDrawer)
+            {
+                DeserializedInfo info = BlockAbstractDrawer.deserializeInfo(stack);
+                Border b = info.getBorder();
+                if(b == null)
+                    b = block.getDefaultState().get(BorderRegistry.BORDER_TYPE);
+
+                return ModelUtils.getBakedDrawerModel(block.getDefaultState().with(BorderRegistry.BORDER_TYPE, b));
+            }
+        }
+        return model;
+    }
 
 }

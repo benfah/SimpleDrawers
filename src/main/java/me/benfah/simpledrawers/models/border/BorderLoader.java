@@ -17,26 +17,26 @@ import java.util.stream.Collectors;
 public class BorderLoader implements ModelAppender, ModelVariantProvider
 {
 
-	@Override
-	public void appendAll(ResourceManager manager, Consumer<ModelIdentifier> out)
-	{
-		BorderRegistry.getBorders().stream().flatMap((border) -> border.getModelMap().values().stream())
-				.forEach(modelIdentifier -> out.accept(new ModelIdentifier(modelIdentifier, "")));
-	}
+    @Override
+    public void appendAll(ResourceManager manager, Consumer<ModelIdentifier> out)
+    {
+        BorderRegistry.getBorders().stream().flatMap((border) -> border.getModelMap().values().stream())
+                .forEach(modelIdentifier -> out.accept(new ModelIdentifier(modelIdentifier, "")));
+    }
 
-	@Override
-	public UnbakedModel loadModelVariant(ModelIdentifier modelId, ModelProviderContext context)
-			throws ModelProviderException
-	{
-		for (Identifier id : BorderRegistry.getBorders().stream()
-				.flatMap((border) -> border.getModelMap().values().stream()).collect(Collectors.toSet()))
-		{
-			if (ModelUtils.identifiersEqual(modelId, id))
-			{
-				return context.loadModel(id);
-			}
-		}
-		return null;
-	}
+    @Override
+    public UnbakedModel loadModelVariant(ModelIdentifier modelId, ModelProviderContext context)
+            throws ModelProviderException
+    {
+        for(Identifier id : BorderRegistry.getBorders().stream()
+                .flatMap((border) -> border.getModelMap().values().stream()).collect(Collectors.toSet()))
+        {
+            if(ModelUtils.identifiersEqual(modelId, id))
+            {
+                return context.loadModel(id);
+            }
+        }
+        return null;
+    }
 
 }

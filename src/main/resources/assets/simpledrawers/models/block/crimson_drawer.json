@@ -1,7 +1,7 @@
 {
-	"parent": "simpledrawers:block/drawer_base",
-	"textures": {
-		"particle": "block/stripped_crimson_stem",
-		"base": "block/stripped_crimson_stem"
-	}
+  "parent": "simpledrawers:block/drawer_base",
+  "textures": {
+    "particle": "block/stripped_crimson_stem",
+    "base": "block/stripped_crimson_stem"
+  }
 }

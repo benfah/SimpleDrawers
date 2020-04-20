@@ -16,53 +16,53 @@ import net.minecraft.world.IWorld;
 
 public class BlockDrawerController extends BlockWithEntity implements InventoryProvider
 {
-	
-	public static DirectionProperty FACING = HorizontalFacingBlock.FACING;
-	
-	public BlockDrawerController(Settings settings)
-	{
-		super(settings);
-		this.setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
-	}
-	
-	@Override
-	public BlockState rotate(BlockState state, BlockRotation rotation)
-	{
-		return state.with(FACING, rotation.rotate(state.get(FACING)));
-	}
-	
-	@Override
-	protected void appendProperties(Builder<Block, BlockState> builder)
-	{
-		builder.add(FACING);
-	}
-	
-	public BlockState mirror(BlockState state, BlockMirror mirror)
-	{
-		return state.rotate(mirror.getRotation(state.get(FACING)));
-	}
 
-	public BlockState getPlacementState(ItemPlacementContext ctx)
-	{
-		return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
-	}
-	
-	@Override
-	public BlockRenderType getRenderType(BlockState state)
-	{
-		return BlockRenderType.MODEL;
-	}
-	
-	@Override
-	public BlockEntity createBlockEntity(BlockView view)
-	{
-		return new BlockEntityDrawerController();
-	}
+    public static DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
-	@Override
-	public SidedInventory getInventory(BlockState state, IWorld world, BlockPos pos)
-	{
-		return ((BlockEntityDrawerController)world.getBlockEntity(pos)).getInventoryHandler();
-	}
-	
+    public BlockDrawerController(Settings settings)
+    {
+        super(settings);
+        this.setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public BlockState rotate(BlockState state, BlockRotation rotation)
+    {
+        return state.with(FACING, rotation.rotate(state.get(FACING)));
+    }
+
+    @Override
+    protected void appendProperties(Builder<Block, BlockState> builder)
+    {
+        builder.add(FACING);
+    }
+
+    public BlockState mirror(BlockState state, BlockMirror mirror)
+    {
+        return state.rotate(mirror.getRotation(state.get(FACING)));
+    }
+
+    public BlockState getPlacementState(ItemPlacementContext ctx)
+    {
+        return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state)
+    {
+        return BlockRenderType.MODEL;
+    }
+
+    @Override
+    public BlockEntity createBlockEntity(BlockView view)
+    {
+        return new BlockEntityDrawerController();
+    }
+
+    @Override
+    public SidedInventory getInventory(BlockState state, IWorld world, BlockPos pos)
+    {
+        return ((BlockEntityDrawerController) world.getBlockEntity(pos)).getInventoryHandler();
+    }
+
 }

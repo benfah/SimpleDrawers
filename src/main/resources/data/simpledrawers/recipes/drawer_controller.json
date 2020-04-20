@@ -1,26 +1,26 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"pattern": [
-		"IHI",
-		"RDR",
-		"IHI"
-	],
-	"key": {
-		"I": {
-			"item": "minecraft:iron_ingot"
-		},
-		"D": {
-			"tag": "simpledrawers:drawers"
-		},
-		"R": {
-			"item": "minecraft:redstone"
-		},
-		"H": {
-			"item": "minecraft:hopper"
-		}
-	},
-	"result": {
-		"item": "simpledrawers:drawer_controller",
-		"count": 1
-	}
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IHI",
+    "RDR",
+    "IHI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "tag": "simpledrawers:drawers"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "result": {
+    "item": "simpledrawers:drawer_controller",
+    "count": 1
+  }
 }

@@ -1,15 +1,39 @@
 {
-	"textures": {
-		"texture": "blocks/e_texture"
-	},
-	"elements": [ 	 
-		{
-			"from": [ 0, 0, 0 ],
-			"to": [ 16, 16, 0.01 ],
-			"faces": {
-				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture" },
-				"south": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture" }
-			}
-		}
-	]
+  "textures": {
+    "texture": "blocks/e_texture"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        0.01
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#texture"
+        }
+      }
+    }
+  ]
 }

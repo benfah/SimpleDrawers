@@ -4,7 +4,7 @@ import net.minecraft.util.Identifier;
 
 public interface BorderModelProvider
 {
-	
-	public Identifier getBorderModel();
-	
+
+    Identifier getBorderModel();
+
 }

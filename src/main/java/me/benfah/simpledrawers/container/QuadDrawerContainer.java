@@ -19,6 +19,4 @@ public class QuadDrawerContainer extends DrawerContainer<BlockEntityQuadDrawer>
     }
 
 
-
-
 }

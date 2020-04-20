@@ -15,66 +15,66 @@ import java.util.Random;
 
 public class WrappedBakedModel implements BakedModel
 {
-	List<BakedModel> modelList;
-	
-	
-	public WrappedBakedModel(BakedModel... models)
-	{
-		this.modelList = Arrays.asList(models);
-	}
-	
-	@Override
-	public List<BakedQuad> getQuads(BlockState state, Direction face, Random random)
-	{
-		ArrayList<BakedQuad> quads = new ArrayList<>();
-		for(BakedModel model : modelList)
-		{
-			quads.addAll(model.getQuads(state, face, random));
-		}
-		
-		return quads;
-	}
+    List<BakedModel> modelList;
 
-	@Override
-	public boolean useAmbientOcclusion()
-	{
-		return modelList.get(0).useAmbientOcclusion();
-	}
 
-	@Override
-	public boolean hasDepth()
-	{
-		return modelList.get(0).hasDepth();
-	}
+    public WrappedBakedModel(BakedModel... models)
+    {
+        this.modelList = Arrays.asList(models);
+    }
 
-	@Override
-	public boolean isSideLit()
-	{
-		return modelList.get(0).isSideLit();
-	}
+    @Override
+    public List<BakedQuad> getQuads(BlockState state, Direction face, Random random)
+    {
+        ArrayList<BakedQuad> quads = new ArrayList<>();
+        for(BakedModel model : modelList)
+        {
+            quads.addAll(model.getQuads(state, face, random));
+        }
 
-	@Override
-	public boolean isBuiltin()
-	{
-		return modelList.get(0).isBuiltin();
-	}
+        return quads;
+    }
 
-	@Override
-	public Sprite getSprite()
-	{
-		return modelList.get(0).getSprite();
-	}
+    @Override
+    public boolean useAmbientOcclusion()
+    {
+        return modelList.get(0).useAmbientOcclusion();
+    }
 
-	@Override
-	public ModelTransformation getTransformation()
-	{
-		return modelList.get(0).getTransformation();
-	}
+    @Override
+    public boolean hasDepth()
+    {
+        return modelList.get(0).hasDepth();
+    }
 
-	@Override
-	public ModelItemPropertyOverrideList getItemPropertyOverrides()
-	{
-		return modelList.get(0).getItemPropertyOverrides();
-	}
+    @Override
+    public boolean isSideLit()
+    {
+        return modelList.get(0).isSideLit();
+    }
+
+    @Override
+    public boolean isBuiltin()
+    {
+        return modelList.get(0).isBuiltin();
+    }
+
+    @Override
+    public Sprite getSprite()
+    {
+        return modelList.get(0).getSprite();
+    }
+
+    @Override
+    public ModelTransformation getTransformation()
+    {
+        return modelList.get(0).getTransformation();
+    }
+
+    @Override
+    public ModelItemPropertyOverrideList getItemPropertyOverrides()
+    {
+        return modelList.get(0).getItemPropertyOverrides();
+    }
 
 }

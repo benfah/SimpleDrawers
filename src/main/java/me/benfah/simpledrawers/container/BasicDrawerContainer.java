@@ -16,6 +16,4 @@ public class BasicDrawerContainer extends DrawerContainer<BlockEntityBasicDrawer
     }
 
 
-
-
 }

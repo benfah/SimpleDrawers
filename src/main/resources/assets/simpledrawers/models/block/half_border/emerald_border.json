@@ -1,6 +1,6 @@
 {
-	"parent": "simpledrawers:block/half_border/drawer_border",
-	"textures": {
-		"border": "block/emerald_block"
-	}
+  "parent": "simpledrawers:block/half_border/drawer_border",
+  "textures": {
+    "border": "block/emerald_block"
+  }
 }

@@ -18,57 +18,57 @@ import java.util.stream.Collectors;
 public class BlockEntityDrawerController extends BlockEntity implements Tickable
 {
 
-	List<BlockPos> drawerPositions = new ArrayList<>();
+    List<BlockPos> drawerPositions = new ArrayList<>();
 
-	CombinedInventoryHandler handler = new CombinedInventoryHandler(this::getAffectedItemHolders);
+    CombinedInventoryHandler handler = new CombinedInventoryHandler(this::getAffectedItemHolders);
 
-	public BlockEntityDrawerController()
-	{
-		super(SDBlockEntities.DRAWER_CONTROLLER);
-	}
+    public BlockEntityDrawerController()
+    {
+        super(SDBlockEntities.DRAWER_CONTROLLER);
+    }
 
-	public void updateDrawerPositions()
-	{
-		drawerPositions.clear();
-		Direction d = getCachedState().get(BlockDrawerController.FACING).getOpposite();
-		BlockPos pos = getPos().offset(d);
-		for (int offsetY = 1; offsetY >= -1; offsetY--)
-		{
-			for (int offset = -1; offset <= 1; offset++)
-			{
-				BlockPos drawerPos;
-				if (d == Direction.NORTH || d == Direction.SOUTH)
-					drawerPos = new BlockPos(pos.getX() + offset, pos.getY() + offsetY, pos.getZ());
-				else
-					drawerPos = new BlockPos(pos.getX(), pos.getY() + offsetY, pos.getZ() + offset);
+    public void updateDrawerPositions()
+    {
+        drawerPositions.clear();
+        Direction d = getCachedState().get(BlockDrawerController.FACING).getOpposite();
+        BlockPos pos = getPos().offset(d);
+        for(int offsetY = 1; offsetY >= -1; offsetY--)
+        {
+            for(int offset = -1; offset <= 1; offset++)
+            {
+                BlockPos drawerPos;
+                if(d == Direction.NORTH || d == Direction.SOUTH)
+                    drawerPos = new BlockPos(pos.getX() + offset, pos.getY() + offsetY, pos.getZ());
+                else
+                    drawerPos = new BlockPos(pos.getX(), pos.getY() + offsetY, pos.getZ() + offset);
 
-				if (getWorld().getBlockState(drawerPos).getBlock() instanceof BlockAbstractDrawer)
-				{
-					drawerPositions.add(drawerPos);
-				}
+                if(getWorld().getBlockState(drawerPos).getBlock() instanceof BlockAbstractDrawer)
+                {
+                    drawerPositions.add(drawerPos);
+                }
 
-			}
-		}
-		handler.generateSlotList();
+            }
+        }
+        handler.generateSlotList();
 
-	}
+    }
 
-	public List<ItemHolder> getAffectedItemHolders()
-	{
-		return drawerPositions.stream()
-				.flatMap((pos) -> ((BlockEntityAbstractDrawer) world.getBlockEntity(pos)).getItemHolders().stream())
-				.collect(Collectors.toList());
-	}
-	
-	public CombinedInventoryHandler getInventoryHandler()
-	{
-		return handler;
-	}
-	
-	@Override
-	public void tick()
-	{
-		updateDrawerPositions();
-	}
+    public List<ItemHolder> getAffectedItemHolders()
+    {
+        return drawerPositions.stream()
+                .flatMap((pos) -> ((BlockEntityAbstractDrawer) world.getBlockEntity(pos)).getItemHolders().stream())
+                .collect(Collectors.toList());
+    }
+
+    public CombinedInventoryHandler getInventoryHandler()
+    {
+        return handler;
+    }
+
+    @Override
+    public void tick()
+    {
+        updateDrawerPositions();
+    }
 
 }

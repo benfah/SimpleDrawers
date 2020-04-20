@@ -1,23 +1,23 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"pattern": [
-		"SCS",
-		"WWW",
-		"SCS"
-	],
-	"key": {
-		"W": {
-			"item": "minecraft:jungle_planks"
-		},
-		"S": {
-			"item": "minecraft:jungle_slab"
-		},
-		"C": {
-			"item": "minecraft:chest"
-		}
-	},
-	"result": {
-		"item": "simpledrawers:quad_jungle_drawer",
-		"count": 1
-	}
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "WWW",
+    "SCS"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:jungle_planks"
+    },
+    "S": {
+      "item": "minecraft:jungle_slab"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    }
+  },
+  "result": {
+    "item": "simpledrawers:quad_jungle_drawer",
+    "count": 1
+  }
 }

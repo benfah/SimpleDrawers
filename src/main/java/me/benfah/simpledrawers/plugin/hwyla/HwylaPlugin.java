@@ -8,12 +8,12 @@ import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 public class HwylaPlugin implements IWailaPlugin
 {
 
-	@Override
-	public void register(IRegistrar registrar)
-	{
-		registrar.registerStackProvider(DrawerComponentProvider.INSTANCE, BlockAbstractDrawer.class);
-		registrar.registerComponentProvider(DrawerComponentProvider.INSTANCE, TooltipPosition.BODY, BlockAbstractDrawer.class);
+    @Override
+    public void register(IRegistrar registrar)
+    {
+        registrar.registerStackProvider(DrawerComponentProvider.INSTANCE, BlockAbstractDrawer.class);
+        registrar.registerComponentProvider(DrawerComponentProvider.INSTANCE, TooltipPosition.BODY, BlockAbstractDrawer.class);
 
-	}
+    }
 
 }

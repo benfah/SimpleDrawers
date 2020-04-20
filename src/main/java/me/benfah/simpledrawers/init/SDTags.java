@@ -10,14 +10,14 @@ import net.minecraft.util.Identifier;
 public class SDTags
 {
 
-	public static Tag<Item> DRAWERS_ITEM;
-	public static Tag<Block> DRAWERS_BLOCK;
+    public static Tag<Item> DRAWERS_ITEM;
+    public static Tag<Block> DRAWERS_BLOCK;
 
-	public static void init()
-	{
-		DRAWERS_ITEM = ItemTags.getContainer().getOrCreate(new Identifier("simpledrawers:drawers"));
-		DRAWERS_BLOCK = BlockTags.getContainer().getOrCreate(new Identifier("simpledrawers:drawers"));
+    public static void init()
+    {
+        DRAWERS_ITEM = ItemTags.getContainer().getOrCreate(new Identifier("simpledrawers:drawers"));
+        DRAWERS_BLOCK = BlockTags.getContainer().getOrCreate(new Identifier("simpledrawers:drawers"));
 
-	}
+    }
 
 }

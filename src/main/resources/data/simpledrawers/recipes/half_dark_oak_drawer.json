@@ -1,23 +1,23 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"pattern": [
-		"SCW",
-		"WWW",
-		"SCW"
-	],
-	"key": {
-		"W": {
-			"item": "minecraft:dark_oak_planks"
-		},
-		"S": {
-			"item": "minecraft:dark_oak_slab"
-		},
-		"C": {
-			"item": "minecraft:chest"
-		}
-	},
-	"result": {
-		"item": "simpledrawers:half_dark_oak_drawer",
-		"count": 1
-	}
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCW",
+    "WWW",
+    "SCW"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:dark_oak_planks"
+    },
+    "S": {
+      "item": "minecraft:dark_oak_slab"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    }
+  },
+  "result": {
+    "item": "simpledrawers:half_dark_oak_drawer",
+    "count": 1
+  }
 }

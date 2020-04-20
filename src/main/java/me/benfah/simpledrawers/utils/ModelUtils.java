@@ -23,96 +23,93 @@ import java.util.Random;
 
 public class ModelUtils
 {
-	public static Random RANDOM = new Random();
+    public static Random RANDOM = new Random();
 
-	public static void loadSpecialModels()
-	{	
-		
-		ModelLoadingRegistry.INSTANCE.registerAppender((manager, out) ->
-		{
-			for (SpecialModel model : SpecialModel.values())
-				out.accept(model.getIdentifier());
-		});
-		
-		ModelLoadingRegistry.INSTANCE.registerVariantProvider(manager -> ((modelId, context) ->
-		{
-			for (SpecialModel m : SpecialModel.values())
-				if (modelId.equals(m.getIdentifier()))
-					return context.loadModel(new Identifier(modelId.getNamespace(), modelId.getPath()));
-			return null;
-		}));
-		
-		
-	}
-	
-	public static void drawSpecialTexture(MatrixStack matrices, VertexConsumerProvider consumers, BakedModel model,
-			int light, int overlay)
-	{
-		renderQuads(matrices.peek(), consumers.getBuffer(RenderLayer.getTranslucent()),
-				model.getQuads(null, null, ModelUtils.RANDOM), light, overlay);
+    public static void loadSpecialModels()
+    {
 
-	}
+        ModelLoadingRegistry.INSTANCE.registerAppender((manager, out) ->
+        {
+            for(SpecialModel model : SpecialModel.values())
+                out.accept(model.getIdentifier());
+        });
 
-	private static void renderQuads(MatrixStack.Entry entry, VertexConsumer vertexConsumer, List<BakedQuad> list,
-			int light, int overlay)
-	{
-		for (BakedQuad quad : list)
-			vertexConsumer.quad(entry, quad, 1F, 1F, 1F, light, overlay);
-	}
+        ModelLoadingRegistry.INSTANCE.registerVariantProvider(manager -> ((modelId, context) ->
+        {
+            for(SpecialModel m : SpecialModel.values())
+                if(modelId.equals(m.getIdentifier()))
+                    return context.loadModel(new Identifier(modelId.getNamespace(), modelId.getPath()));
+            return null;
+        }));
 
-	public enum SpecialModel
-	{
 
-		LOCK(new ModelIdentifier("simpledrawers:attributes/lock"));
-		
-		
+    }
 
-		
-		
-		private ModelIdentifier identifier;
+    public static void drawSpecialTexture(MatrixStack matrices, VertexConsumerProvider consumers, BakedModel model,
+                                          int light, int overlay)
+    {
+        renderQuads(matrices.peek(), consumers.getBuffer(RenderLayer.getTranslucent()),
+                model.getQuads(null, null, ModelUtils.RANDOM), light, overlay);
 
-		SpecialModel(ModelIdentifier identifier)
-		{
-			this.identifier = identifier;
-		}
+    }
 
-		public ModelIdentifier getIdentifier()
-		{
-			return identifier;
-		}
+    private static void renderQuads(MatrixStack.Entry entry, VertexConsumer vertexConsumer, List<BakedQuad> list,
+                                    int light, int overlay)
+    {
+        for(BakedQuad quad : list)
+            vertexConsumer.quad(entry, quad, 1F, 1F, 1F, light, overlay);
+    }
 
-		public BakedModel getBakedModel()
-		{
-			return MinecraftClient.getInstance().getBakedModelManager().getModel(identifier);
-		}
+    public enum SpecialModel
+    {
 
-	}
-	
-	public static boolean identifiersEqual(Identifier id1, Identifier id2)
-	{
-		return id1.getNamespace().equals(id2.getNamespace()) && id1.getPath().equals(id2.getPath());
-	}
-	
-	public static String variantMapToString(Map<String, String> map)
-	{
-		String result = "";
-		
-		Iterator<Entry<String, String>> iterator = map.entrySet().iterator();
-		
-		while(iterator.hasNext())
-		{
-			Entry<String, String> entry = iterator.next();
-			result = result + entry.getKey() + "=" + entry.getValue();
-			
-			if(iterator.hasNext())
-				result = result + ",";
-		}
-		return result;
-	}
-	
-	public static BakedModel getBakedDrawerModel(BlockState state)
-	{
-		Identifier id = Registry.BLOCK.getId(state.getBlock());
-		return MinecraftClient.getInstance().getBakedModelManager().getModel(new ModelIdentifier(id, "border_type=" + BorderRegistry.getName(state.get(BlockAbstractDrawer.BORDER_TYPE)) + ",drawer_type=" + state.get(BlockAbstractDrawer.DRAWER_TYPE) + ",facing=north"));
-	}
+        LOCK(new ModelIdentifier("simpledrawers:attributes/lock"));
+
+
+        private ModelIdentifier identifier;
+
+        SpecialModel(ModelIdentifier identifier)
+        {
+            this.identifier = identifier;
+        }
+
+        public ModelIdentifier getIdentifier()
+        {
+            return identifier;
+        }
+
+        public BakedModel getBakedModel()
+        {
+            return MinecraftClient.getInstance().getBakedModelManager().getModel(identifier);
+        }
+
+    }
+
+    public static boolean identifiersEqual(Identifier id1, Identifier id2)
+    {
+        return id1.getNamespace().equals(id2.getNamespace()) && id1.getPath().equals(id2.getPath());
+    }
+
+    public static String variantMapToString(Map<String, String> map)
+    {
+        String result = "";
+
+        Iterator<Entry<String, String>> iterator = map.entrySet().iterator();
+
+        while(iterator.hasNext())
+        {
+            Entry<String, String> entry = iterator.next();
+            result = result + entry.getKey() + "=" + entry.getValue();
+
+            if(iterator.hasNext())
+                result = result + ",";
+        }
+        return result;
+    }
+
+    public static BakedModel getBakedDrawerModel(BlockState state)
+    {
+        Identifier id = Registry.BLOCK.getId(state.getBlock());
+        return MinecraftClient.getInstance().getBakedModelManager().getModel(new ModelIdentifier(id, "border_type=" + BorderRegistry.getName(state.get(BlockAbstractDrawer.BORDER_TYPE)) + ",drawer_type=" + state.get(BlockAbstractDrawer.DRAWER_TYPE) + ",facing=north"));
+    }
 }

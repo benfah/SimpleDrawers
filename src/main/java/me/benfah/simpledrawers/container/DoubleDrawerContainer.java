@@ -17,6 +17,4 @@ public class DoubleDrawerContainer extends DrawerContainer<BlockEntityHalfDrawer
     }
 
 
-
-
 }

@@ -1,8 +1,19 @@
 {
-	"variants": {
-		"facing=north": { "model": "simpledrawers:block/dark_oak_drawer" },
-		"facing=east": { "model": "simpledrawers:block/dark_oak_drawer", "y": 90 },
-		"facing=south": { "model": "simpledrawers:block/dark_oak_drawer", "y": 180  },
-		"facing=west": { "model": "simpledrawers:block/dark_oak_drawer", "y": 270  }
-	}
+  "variants": {
+    "facing=north": {
+      "model": "simpledrawers:block/dark_oak_drawer"
+    },
+    "facing=east": {
+      "model": "simpledrawers:block/dark_oak_drawer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "simpledrawers:block/dark_oak_drawer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "simpledrawers:block/dark_oak_drawer",
+      "y": 270
+    }
+  }
 }

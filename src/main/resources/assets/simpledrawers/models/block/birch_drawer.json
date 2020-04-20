@@ -1,7 +1,7 @@
 {
-	"parent": "simpledrawers:block/drawer_base",
-	"textures": {
-		"particle": "block/stripped_birch_log",
-		"base": "block/stripped_birch_log"
-	}
+  "parent": "simpledrawers:block/drawer_base",
+  "textures": {
+    "particle": "block/stripped_birch_log",
+    "base": "block/stripped_birch_log"
+  }
 }
