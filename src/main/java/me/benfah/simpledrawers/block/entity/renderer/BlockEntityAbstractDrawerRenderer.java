@@ -13,14 +13,19 @@ import net.minecraft.client.render.model.json.ModelTransformation.Mode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Matrix3f;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.world.LightType;
+import static me.benfah.simpledrawers.utils.RenderConstants.*;
 
 public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbstractDrawer> extends BlockEntityRenderer<B>
 {
+
+
 
     public BlockEntityAbstractDrawerRenderer(BlockEntityRenderDispatcher dispatcher)
     {
@@ -86,9 +91,9 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
 
         BakedModel model = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(stack);
         if(model.hasDepth())
-            RenderSystem.setupGui3DDiffuseLighting();
+            RenderSystem.setupGui3DDiffuseLighting(DIFFUSE_LIGHT_0, DIFFUSE_LIGHT_1);
         else
-            RenderSystem.setupGuiFlatDiffuseLighting();
+            RenderSystem.setupGuiFlatDiffuseLighting(DIFFUSE_LIGHT_0, DIFFUSE_LIGHT_1);
         matrices.peek().getNormal().load(Matrix3f.scale(1, -1, 1));
         MinecraftClient.getInstance().getItemRenderer().renderItem(stack, Mode.GUI, light, overlay, matrices, vertexConsumers);
 
@@ -106,7 +111,7 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
 
         matrices.scale(0.01f, 0.01f, 0.01f);
 
-        int width = dispatcher.getTextRenderer().getStringWidth(s);
+        int width = dispatcher.getTextRenderer().getStringWidth(new LiteralText(s));
 
         dispatcher.getTextRenderer().draw(s, -width / 2, 3, 0, false, matrices.peek().getModel(), vertexConsumers, false, 0, 15728880);
 

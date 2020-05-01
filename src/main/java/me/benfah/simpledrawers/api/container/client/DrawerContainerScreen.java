@@ -7,6 +7,7 @@ import me.benfah.simpledrawers.utils.NumberUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
@@ -23,7 +24,7 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
         this.backgroundHeight = 187;
     }
 
-    protected void drawForeground(int mouseX, int mouseY)
+    protected void drawForeground(MatrixStack stack, int mouseX, int mouseY)
     {
         handler.holderSlots.forEach((slot) ->
         {
@@ -43,12 +44,12 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
 
             RenderSystem.disableDepthTest();
             RenderSystem.colorMask(true, true, true, false);
-            this.fillGradient(slotX, slotY, slotX + 16, slotY + 16, -2130706433, -2130706433);
+            this.fillGradient(stack, slotX, slotY, slotX + 16, slotY + 16, -2130706433, -2130706433);
             RenderSystem.colorMask(true, true, true, true);
             RenderSystem.enableDepthTest();
         }
-        this.textRenderer.draw(this.title.asFormattedString(), 8.0F, 6.0F, 4210752);
-        this.textRenderer.draw(this.playerInventory.getDisplayName().asFormattedString(), 8.0F,
+        this.textRenderer.draw(stack, this.title.asString(), 8.0F, 6.0F, 4210752);
+        this.textRenderer.draw(stack, this.playerInventory.getDisplayName().asString(), 8.0F,
                 (float) (this.backgroundHeight - 96 + 2), 4210752);
 
     }
@@ -71,11 +72,11 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
                 && pointY >= (double) (yPosition - 1) && pointY < (double) (yPosition + height + 1);
     }
 
-    public void render(int mouseX, int mouseY, float delta)
+    public void render(MatrixStack stacks, int mouseX, int mouseY, float delta)
     {
-        this.renderBackground();
-        this.drawBackground(delta, mouseX, mouseY);
-        super.render(mouseX, mouseY, delta);
+        this.renderBackground(stacks);
+        this.drawBackground(stacks, delta, mouseX, mouseY);
+        super.render(stacks, mouseX, mouseY, delta);
         HolderSlot slot = getHolderSlotAt(mouseX, mouseY);
 
         if(slot != null)
@@ -83,17 +84,17 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
             focusedSlot = slot;
         }
 
-        this.drawMouseoverTooltip(mouseX, mouseY);
+        this.drawMouseoverTooltip(stacks, mouseX, mouseY);
     }
 
-    protected void drawBackground(float delta, int mouseX, int mouseY)
+    @Override
+    protected void drawBackground(MatrixStack matrixStack, float delta, int mouseX, int mouseY)
     {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+//        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.client.getTextureManager().bindTexture(getBackgroundTexture());
         int i = (this.width - this.backgroundWidth) / 2;
         int j = (this.height - this.backgroundHeight) / 2;
-        this.drawTexture(i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
-
+        this.drawTexture(matrixStack, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
     }
 
     public abstract Identifier getBackgroundTexture();

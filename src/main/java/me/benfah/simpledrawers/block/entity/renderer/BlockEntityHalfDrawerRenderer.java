@@ -8,6 +8,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
+import static me.benfah.simpledrawers.utils.RenderConstants.*;
 
 public class BlockEntityHalfDrawerRenderer extends BlockEntityAbstractDrawerRenderer<BlockEntityHalfDrawer>
 {
@@ -33,7 +34,7 @@ public class BlockEntityHalfDrawerRenderer extends BlockEntityAbstractDrawerRend
         }
 
         matrices.pop();
-        RenderSystem.setupLevelDiffuseLighting(matrices.peek().getModel());
+        RenderSystem.setupLevelDiffuseLighting(DIFFUSE_LIGHT_0, DIFFUSE_LIGHT_1, matrices.peek().getModel());
         matrices.push();
 
     }
