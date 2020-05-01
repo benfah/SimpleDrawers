@@ -10,6 +10,8 @@ import me.benfah.simpledrawers.container.BasicDrawerContainer;
 import me.benfah.simpledrawers.container.DoubleDrawerContainer;
 import me.benfah.simpledrawers.container.QuadDrawerContainer;
 import me.benfah.simpledrawers.container.client.BasicDrawerContainerScreen;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.util.Identifier;
@@ -56,6 +58,7 @@ public class SDContainers
         });
     }
 
+    @Environment(EnvType.CLIENT)
     public static void initClient()
     {
         ScreenProviderRegistry.INSTANCE.registerFactory(BASIC_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_1.png")));
