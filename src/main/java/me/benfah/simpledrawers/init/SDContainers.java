@@ -1,7 +1,6 @@
 package me.benfah.simpledrawers.init;
 
 import me.benfah.simpledrawers.SimpleDrawersMod;
-import me.benfah.simpledrawers.api.container.DrawerContainer;
 import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
 import me.benfah.simpledrawers.block.entity.BlockEntityHalfDrawer;
@@ -9,10 +8,6 @@ import me.benfah.simpledrawers.block.entity.BlockEntityQuadDrawer;
 import me.benfah.simpledrawers.container.BasicDrawerContainer;
 import me.benfah.simpledrawers.container.DoubleDrawerContainer;
 import me.benfah.simpledrawers.container.QuadDrawerContainer;
-import me.benfah.simpledrawers.container.client.BasicDrawerContainerScreen;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -58,13 +53,6 @@ public class SDContainers
         });
     }
 
-    @Environment(EnvType.CLIENT)
-    public static void initClient()
-    {
-        ScreenProviderRegistry.INSTANCE.registerFactory(BASIC_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_1.png")));
-        ScreenProviderRegistry.INSTANCE.registerFactory(DOUBLE_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_2.png")));
-        ScreenProviderRegistry.INSTANCE.registerFactory(QUAD_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_4.png")));
 
-    }
 
 }
