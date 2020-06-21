@@ -6,6 +6,7 @@ import me.benfah.simpledrawers.api.border.BorderRegistry.BorderProperty;
 import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.item.DrawerInteractable;
 import me.benfah.simpledrawers.utils.BlockUtils;
+import me.benfah.simpledrawers.utils.ITapeable;
 import me.benfah.simpledrawers.utils.model.BorderModelProvider;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.*;
@@ -29,7 +30,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public abstract class BlockAbstractDrawer extends BlockWithEntity implements InventoryProvider, BorderModelProvider
+public abstract class BlockAbstractDrawer extends BlockWithEntity implements InventoryProvider, BorderModelProvider, ITapeable<BlockEntityAbstractDrawer>
 {
 
     protected BlockAbstractDrawer(Settings settings)
@@ -78,6 +79,7 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
 
                 return drawer.getItemHolderAt(interactPos.x, interactPos.y).offer(player.getMainHandStack());
             }
+            return ActionResult.PASS;
         }
         return ActionResult.CONSUME;
     }

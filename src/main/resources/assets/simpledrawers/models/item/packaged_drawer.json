@@ -1,0 +1,170 @@
+{
+    "textures": {
+        "particle": "#texture",
+        "texture": "simpledrawers:item/package_wrap"
+    },
+    "elements": [
+        {
+            "__comment": "PlaneY2",
+            "from": [ -0.5, -0.5, 6.5 ],
+            "to": [ 16.5, -0.499, 9.5 ],
+            "faces": {
+                "down": { "uv": [ 0, 6.5, 16, 9.5 ], "texture": "#texture" },
+                "up": { "uv": [ 0, 6.5, 16, 9.5 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneY3",
+            "from": [ 6.5, -0.5, -0.5 ],
+            "to": [ 9.5, -0.499, 6.5 ],
+            "faces": {
+                "down": { "uv": [ 6.5, 9.5, 9.5, 16 ], "texture": "#texture" },
+                "up": { "uv": [ 6.5, 0, 9.5, 6.5 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneY3",
+            "from": [ 6.5, -0.5, 9.5 ],
+            "to": [ 9.5, -0.499, 16.5 ],
+            "faces": {
+                "down": { "uv": [ 6.5, 9.5, 9.5, 16 ], "texture": "#texture" },
+                "up": { "uv": [ 6.5, 0, 9.5, 6.5 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneY3",
+            "from": [ 6.5, 16.5, 9.5 ],
+            "to": [ 9.5, 16.501, 16.5 ],
+            "faces": {
+                "down": { "uv": [ 7, 9.5, 10, 16 ], "texture": "#texture" },
+                "up": { "uv": [ 6.5, 0, 9.5, 6.5 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneY2",
+            "from": [ -0.5, 16.5, 6.5 ],
+            "to": [ 16.5, 16.501, 9.5 ],
+            "faces": {
+                "down": { "uv": [ 0, 6.5, 16, 9.5 ], "texture": "#texture" },
+                "up": { "uv": [ 0, 6, 16, 9 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneY3",
+            "from": [ 6.5, 16.5, -0.5 ],
+            "to": [ 9.5, 16.501, 6.5 ],
+            "faces": {
+                "down": { "uv": [ 7, 9.5, 10, 16 ], "texture": "#texture" },
+                "up": { "uv": [ 6.5, 0, 9.5, 6.5 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneX8",
+            "from": [ -0.5, -0.5, 6.5 ],
+            "to": [ -0.499, 16.5, 9.5 ],
+            "faces": {
+                "west": { "uv": [ 7, 0, 10, 16 ], "texture": "#texture" },
+                "east": { "uv": [ 7, 0, 10, 16 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneX9",
+            "from": [ -0.5, 6.5, -0.5 ],
+            "to": [ -0.499, 9.5, 6.5 ],
+            "faces": {
+                "west": { "uv": [ 0, 6.5, 6.5, 9.5 ], "texture": "#texture" },
+                "east": { "uv": [ 9.5, 6.5, 16, 9.5 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneX9",
+            "from": [ -0.5, 6.5, 9.5 ],
+            "to": [ -0.499, 9.5, 16.5 ],
+            "faces": {
+                "west": { "uv": [ 0, 6.5, 6.5, 9.5 ], "texture": "#texture" },
+                "east": { "uv": [ 9.5, 6.5, 16, 9.5 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneX8",
+            "from": [ 16.5, -0.5, 6.5 ],
+            "to": [ 16.501, 16.5, 9.5 ],
+            "faces": {
+                "west": { "uv": [ 6.5, 0, 9.5, 16 ], "texture": "#texture" },
+                "east": { "uv": [ 6.5, 0, 9.5, 16 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneX9",
+            "from": [ 16.5, 6.5, -0.5 ],
+            "to": [ 16.501, 9.5, 6.5 ],
+            "faces": {
+                "west": { "uv": [ 0, 6.5, 6.5, 9.5 ], "texture": "#texture" },
+                "east": { "uv": [ 9.5, 6.5, 16, 9.5 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneX9",
+            "from": [ 16.5, 6.5, 9.5 ],
+            "to": [ 16.501, 9.5, 16.5 ],
+            "faces": {
+                "west": { "uv": [ 0, 6.5, 6.5, 9.5 ], "texture": "#texture" },
+                "east": { "uv": [ 9.5, 6.5, 16, 9.5 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneZ14",
+            "from": [ 6.5, -0.5, -0.5 ],
+            "to": [ 9.5, 16.5, -0.499 ],
+            "faces": {
+                "north": { "uv": [ 6.5, 0, 9.5, 16 ], "texture": "#texture" },
+                "south": { "uv": [ 6.5, 0, 9.5, 16 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneZ15",
+            "from": [ -0.5, 6.5, -0.5 ],
+            "to": [ 6.5, 9.5, -0.499 ],
+            "faces": {
+                "north": { "uv": [ 9.5, 6.5, 16, 9.5 ], "texture": "#texture" },
+                "south": { "uv": [ 0, 6.5, 6.5, 9.5 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneZ15",
+            "from": [ 9.5, 6.5, -0.5 ],
+            "to": [ 16.5, 9.5, -0.499 ],
+            "faces": {
+                "north": { "uv": [ 9.5, 6.5, 16, 9.5 ], "texture": "#texture" },
+                "south": { "uv": [ 0, 6.5, 6.5, 9.5 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneZ15",
+            "from": [ 9.5, 6.5, 16.5 ],
+            "to": [ 16.5, 9.5, 16.501 ],
+            "faces": {
+                "north": { "uv": [ 9.5, 7, 16, 10 ], "texture": "#texture" },
+                "south": { "uv": [ 0, 7, 6.5, 10 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneZ14",
+            "from": [ 6.5, -0.5, 16.5 ],
+            "to": [ 9.5, 16.5, 16.501 ],
+            "faces": {
+                "north": { "uv": [ 7, 0, 10, 16 ], "texture": "#texture" },
+                "south": { "uv": [ 7, 0, 10, 16 ], "texture": "#texture" }
+            }
+        },
+        {
+            "__comment": "PlaneZ15",
+            "from": [ -0.5, 6.5, 16.5 ],
+            "to": [ 6.5, 9.5, 16.501 ],
+            "faces": {
+                "north": { "uv": [ 9.5, 6.5, 16, 9.5 ], "texture": "#texture" },
+                "south": { "uv": [ 0, 6.5, 6.5, 9.5 ], "texture": "#texture" }
+            }
+        }
+    ]
+}

@@ -4,9 +4,7 @@ import com.mojang.datafixers.util.Either;
 import me.benfah.simpledrawers.SimpleDrawersMod;
 import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.api.border.Border.BorderType;
-import me.benfah.simpledrawers.item.ItemDrawerFullUpgrade;
-import me.benfah.simpledrawers.item.ItemDrawerUpgrade;
-import me.benfah.simpledrawers.item.ItemKey;
+import me.benfah.simpledrawers.item.*;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -66,6 +64,9 @@ public class SDItems
     public static ItemDrawerFullUpgrade FULL_DIAMOND_UPGRADE;
     public static ItemDrawerFullUpgrade FULL_EMERALD_UPGRADE;
 
+    public static ItemTape TAPE;
+    public static ItemPackagedDrawer PACKAGED_DRAWER;
+
     public static void init()
     {
         initItemGroup();
@@ -115,6 +116,8 @@ public class SDItems
             }
         }));
 
+        TAPE = register("tape", new ItemTape(new Settings().maxCount(1).group(SD_GROUP).maxDamage(3)));
+        PACKAGED_DRAWER = register("packaged_drawer", new ItemPackagedDrawer(new Settings().maxCount(1)));
     }
 
     private static void initItemGroup()

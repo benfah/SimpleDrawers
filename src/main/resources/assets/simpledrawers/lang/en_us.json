@@ -16,6 +16,8 @@
   "item.simpledrawers.full_gold_upgrade": "Full Gold Upgrade",
   "item.simpledrawers.full_diamond_upgrade": "Full Diamond Upgrade",
   "item.simpledrawers.full_emerald_upgrade": "Full Emerald Upgrade",
+  "item.simpledrawers.tape": "Tape",
+  "item.simpledrawers.packaged_drawer": "Packaged Drawer",
   "block.simpledrawers.drawer_controller": "Drawer Controller",
   "block.simpledrawers.half_oak_drawer": "Double Oak Drawer",
   "block.simpledrawers.half_birch_drawer": "Double Birch Drawer",

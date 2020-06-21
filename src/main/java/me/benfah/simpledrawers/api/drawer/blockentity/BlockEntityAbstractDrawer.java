@@ -1,5 +1,6 @@
 package me.benfah.simpledrawers.api.drawer.blockentity;
 
+import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.holder.CombinedInventoryHandler;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
@@ -8,7 +9,10 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.Tickable;
+import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +30,7 @@ public abstract class BlockEntityAbstractDrawer extends BlockEntity implements B
 
     public abstract List<ItemHolder> getItemHolders();
 
-    protected abstract void setItemHolders(List<ItemHolder> holders);
+    public abstract void setItemHolders(List<ItemHolder> holders);
 
     public abstract CombinedInventoryHandler getInventoryHandler();
 
