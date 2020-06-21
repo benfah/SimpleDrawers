@@ -7,9 +7,8 @@ import me.benfah.simpledrawers.callback.ModelPostBakeCallback;
 import me.benfah.simpledrawers.callback.ModelPreBakeCallback;
 import me.benfah.simpledrawers.callback.RedirectModelCallback;
 import me.benfah.simpledrawers.init.SDBlockEntities;
-import me.benfah.simpledrawers.init.SDContainers;
 import me.benfah.simpledrawers.init.client.SDContainerScreens;
-import me.benfah.simpledrawers.models.DrawerItemModelReplacer;
+import me.benfah.simpledrawers.models.ItemModelRedirector;
 import me.benfah.simpledrawers.models.ModelMerger;
 import me.benfah.simpledrawers.models.border.BorderLoader;
 import me.benfah.simpledrawers.utils.ModelUtils;
@@ -26,7 +25,7 @@ public class SimpleDrawersModClient implements ClientModInitializer
         ModelPostBakeCallback.EVENT.register(new ModelMerger());
         ModelPreBakeCallback.EVENT.register(new ModelMerger());
 
-        RedirectModelCallback.EVENT.register(new DrawerItemModelReplacer());
+        RedirectModelCallback.EVENT.register(new ItemModelRedirector());
 
         ModelUtils.loadSpecialModels();
 

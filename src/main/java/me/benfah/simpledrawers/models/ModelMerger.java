@@ -2,17 +2,23 @@ package me.benfah.simpledrawers.models;
 
 import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.api.border.BorderRegistry;
+import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.DrawerType;
 import me.benfah.simpledrawers.callback.ModelPostBakeCallback;
 import me.benfah.simpledrawers.callback.ModelPreBakeCallback;
+import me.benfah.simpledrawers.init.SDItems;
 import me.benfah.simpledrawers.utils.ModelUtils;
 import me.benfah.simpledrawers.utils.WrappedBakedModel;
+import net.minecraft.block.Block;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.ModelBakeSettings;
 import net.minecraft.client.render.model.ModelRotation;
 import net.minecraft.client.render.model.UnbakedModel;
 import net.minecraft.client.util.ModelIdentifier;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
+import net.minecraft.util.registry.Registry;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -25,6 +31,7 @@ public class ModelMerger implements ModelPostBakeCallback, ModelPreBakeCallback
     @Override
     public void onPostBake(Map<ModelIdentifier, BakedModel> baked)
     {
+        Map<ModelIdentifier, BakedModel> toAdd = new HashMap<>();
         for(Entry<ModelIdentifier, BakedModel> modelEntry : baked.entrySet())
         {
             if(modelEntry.getKey().toString().contains("border_type"))
@@ -40,10 +47,13 @@ public class ModelMerger implements ModelPostBakeCallback, ModelPreBakeCallback
 
                     BakedModel borderModel = baked.get(
                             new ModelIdentifier(borderIdentifier, "facing=" + variantMap.get("facing")));
-                    baked.put(modelEntry.getKey(), new WrappedBakedModel(modelEntry.getValue(), borderModel));
+                    toAdd.put(modelEntry.getKey(), new WrappedBakedModel(modelEntry.getValue(), borderModel));
                 }
             }
+
         }
+        baked.putAll(toAdd);
+        toAdd.clear();
     }
 
     @Override
@@ -68,6 +78,7 @@ public class ModelMerger implements ModelPostBakeCallback, ModelPreBakeCallback
                     .filter((identifier) -> ModelUtils.identifiersEqual(identifier, borderIdentifier))
                     .forEach(identifier -> unbaked.remove(identifier));
         }
+
 
     }
 

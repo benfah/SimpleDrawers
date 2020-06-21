@@ -12,6 +12,7 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.state.property.Property;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -20,10 +21,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ModelUtils
 {
     public static Random RANDOM = new Random();
+
+    public static final Function<Entry<Property<?>, Comparable<?>>, String> PROPERTY_MAP_PRINTER = new Function<Map.Entry<Property<?>, Comparable<?>>, String>() {
+        public String apply(Map.Entry<Property<?>, Comparable<?>> entry) {
+            if (entry == null) {
+                return "<NULL>";
+            } else {
+                Property<?> property = (Property)entry.getKey();
+                return property.getName() + "=" + this.nameValue(property, (Comparable)entry.getValue());
+            }
+        }
+
+        private <T extends Comparable<T>> String nameValue(Property<T> property, Comparable<?> value) {
+            return property.name((T) value);
+        }
+    };
 
     public static void loadSpecialModels()
     {
@@ -90,26 +108,20 @@ public class ModelUtils
         return id1.getNamespace().equals(id2.getNamespace()) && id1.getPath().equals(id2.getPath());
     }
 
-    public static String variantMapToString(Map<String, String> map)
+    public static String variantMapToString(Map<Property<?>, Comparable<?>> map)
     {
-        String result = "";
+        return map.entrySet().stream().map(PROPERTY_MAP_PRINTER).collect(Collectors.joining(","));
+    }
 
-        Iterator<Entry<String, String>> iterator = map.entrySet().iterator();
-
-        while(iterator.hasNext())
-        {
-            Entry<String, String> entry = iterator.next();
-            result = result + entry.getKey() + "=" + entry.getValue();
-
-            if(iterator.hasNext())
-                result = result + ",";
-        }
-        return result;
+    public static ModelIdentifier getStateModelIdentifier(BlockState state)
+    {
+        Identifier id = Registry.BLOCK.getId(state.getBlock());
+        String variant = variantMapToString(state.getEntries());
+        return new ModelIdentifier(id, variant);
     }
 
     public static BakedModel getBakedDrawerModel(BlockState state)
     {
-        Identifier id = Registry.BLOCK.getId(state.getBlock());
-        return MinecraftClient.getInstance().getBakedModelManager().getModel(new ModelIdentifier(id, "border_type=" + BorderRegistry.getName(state.get(BlockAbstractDrawer.BORDER_TYPE)) + ",drawer_type=" + state.get(BlockAbstractDrawer.DRAWER_TYPE) + ",facing=north"));
+        return MinecraftClient.getInstance().getBakedModelManager().getModel(getStateModelIdentifier(state));
     }
 }

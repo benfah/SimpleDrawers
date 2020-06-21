@@ -49,7 +49,7 @@ public class BlockEntityQuadDrawer extends BlockEntityAbstractDrawer implements 
     }
 
     @Override
-    protected void setItemHolders(List<ItemHolder> holders)
+    public void setItemHolders(List<ItemHolder> holders)
     {
         this.holderList.clear();
         this.holderList.addAll(holders);

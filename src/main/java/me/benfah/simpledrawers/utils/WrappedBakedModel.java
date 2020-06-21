@@ -1,5 +1,6 @@
 package me.benfah.simpledrawers.utils;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
@@ -8,15 +9,13 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.util.math.Direction;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class WrappedBakedModel implements BakedModel
 {
     List<BakedModel> modelList;
-
 
     public WrappedBakedModel(BakedModel... models)
     {
@@ -31,7 +30,6 @@ public class WrappedBakedModel implements BakedModel
         {
             quads.addAll(model.getQuads(state, face, random));
         }
-
         return quads;
     }
 
