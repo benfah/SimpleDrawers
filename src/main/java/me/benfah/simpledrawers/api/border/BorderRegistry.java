@@ -2,7 +2,7 @@ package me.benfah.simpledrawers.api.border;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import net.minecraft.state.property.AbstractProperty;
+import net.minecraft.state.property.Property;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -34,7 +34,7 @@ public class BorderRegistry
         return BORDER_MAP.values();
     }
 
-    public static class BorderProperty extends AbstractProperty<Border>
+    public static class BorderProperty extends Property<Border>
     {
 
         protected BorderProperty(String name, Class<Border> type)

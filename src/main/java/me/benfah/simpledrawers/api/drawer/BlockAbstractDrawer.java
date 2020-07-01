@@ -27,8 +27,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 
 public abstract class BlockAbstractDrawer extends BlockWithEntity implements InventoryProvider, BorderModelProvider, ITapeable<BlockEntityAbstractDrawer>
 {
@@ -117,13 +117,33 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
 
         drawer.getItemHolders().stream().filter((holder) -> !holder.isEmpty()).forEach((holder) ->
         {
-            ItemStack stack = new ItemStack(holder.getItemType(), holder.getAmount());
+
+            int fullStacksCount = Math.floorDiv(holder.getAmount(), holder.getItemType().getMaxCount());
+            int remainderStackSize = holder.getAmount() % holder.getItemType().getMaxCount();
+
+            ItemStack stack = new ItemStack(holder.getItemType(), holder.getItemType().getMaxCount());
+
+
+
             if(holder.getTag() != null)
                 stack.setTag(holder.getTag());
 
-            ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
-            itemEntity.setToDefaultPickupDelay();
-            world.spawnEntity(itemEntity);
+            for(int i = 0; i < fullStacksCount; i++)
+            {
+                ItemStack localStack = stack.copy();
+                ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, localStack);
+                itemEntity.setToDefaultPickupDelay();
+                world.spawnEntity(itemEntity);
+            }
+
+
+            if(remainderStackSize > 0)
+            {
+                stack.setCount(remainderStackSize);
+                ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
+                itemEntity.setToDefaultPickupDelay();
+                world.spawnEntity(itemEntity);
+            }
         });
 
         super.onBreak(world, pos, state, player);
@@ -173,7 +193,7 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
     }
 
     @Override
-    public SidedInventory getInventory(BlockState state, IWorld world, BlockPos pos)
+    public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos)
     {
         return ((BlockEntityAbstractDrawer) world.getBlockEntity(pos)).getInventoryHandler();
     }

@@ -28,7 +28,7 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
     {
         handler.holderSlots.forEach((slot) ->
         {
-            itemRenderer.renderGuiItem(slot.getStack(), slot.x, slot.y);
+            itemRenderer.renderGuiItemIcon(slot.getStack(), slot.x, slot.y);
             RenderSystem.pushMatrix();
             RenderSystem.translatef(slot.x + 3, slot.y + 3, 0);
             RenderSystem.scalef(0.75f, 0.75f, 1);

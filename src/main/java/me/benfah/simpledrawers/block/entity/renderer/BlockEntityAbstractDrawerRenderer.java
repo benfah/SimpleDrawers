@@ -111,7 +111,7 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
 
         matrices.scale(0.01f, 0.01f, 0.01f);
 
-        int width = dispatcher.getTextRenderer().getStringWidth(new LiteralText(s));
+        int width = dispatcher.getTextRenderer().getWidth(new LiteralText(s));
 
         dispatcher.getTextRenderer().draw(s, -width / 2, 3, 0, false, matrices.peek().getModel(), vertexConsumers, false, 0, 15728880);
 

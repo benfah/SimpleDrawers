@@ -12,7 +12,7 @@ import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.WorldAccess;
 
 public class BlockDrawerController extends BlockWithEntity implements InventoryProvider
 {
@@ -60,7 +60,7 @@ public class BlockDrawerController extends BlockWithEntity implements InventoryP
     }
 
     @Override
-    public SidedInventory getInventory(BlockState state, IWorld world, BlockPos pos)
+    public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos)
     {
         return ((BlockEntityDrawerController) world.getBlockEntity(pos)).getInventoryHandler();
     }

@@ -11,7 +11,7 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-    maven { url "http://tehnut.info/maven" }
+    maven { url "http://maven.tehnut.info" }
 }
 
 dependencies {
@@ -21,7 +21,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     modCompile "me.sargunvohra.mcmods:autoconfig1u:2.0.1"
-//    modImplementation "mcp.mobius.waila:Hwyla:${project.hwyla_version}"
+    modImplementation "mcp.mobius.waila:Hwyla:${project.hwyla_version}"
 
     modCompile "io.github.prospector:modmenu:${project.modmenu_version}"
 
