@@ -4,6 +4,7 @@ import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.holder.HolderSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
@@ -31,18 +32,15 @@ public class DrawerContainer<T extends BlockEntityAbstractDrawer> extends Screen
 //		addSlot(slot);
 
 
-        int k;
-        for(k = 0; k < 3; ++k)
-        {
-            for(int j = 0; j < 9; ++j)
-            {
-                this.addSlot(new Slot(playerInv, j + k * 9 + 9, 8 + j * 18, 105 + k * 18));
-            }
+        int m;
+        for(m = 0; m < 3; ++m) {
+           for(int l = 0; l < 9; ++l) {
+              this.addSlot(new Slot(entity.inventory, l + m * 9 + 9, 8 + l * 18, 105 + m * 18));
+           }
         }
 
-        for(k = 0; k < 9; ++k)
-        {
-            this.addSlot(new Slot(playerInv, k, 8 + k * 18, 163));
+        for(m = 0; m < 9; ++m) {
+           this.addSlot(new Slot(entity.inventory, m, 8 + m * 18, 163));
         }
     }
 
@@ -51,5 +49,11 @@ public class DrawerContainer<T extends BlockEntityAbstractDrawer> extends Screen
     {
         return true;
     }
-
+    
+    @Override
+    public ItemStack transferSlot(PlayerEntity player, int index)
+    {
+    	return ItemStack.EMPTY;
+    }
+    
 }
