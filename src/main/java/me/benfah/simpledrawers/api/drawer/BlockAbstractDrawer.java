@@ -49,35 +49,35 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
     {
         return (BlockState) state.with(FACING, rotation.rotate((Direction) state.get(FACING)));
     }
-
+    
+    
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
                               BlockHitResult hit)
     {
         if(!world.isClient)
         {
-            if(player.isSneaking())
+            if(hand.equals(Hand.MAIN_HAND))
             {
-                ContainerProviderRegistry.INSTANCE.openContainer(getContainerIdentifier(), player, (buf) ->
-                {
-                    buf.writeBlockPos(pos);
-                });
-                return ActionResult.CONSUME;
-            }
-            if(hand.equals(Hand.MAIN_HAND) && !player.getMainHandStack().isEmpty()
-                    && state.get(FACING).equals(hit.getSide()))
-            {
-
-                BlockEntityAbstractDrawer drawer = (BlockEntityAbstractDrawer) world.getBlockEntity(pos);
-                Vec2f interactPos = BlockUtils.getCoordinatesFromHitResult(hit);
-                if(player.getMainHandStack().getItem() instanceof DrawerInteractable)
-                {
-                    ((DrawerInteractable) player.getMainHandStack().getItem()).interact(drawer, player,
-                            drawer.getItemHolderAt(interactPos.x, interactPos.y));
-                    return ActionResult.SUCCESS;
-                }
-
-                return drawer.getItemHolderAt(interactPos.x, interactPos.y).offer(player.getMainHandStack());
+            	if(player.getMainHandStack().isEmpty())
+            	{
+            		ContainerProviderRegistry.INSTANCE.openContainer(getContainerIdentifier(), player, (buf) ->
+                    {
+                        buf.writeBlockPos(pos);
+                    });
+            	}
+            	else if(state.get(FACING).equals(hit.getSide()))
+            	{
+	                BlockEntityAbstractDrawer drawer = (BlockEntityAbstractDrawer) world.getBlockEntity(pos);
+	                Vec2f interactPos = BlockUtils.getCoordinatesFromHitResult(hit);
+	                if(player.getMainHandStack().getItem() instanceof DrawerInteractable)
+	                {
+	                    ((DrawerInteractable) player.getMainHandStack().getItem()).interact(drawer, player,
+	                            drawer.getItemHolderAt(interactPos.x, interactPos.y));
+	                    return ActionResult.SUCCESS;
+	                }
+	                return drawer.getItemHolderAt(interactPos.x, interactPos.y).offer(player.getMainHandStack());
+            	}
             }
             return ActionResult.PASS;
         }
