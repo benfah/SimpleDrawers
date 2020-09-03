@@ -93,6 +93,10 @@ public class ItemHolder
             amount = amount - stack.getCount();
             boolean result = player.inventory.insertStack(stack);
             amount = amount + stack.getCount();
+            
+            if(isEmpty() && !locked)
+            	clearData();
+            
             blockEntity.sync();
             return result;
         }
@@ -132,10 +136,21 @@ public class ItemHolder
     {
         return locked;
     }
-
+    
+    public void clearData()
+    {
+    	this.locked = false;
+        this.amount = 0;
+        this.itemType = null;
+    }
+    
     public void setLocked(boolean locked)
     {
         this.locked = locked;
+        
+        if(isEmpty() && !locked)
+        	clearData();
+        
         blockEntity.sync();
     }
 
