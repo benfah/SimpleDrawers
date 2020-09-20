@@ -206,7 +206,7 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
 
     private BlockHitResult rayTrace(PlayerEntity player)
     {
-        return (BlockHitResult) player.rayTrace(4.5, 0, false);
+        return (BlockHitResult) player.raycast(4.5, 0, false);
     }
 
     private static BlockState deserializeStack(ItemStack stack, BlockState state)

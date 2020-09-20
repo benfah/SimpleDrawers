@@ -15,9 +15,8 @@ public class SDTags
 
     public static void init()
     {
-        DRAWERS_ITEM = ItemTags.getContainer().getOrCreate(new Identifier("simpledrawers:drawers"));
-        DRAWERS_BLOCK = BlockTags.getContainer().getOrCreate(new Identifier("simpledrawers:drawers"));
-
+        DRAWERS_ITEM = ItemTags.getTagGroup().getTag(new Identifier("simpledrawers:drawers"));
+        DRAWERS_BLOCK = BlockTags.getTagGroup().getTag(new Identifier("simpledrawers:drawers"));
     }
 
 }
