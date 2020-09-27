@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.2.7-SNAPSHOT'
+    id 'fabric-loom' version '0.4-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -23,7 +23,9 @@ dependencies {
     modCompile "me.sargunvohra.mcmods:autoconfig1u:2.0.1"
     modImplementation "mcp.mobius.waila:Hwyla:${project.hwyla_version}"
 
-    modCompile "io.github.prospector:modmenu:${project.modmenu_version}"
+    modCompile("io.github.prospector:modmenu:${project.modmenu_version}") {
+        exclude group: "net.fabricmc.fabric-api"
+    }
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"

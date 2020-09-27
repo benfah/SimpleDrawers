@@ -26,15 +26,15 @@ public class HolderSlot extends Slot
     }
 
     @Override
-    public int getMaxStackAmount()
+    public int getMaxItemCount()
     {
         return 0;
     }
 
     @Override
-    public int getMaxStackAmount(ItemStack itemStack)
+    public int getMaxItemCount(ItemStack stack)
     {
-        return holder.get().getMaxStacks() * itemStack.getMaxCount();
+        return holder.get().getMaxStacks() * stack.getMaxCount();
     }
 
     @Override
