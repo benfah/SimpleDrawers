@@ -1,5 +1,7 @@
 package me.benfah.simpledrawers.api.drawer;
 
+import java.util.Arrays;
+
 import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.api.border.BorderRegistry;
 import me.benfah.simpledrawers.api.border.BorderRegistry.BorderProperty;
@@ -79,9 +81,8 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
 	                return drawer.getItemHolderAt(interactPos.x, interactPos.y).offer(player.getMainHandStack());
             	}
             }
-            return ActionResult.PASS;
         }
-        return ActionResult.CONSUME;
+        return ActionResult.PASS;
     }
 
     @Override
@@ -223,7 +224,8 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
         if(stack.getSubTag("DrawerInfo") != null)
         {
             CompoundTag data = stack.getSubTag("DrawerInfo");
-
+            
+            
             String border = data.getString("Border");
             if(border != null)
             {
