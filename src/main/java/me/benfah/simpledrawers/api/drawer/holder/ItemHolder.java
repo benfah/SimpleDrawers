@@ -4,6 +4,7 @@ import me.benfah.simpledrawers.api.border.BorderRegistry;
 import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.utils.NumberUtils;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -64,6 +65,28 @@ public class ItemHolder
                 amount = newAmount;
                 blockEntity.sync();
                 return ActionResult.SUCCESS;
+            }
+        }
+        return ActionResult.CONSUME;
+    }
+    
+    public ActionResult offerAll(ItemStack stack, PlayerEntity player)
+    {
+        Inventory inventory = player.inventory;
+        for (int i = 0; i < inventory.size(); i++)
+        {
+            ItemStack currentStack = inventory.getStack(i);
+            if (!currentStack.isEmpty() && isStackEqual(currentStack))
+            {
+                int newAmount = Math.min(amount + currentStack.getCount(), getMaxAmount());
+                int stackSize = (amount + currentStack.getCount()) - newAmount;
+                currentStack.setCount(stackSize);
+                amount = newAmount;
+                blockEntity.sync();
+                if (amount == getMaxAmount())
+                {
+                    break;
+                }
             }
         }
         return ActionResult.CONSUME;

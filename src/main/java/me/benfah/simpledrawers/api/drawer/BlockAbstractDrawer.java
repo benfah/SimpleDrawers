@@ -1,6 +1,6 @@
 package me.benfah.simpledrawers.api.drawer;
 
-import java.util.Arrays;
+import java.util.UUID;
 
 import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.api.border.BorderRegistry;
@@ -46,6 +46,8 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
 
     public Identifier borderIdentifier;
 
+    private UUID lastUsedPlayer;
+    private long lastUsedTime;
 
     public BlockState rotate(BlockState state, BlockRotation rotation)
     {
@@ -61,7 +63,7 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
         {
             if(hand.equals(Hand.MAIN_HAND))
             {
-            	if(player.getMainHandStack().isEmpty())
+            	if(player.getMainHandStack().isEmpty() && !(player.getUuid().equals(lastUsedPlayer) && world.getTime() - lastUsedTime < 10))
             	{
             		ContainerProviderRegistry.INSTANCE.openContainer(getContainerIdentifier(), player, (buf) ->
                     {
@@ -78,11 +80,24 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
 	                            drawer.getItemHolderAt(interactPos.x, interactPos.y));
 	                    return ActionResult.SUCCESS;
 	                }
-	                return drawer.getItemHolderAt(interactPos.x, interactPos.y).offer(player.getMainHandStack());
+                        //If this is a valid double right click, store all valid items from the inventory
+                    if (player.getUuid().equals(lastUsedPlayer) && world.getTime() - lastUsedTime < 10)
+                    {
+                        lastUsedPlayer = player.getUuid();
+                        lastUsedTime = world.getTime();
+                        return drawer.getItemHolderAt(interactPos.x, interactPos.y).offerAll(player.getMainHandStack(), player);
+                    }
+                        //If this isn't a valid double right click, store only the held stack
+                    else
+                    {
+                        lastUsedPlayer = player.getUuid();
+                        lastUsedTime = world.getTime();
+                        return drawer.getItemHolderAt(interactPos.x, interactPos.y).offer(player.getMainHandStack());
+                    }
             	}
             }
         }
-        return ActionResult.PASS;
+        return ActionResult.CONSUME;
     }
 
     @Override
