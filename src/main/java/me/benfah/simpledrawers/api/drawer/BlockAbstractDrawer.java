@@ -97,7 +97,7 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
             	}
             }
         }
-        return ActionResult.PASS;
+        return ActionResult.CONSUME;
     }
 
     @Override
