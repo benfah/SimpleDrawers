@@ -63,7 +63,7 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
         {
             if(hand.equals(Hand.MAIN_HAND))
             {
-            	if(player.getMainHandStack().isEmpty())
+            	if(player.getMainHandStack().isEmpty() && !(player.getUuid().equals(lastUsedPlayer) && world.getTime() - lastUsedTime < 10))
             	{
             		ContainerProviderRegistry.INSTANCE.openContainer(getContainerIdentifier(), player, (buf) ->
                     {
