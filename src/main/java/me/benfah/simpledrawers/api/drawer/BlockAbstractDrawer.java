@@ -1,6 +1,6 @@
 package me.benfah.simpledrawers.api.drawer;
 
-import java.util.Arrays;
+import java.util.UUID;
 
 import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.api.border.BorderRegistry;
