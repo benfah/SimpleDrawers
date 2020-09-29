@@ -68,6 +68,28 @@ public class ItemHolder
         }
         return ActionResult.CONSUME;
     }
+    
+    public ActionResult offerAll(ItemStack stack, PlayerEntity player)
+    {
+        Inventory inventory = player.inventory;
+        for (int i = 0; i < inventory.size(); i++)
+        {
+            ItemStack currentStack = inventory.getStack(i);
+            if (!currentStack.isEmpty() && isStackEqual(currentStack))
+            {
+                int newAmount = Math.min(amount + currentStack.getCount(), getMaxAmount());
+                int stackSize = (amount + currentStack.getCount()) - newAmount;
+                currentStack.setCount(stackSize);
+                amount = newAmount;
+                blockEntity.sync();
+                if (amount == getMaxAmount())
+                {
+                    break;
+                }
+            }
+        }
+        return ActionResult.CONSUME;
+    }
 
     public boolean shouldOffer(ItemStack stack)
     {
