@@ -81,7 +81,7 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
 	                    return ActionResult.SUCCESS;
 	                }
                         //If this is a valid double right click, store all valid items from the inventory
-                    if (player.getUuid().equals(lastUsedPlayer) && world.getTime() - lastUsedTime < 10)
+                    if (player.getUuid().equals(lastUsedPlayer) && world.getTime() - lastUsedTime < 30)
                     {
                         lastUsedPlayer = player.getUuid();
                         lastUsedTime = world.getTime();
