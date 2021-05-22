@@ -29,14 +29,15 @@ public class ModelMerger implements ModelPostBakeCallback, ModelPreBakeCallback
 {
 
     @Override
-    public void onPostBake(Map<ModelIdentifier, BakedModel> baked)
+    public void onPostBake(Map<Identifier, BakedModel> baked)
     {
         Map<ModelIdentifier, BakedModel> toAdd = new HashMap<>();
-        for(Entry<ModelIdentifier, BakedModel> modelEntry : baked.entrySet())
+        for(Entry<Identifier, BakedModel> modelEntry : baked.entrySet())
         {
-            if(modelEntry.getKey().toString().contains("border_type"))
+            if(modelEntry.getKey() instanceof ModelIdentifier && modelEntry.getKey().toString().contains("border_type"))
             {
-                Map<String, String> variantMap = variantToMap(modelEntry.getKey().getVariant());
+                ModelIdentifier modelIdentifier = (ModelIdentifier) modelEntry.getKey();
+                Map<String, String> variantMap = variantToMap(modelIdentifier.getVariant());
                 if(variantMap.containsKey("border_type"))
                 {
 
@@ -47,7 +48,7 @@ public class ModelMerger implements ModelPostBakeCallback, ModelPreBakeCallback
 
                     BakedModel borderModel = baked.get(
                             new ModelIdentifier(borderIdentifier, "facing=" + variantMap.get("facing")));
-                    toAdd.put(modelEntry.getKey(), new WrappedBakedModel(modelEntry.getValue(), borderModel));
+                    toAdd.put(modelIdentifier, new WrappedBakedModel(modelEntry.getValue(), borderModel));
                 }
             }
 
@@ -58,7 +59,7 @@ public class ModelMerger implements ModelPostBakeCallback, ModelPreBakeCallback
 
     @Override
     public void onPreBake(Map<Identifier, UnbakedModel> unbaked,
-                          BiFunction<Identifier, ModelBakeSettings, BakedModel> bakeFunction, Map<ModelIdentifier, BakedModel> baked)
+                          BiFunction<Identifier, ModelBakeSettings, BakedModel> bakeFunction, Map<Identifier, BakedModel> baked)
     {
         List<Identifier> toBake = BorderRegistry.getBorders().stream()
                 .flatMap((border) -> border.getModelMap().values().stream()).collect(Collectors.toList());
