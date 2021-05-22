@@ -21,7 +21,7 @@ public class ModelLoaderMixin
 {
 
     @Shadow
-    Map<ModelIdentifier, BakedModel> bakedModels;
+    Map<Identifier, BakedModel> bakedModels;
 
     @Shadow
     Map<Identifier, UnbakedModel> modelsToBake;
