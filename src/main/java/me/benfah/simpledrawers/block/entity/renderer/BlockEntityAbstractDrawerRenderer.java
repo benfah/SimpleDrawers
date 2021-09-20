@@ -11,7 +11,6 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation.Mode;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Util;
@@ -19,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Matrix3f;
 import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.LightType;
 import static me.benfah.simpledrawers.utils.RenderConstants.*;
 
@@ -37,7 +37,7 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
     {
         stack.translate(.5f, .5f, .5f);
         stack.multiply(d.getRotationQuaternion());
-        stack.multiply(new Quaternion(Vector3f.POSITIVE_X, 90, true));
+        stack.multiply(new Quaternion(Vec3f.POSITIVE_X, 90, true));
         stack.translate(-.5f, -.5f, -.5f);
     }
 
@@ -45,7 +45,7 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
     {
         stack.translate(.5f, .5f, .5f);
         stack.multiply(d.getRotationQuaternion());
-        stack.multiply(new Quaternion(Vector3f.NEGATIVE_X, 90, true));
+        stack.multiply(new Quaternion(Vec3f.NEGATIVE_X, 90, true));
         stack.translate(-.5f, -.5f, -.5f);
     }
 
@@ -83,8 +83,8 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
         transformToFace(matrices, facing);
         transformToPosition(x, y, matrices);
         matrices.translate(0, 0, -0.01);
-        matrices.multiply(new Quaternion(Vector3f.NEGATIVE_Z, 180, true));
-        matrices.multiply(new Quaternion(Vector3f.NEGATIVE_Y, 180, true));
+        matrices.multiply(new Quaternion(Vec3f.NEGATIVE_Z, 180, true));
+        matrices.multiply(new Quaternion(Vec3f.NEGATIVE_Y, 180, true));
         matrices.scale(scale, scale, 0.0001f);
         if(vertexConsumers instanceof VertexConsumerProvider.Immediate)
             ((VertexConsumerProvider.Immediate) vertexConsumers).draw();

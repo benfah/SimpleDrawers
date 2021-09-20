@@ -7,7 +7,7 @@ import mcp.mobius.waila.api.RenderableTextComponent;
 import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -49,15 +49,15 @@ public class DrawerComponentProvider implements IComponentProvider
     {
         if(!stack.isEmpty())
         {
-            CompoundTag tag = new CompoundTag();
+            NbtCompound tag = new NbtCompound();
             tag.putString("id", Registry.ITEM.getId(stack.getItem()).toString());
             tag.putInt("count", stack.getCount());
-            if(stack.hasTag())
-                tag.putString("nbt", stack.getTag().toString());
+            if(stack.hasNbt())
+                tag.putString("nbt", stack.getNbt().toString());
             return new RenderableTextComponent(new Identifier("item"), tag);
         } else
         {
-            CompoundTag spacerTag = new CompoundTag();
+            NbtCompound spacerTag = new NbtCompound();
             spacerTag.putInt("width", 18);
             return new RenderableTextComponent(new Identifier("spacer"), spacerTag);
         }

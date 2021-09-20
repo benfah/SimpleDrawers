@@ -58,9 +58,9 @@ public class WrappedBakedModel implements BakedModel
     }
 
     @Override
-    public Sprite getSprite()
+    public Sprite getParticleSprite()
     {
-        return modelList.get(0).getSprite();
+        return modelList.get(0).getParticleSprite();
     }
 
     @Override

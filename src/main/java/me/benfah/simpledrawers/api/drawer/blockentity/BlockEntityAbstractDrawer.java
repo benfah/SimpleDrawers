@@ -7,8 +7,8 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.Tickable;
@@ -48,21 +48,21 @@ public abstract class BlockEntityAbstractDrawer extends BlockEntity implements B
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag)
+    public void readNbt(BlockState state, NbtCompound tag)
     {
         fromClientTag(tag);
-        super.fromTag(state, tag);
+        super.readNbt(state, tag);
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag)
+    public NbtCompound writeNbt(NbtCompound tag)
     {
         toClientTag(tag);
-        return super.toTag(tag);
+        return super.writeNbt(tag);
     }
 
     @Override
-    public void fromClientTag(CompoundTag tag)
+    public void fromClientTag(NbtCompound tag)
     {
         List<ItemHolder> holders = new ArrayList<>();
         if(tag.contains("Holder"))
@@ -70,20 +70,20 @@ public abstract class BlockEntityAbstractDrawer extends BlockEntity implements B
             holders.add(ItemHolder.fromNBT(tag.getCompound("Holder"), this));
         } else if(tag.contains("Holders"))
         {
-            ListTag listTag = tag.getList("Holders", 10);
+            NbtList listTag = tag.getList("Holders", 10);
             holders.addAll(listTag.stream()
-                    .map((holderTag) -> ItemHolder.fromNBT((CompoundTag) holderTag, this)).collect(Collectors.toList()));
+                    .map((holderTag) -> ItemHolder.fromNBT((NbtCompound) holderTag, this)).collect(Collectors.toList()));
         }
         if(!holders.isEmpty())
             setItemHolders(holders);
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag tag)
+    public NbtCompound toClientTag(NbtCompound tag)
     {
-        List<CompoundTag> holderList = getItemHolders().stream().map((holder) -> holder.toNBT(new CompoundTag()))
+        List<NbtCompound> holderList = getItemHolders().stream().map((holder) -> holder.toNBT(new NbtCompound()))
                 .collect(Collectors.toList());
-        ListTag listTag = new ListTag();
+        NbtList listTag = new NbtList();
         listTag.addAll(holderList);
         tag.put("Holders", listTag);
         return tag;

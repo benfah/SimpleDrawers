@@ -8,7 +8,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -17,7 +17,7 @@ public class ItemHolder
 {
 
     protected Item itemType;
-    protected CompoundTag tag;
+    protected NbtCompound tag;
     protected int amount;
     protected int maxStacks;
     protected BlockEntityAbstractDrawer blockEntity;
@@ -51,7 +51,7 @@ public class ItemHolder
             {
                 itemType = stack.getItem();
                 amount = stack.getCount();
-                tag = stack.getTag();
+                tag = stack.getNbt();
 
                 stack.setCount(0);
                 blockEntity.sync();
@@ -146,7 +146,7 @@ public class ItemHolder
     {
         ItemStack stack = new ItemStack(itemType, amount);
         if(tag != null)
-            stack.setTag(tag);
+            stack.setNbt(tag);
         return stack;
     }
 
@@ -177,16 +177,16 @@ public class ItemHolder
         blockEntity.sync();
     }
 
-    public CompoundTag toNBT(CompoundTag tag)
+    public NbtCompound toNBT(NbtCompound tag)
     {
-        tag.put("Item", serializeItemData(new CompoundTag()));
+        tag.put("Item", serializeItemData(new NbtCompound()));
         tag.putInt("MaxAmount", maxStacks);
         tag.putBoolean("Locked", locked);
 
         return tag;
     }
 
-    public static ItemHolder fromNBT(CompoundTag tag, BlockEntityAbstractDrawer blockEntity)
+    public static ItemHolder fromNBT(NbtCompound tag, BlockEntityAbstractDrawer blockEntity)
     {
         ItemHolder holder = new ItemHolder();
 
@@ -200,7 +200,7 @@ public class ItemHolder
         return holder;
     }
 
-    public CompoundTag serializeItemData(CompoundTag tag)
+    public NbtCompound serializeItemData(NbtCompound tag)
     {
         if(itemType != null)
         {
@@ -214,7 +214,7 @@ public class ItemHolder
         return tag;
     }
 
-    public void deserializeItemData(CompoundTag tag)
+    public void deserializeItemData(NbtCompound tag)
     {
         Identifier id = new Identifier(tag.getString("id"));
 
@@ -239,7 +239,7 @@ public class ItemHolder
         return amount;
     }
 
-    public CompoundTag getTag()
+    public NbtCompound getTag()
     {
         return tag;
     }
@@ -259,8 +259,8 @@ public class ItemHolder
 
         if(stack.getItem().equals(itemType))
         {
-            CompoundTag tag1 = this.tag == null ? new CompoundTag() : tag;
-            CompoundTag tag2 = stack.getTag() == null ? new CompoundTag() : stack.getTag();
+            NbtCompound tag1 = this.tag == null ? new NbtCompound() : tag;
+            NbtCompound tag2 = stack.getNbt() == null ? new NbtCompound() : stack.getNbt();
             return tag1.equals(tag2);
         }
         return false;
