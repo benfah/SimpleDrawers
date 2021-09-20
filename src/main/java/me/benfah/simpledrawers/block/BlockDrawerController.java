@@ -54,9 +54,9 @@ public class BlockDrawerController extends BlockWithEntity implements InventoryP
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockView view)
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
     {
-        return new BlockEntityDrawerController();
+        return new BlockEntityDrawerController(pos, state);
     }
 
     @Override

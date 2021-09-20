@@ -29,11 +29,12 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
         handler.holderSlots.forEach((slot) ->
         {
             itemRenderer.renderGuiItemIcon(slot.getStack(), slot.x, slot.y);
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(slot.x + 3, slot.y + 3, 0);
-            RenderSystem.scalef(0.75f, 0.75f, 1);
+//TODO
+//            RenderSystem.pushMatrix();
+//            RenderSystem.translatef(slot.x + 3, slot.y + 3, 0);
+//            RenderSystem.scalef(0.75f, 0.75f, 1);
             itemRenderer.renderGuiItemOverlay(textRenderer, slot.getStack(), 0, 0, NumberUtils.displayShortNumber(slot.holder.get().getAmount()));
-            RenderSystem.popMatrix();
+//            RenderSystem.popMatrix();
 
         });
         HolderSlot slot = getHolderSlotAt(mouseX, mouseY);
@@ -49,8 +50,9 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
             RenderSystem.enableDepthTest();
         }
         this.textRenderer.draw(stack, this.title.asString(), 8.0F, 6.0F, 4210752);
-        this.textRenderer.draw(stack, this.playerInventory.getDisplayName().asString(), 8.0F,
-                (float) (this.backgroundHeight - 96 + 2), 4210752);
+//TODO
+//        this.textRenderer.draw(stack, this.playerInventory.getDisplayName().asString(), 8.0F,
+//                (float) (this.backgroundHeight - 96 + 2), 4210752);
 
     }
 

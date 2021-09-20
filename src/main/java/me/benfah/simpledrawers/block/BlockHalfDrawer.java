@@ -6,8 +6,10 @@ import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.DrawerType;
 import me.benfah.simpledrawers.block.entity.BlockEntityHalfDrawer;
 import me.benfah.simpledrawers.init.SDContainers;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
 public class BlockHalfDrawer extends BlockAbstractDrawer
@@ -20,9 +22,9 @@ public class BlockHalfDrawer extends BlockAbstractDrawer
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockView arg0)
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
     {
-        return new BlockEntityHalfDrawer();
+        return new BlockEntityHalfDrawer(pos, state);
     }
 
     @Override

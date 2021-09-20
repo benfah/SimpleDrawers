@@ -4,26 +4,30 @@ import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.holder.CombinedInventoryHandler;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
-import net.minecraft.util.Tickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class BlockEntityAbstractDrawer extends BlockEntity implements BlockEntityClientSerializable, Tickable
+public abstract class BlockEntityAbstractDrawer extends BlockEntity implements BlockEntityClientSerializable
 {
 
-    public BlockEntityAbstractDrawer(BlockEntityType<?> type)
+    public BlockEntityAbstractDrawer(BlockEntityType<?> type, BlockPos pos, BlockState state)
     {
-        super(type);
+        super(type, pos, state);
     }
 
     public abstract ItemHolder getItemHolderAt(float x, float y);
@@ -48,10 +52,10 @@ public abstract class BlockEntityAbstractDrawer extends BlockEntity implements B
     }
 
     @Override
-    public void readNbt(BlockState state, NbtCompound tag)
+    public void readNbt(NbtCompound nbt)
     {
-        fromClientTag(tag);
-        super.readNbt(state, tag);
+        fromClientTag(nbt);
+        super.readNbt(nbt);
     }
 
     @Override

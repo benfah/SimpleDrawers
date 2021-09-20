@@ -72,7 +72,7 @@ public class ItemHolder
     
     public ActionResult offerAll(ItemStack stack, PlayerEntity player)
     {
-        Inventory inventory = player.inventory;
+        Inventory inventory = player.getInventory();
         for (int i = 0; i < inventory.size(); i++)
         {
             ItemStack currentStack = inventory.getStack(i);
@@ -114,7 +114,7 @@ public class ItemHolder
         if(!stack.isEmpty())
         {
             amount = amount - stack.getCount();
-            boolean result = player.inventory.insertStack(stack);
+            boolean result = player.getInventory().insertStack(stack);
             amount = amount + stack.getCount();
             
             if(isEmpty() && !locked)

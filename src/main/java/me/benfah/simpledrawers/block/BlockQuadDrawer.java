@@ -6,8 +6,10 @@ import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.DrawerType;
 import me.benfah.simpledrawers.block.entity.BlockEntityQuadDrawer;
 import me.benfah.simpledrawers.init.SDContainers;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
 public class BlockQuadDrawer extends BlockAbstractDrawer
@@ -20,9 +22,9 @@ public class BlockQuadDrawer extends BlockAbstractDrawer
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockView arg0)
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
     {
-        return new BlockEntityQuadDrawer();
+        return new BlockEntityQuadDrawer(pos, state);
     }
 
     @Override

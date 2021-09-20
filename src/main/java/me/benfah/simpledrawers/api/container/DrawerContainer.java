@@ -25,7 +25,7 @@ public class DrawerContainer<T extends BlockEntityAbstractDrawer> extends Screen
     {
 
         super(null, syncId);
-        this.playerInv = entity.inventory;
+        this.playerInv = entity.getInventory();
         this.drawer = drawer;
 //		HolderSlot slot = new HolderSlot(() -> drawer.getItemHolders().get(0), 0, 80, 44);
 //		holderSlots.add(slot);
@@ -35,12 +35,12 @@ public class DrawerContainer<T extends BlockEntityAbstractDrawer> extends Screen
         int m;
         for(m = 0; m < 3; ++m) {
            for(int l = 0; l < 9; ++l) {
-              this.addSlot(new Slot(entity.inventory, l + m * 9 + 9, 8 + l * 18, 105 + m * 18));
+              this.addSlot(new Slot(entity.getInventory(), l + m * 9 + 9, 8 + l * 18, 105 + m * 18));
            }
         }
 
         for(m = 0; m < 9; ++m) {
-           this.addSlot(new Slot(entity.inventory, m, 8 + m * 18, 163));
+           this.addSlot(new Slot(entity.getInventory(), m, 8 + m * 18, 163));
         }
     }
 

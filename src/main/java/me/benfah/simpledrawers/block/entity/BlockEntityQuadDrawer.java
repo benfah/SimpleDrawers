@@ -6,13 +6,14 @@ import me.benfah.simpledrawers.api.drawer.holder.CombinedInventoryHandler;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import me.benfah.simpledrawers.init.SDBlockEntities;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.minecraft.util.Tickable;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec2f;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockEntityQuadDrawer extends BlockEntityAbstractDrawer implements BlockEntityClientSerializable, Tickable
+public class BlockEntityQuadDrawer extends BlockEntityAbstractDrawer implements BlockEntityClientSerializable
 {
 
     List<ItemHolder> holderList = new ArrayList<>();
@@ -20,9 +21,9 @@ public class BlockEntityQuadDrawer extends BlockEntityAbstractDrawer implements 
 
     private CombinedInventoryHandler handler;
 
-    public BlockEntityQuadDrawer()
+    public BlockEntityQuadDrawer(BlockPos pos, BlockState state)
     {
-        super(SDBlockEntities.QUAD_DRAWER);
+        super(SDBlockEntities.QUAD_DRAWER, pos, state);
         holderList.add(new ItemHolder(8, this));
         holderList.add(new ItemHolder(8, this));
         holderList.add(new ItemHolder(8, this));

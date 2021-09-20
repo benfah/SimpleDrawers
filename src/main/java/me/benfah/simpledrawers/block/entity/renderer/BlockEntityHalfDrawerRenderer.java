@@ -6,6 +6,7 @@ import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import me.benfah.simpledrawers.block.entity.BlockEntityHalfDrawer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
 import static me.benfah.simpledrawers.utils.RenderConstants.*;
@@ -13,9 +14,9 @@ import static me.benfah.simpledrawers.utils.RenderConstants.*;
 public class BlockEntityHalfDrawerRenderer extends BlockEntityAbstractDrawerRenderer<BlockEntityHalfDrawer>
 {
 
-    public BlockEntityHalfDrawerRenderer(BlockEntityRenderDispatcher dispatcher)
+    public BlockEntityHalfDrawerRenderer(BlockEntityRendererFactory.Context ctx)
     {
-        super(dispatcher);
+        super(ctx);
     }
 
     @Override

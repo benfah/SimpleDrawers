@@ -8,6 +8,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation.Mode;
 import net.minecraft.client.util.math.MatrixStack;
@@ -22,16 +23,12 @@ import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.LightType;
 import static me.benfah.simpledrawers.utils.RenderConstants.*;
 
-public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbstractDrawer> extends BlockEntityRenderer<B>
-{
+public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbstractDrawer> implements BlockEntityRenderer<B> {
 
-
-
-    public BlockEntityAbstractDrawerRenderer(BlockEntityRenderDispatcher dispatcher)
+    public BlockEntityAbstractDrawerRenderer(BlockEntityRendererFactory.Context ctx)
     {
-        super(dispatcher);
-    }
 
+    }
 
     public void transformToFace(MatrixStack stack, Direction d)
     {
@@ -95,7 +92,8 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
         else
             RenderSystem.setupGuiFlatDiffuseLighting(DIFFUSE_LIGHT_0, DIFFUSE_LIGHT_1);
         matrices.peek().getNormal().load(Matrix3f.scale(1, -1, 1));
-        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, Mode.GUI, light, overlay, matrices, vertexConsumers);
+//TODO
+//        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, Mode.GUI, light, overlay, matrices, vertexConsumers);
 
         if(vertexConsumers instanceof VertexConsumerProvider.Immediate)
             ((VertexConsumerProvider.Immediate) vertexConsumers).draw();
@@ -111,9 +109,10 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
 
         matrices.scale(0.01f, 0.01f, 0.01f);
 
-        int width = dispatcher.getTextRenderer().getWidth(new LiteralText(s));
-
-        dispatcher.getTextRenderer().draw(s, -width / 2, 3, 0, false, matrices.peek().getModel(), vertexConsumers, false, 0, 15728880);
+//TODO
+//        int width = dispatcher.getTextRenderer().getWidth(new LiteralText(s));
+//
+//        dispatcher.getTextRenderer().draw(s, -width / 2, 3, 0, false, matrices.peek().getModel(), vertexConsumers, false, 0, 15728880);
 
         matrices.pop();
     }
