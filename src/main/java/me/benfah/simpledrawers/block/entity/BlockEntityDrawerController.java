@@ -10,6 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,11 +66,9 @@ public class BlockEntityDrawerController extends BlockEntity
         return handler;
     }
 
-//TODO
-//    @Override
-    public void tick()
+    public static void serverTick(World world, BlockPos pos, BlockState state, BlockEntityDrawerController blockEntity)
     {
-        updateDrawerPositions();
+        blockEntity.updateDrawerPositions();
     }
 
 }

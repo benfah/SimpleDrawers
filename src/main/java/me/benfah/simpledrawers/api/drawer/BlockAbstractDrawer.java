@@ -1,7 +1,5 @@
 package me.benfah.simpledrawers.api.drawer;
 
-import java.util.UUID;
-
 import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.api.border.BorderRegistry;
 import me.benfah.simpledrawers.api.border.BorderRegistry.BorderProperty;
@@ -12,6 +10,9 @@ import me.benfah.simpledrawers.utils.ITapeable;
 import me.benfah.simpledrawers.utils.model.BorderModelProvider;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,6 +32,9 @@ import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
 
 public abstract class BlockAbstractDrawer extends BlockWithEntity implements InventoryProvider, BorderModelProvider, ITapeable<BlockEntityAbstractDrawer>
 {
@@ -49,12 +53,19 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
     private UUID lastUsedPlayer;
     private long lastUsedTime;
 
+    @Override
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient ? null : (w, p, s, blockEntity) ->
+            BlockEntityAbstractDrawer.serverTick(w, p, s, (BlockEntityAbstractDrawer) blockEntity);
+    }
+
+    @Override
     public BlockState rotate(BlockState state, BlockRotation rotation)
     {
         return (BlockState) state.with(FACING, rotation.rotate((Direction) state.get(FACING)));
     }
-    
-    
+
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
                               BlockHitResult hit)

@@ -1,8 +1,11 @@
 package me.benfah.simpledrawers.block;
 
 import me.benfah.simpledrawers.block.entity.BlockEntityDrawerController;
+import me.benfah.simpledrawers.init.SDBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager.Builder;
@@ -11,8 +14,9 @@ import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import org.jetbrains.annotations.Nullable;
 
 public class BlockDrawerController extends BlockWithEntity implements InventoryProvider
 {
@@ -23,6 +27,12 @@ public class BlockDrawerController extends BlockWithEntity implements InventoryP
     {
         super(settings);
         this.setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
+    }
+
+    @Override
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient ? null : checkType(type, SDBlockEntities.DRAWER_CONTROLLER, BlockEntityDrawerController::serverTick);
     }
 
     @Override
