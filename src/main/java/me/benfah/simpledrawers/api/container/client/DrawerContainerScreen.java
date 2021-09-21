@@ -9,6 +9,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extends HandledScreen<T>
@@ -29,12 +30,17 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
         handler.holderSlots.forEach((slot) ->
         {
             itemRenderer.renderGuiItemIcon(slot.getStack(), slot.x, slot.y);
-//TODO
-//            RenderSystem.pushMatrix();
-//            RenderSystem.translatef(slot.x + 3, slot.y + 3, 0);
-//            RenderSystem.scalef(0.75f, 0.75f, 1);
+
+            MatrixStack matrices = RenderSystem.getModelViewStack();
+            matrices.push();
+            matrices.translate(slot.x + 3, slot.y + 3, 0);
+            matrices.scale(0.75f, 0.75f, 1);
+            RenderSystem.applyModelViewMatrix();
+
             itemRenderer.renderGuiItemOverlay(textRenderer, slot.getStack(), 0, 0, NumberUtils.displayShortNumber(slot.holder.get().getAmount()));
-//            RenderSystem.popMatrix();
+
+            matrices.pop();
+            RenderSystem.applyModelViewMatrix();
 
         });
         HolderSlot slot = getHolderSlotAt(mouseX, mouseY);
@@ -50,9 +56,8 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
             RenderSystem.enableDepthTest();
         }
         this.textRenderer.draw(stack, this.title.asString(), 8.0F, 6.0F, 4210752);
-//TODO
-//        this.textRenderer.draw(stack, this.playerInventory.getDisplayName().asString(), 8.0F,
-//                (float) (this.backgroundHeight - 96 + 2), 4210752);
+        this.textRenderer.draw(stack, this.playerInventoryTitle.asString(), 8.0F,
+                (float) (this.backgroundHeight - 96 + 2), 4210752);
 
     }
 
