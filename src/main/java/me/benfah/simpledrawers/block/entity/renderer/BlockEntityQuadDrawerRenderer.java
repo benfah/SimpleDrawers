@@ -4,11 +4,11 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import me.benfah.simpledrawers.block.entity.BlockEntityQuadDrawer;
+import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
-import static me.benfah.simpledrawers.utils.RenderConstants.*;
 
 public class BlockEntityQuadDrawerRenderer extends BlockEntityAbstractDrawerRenderer<BlockEntityQuadDrawer>
 {
@@ -37,7 +37,7 @@ public class BlockEntityQuadDrawerRenderer extends BlockEntityAbstractDrawerRend
         }
 
         matrices.pop();
-        RenderSystem.setupLevelDiffuseLighting(DIFFUSE_LIGHT_0, DIFFUSE_LIGHT_1, matrices.peek().getModel());
+        DiffuseLighting.disableForLevel(matrices.peek().getModel());
         matrices.push();
     }
 
