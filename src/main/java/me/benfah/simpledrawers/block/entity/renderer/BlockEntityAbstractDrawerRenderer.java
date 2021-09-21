@@ -5,6 +5,7 @@ import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.utils.ModelUtils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -88,12 +89,12 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
 
         BakedModel model = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(stack);
         if(model.hasDepth())
-            RenderSystem.setupGui3DDiffuseLighting(DIFFUSE_LIGHT_0, DIFFUSE_LIGHT_1);
+            DiffuseLighting.enableGuiDepthLighting();
         else
-            RenderSystem.setupGuiFlatDiffuseLighting(DIFFUSE_LIGHT_0, DIFFUSE_LIGHT_1);
-        matrices.peek().getNormal().load(Matrix3f.scale(1, -1, 1));
-//TODO
-//        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, Mode.GUI, light, overlay, matrices, vertexConsumers);
+            DiffuseLighting.disableGuiDepthLighting();
+        matrices.peek().getNormal().loadIdentity();
+
+        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, Mode.GUI, light, overlay, matrices, vertexConsumers, 0);
 
         if(vertexConsumers instanceof VertexConsumerProvider.Immediate)
             ((VertexConsumerProvider.Immediate) vertexConsumers).draw();
