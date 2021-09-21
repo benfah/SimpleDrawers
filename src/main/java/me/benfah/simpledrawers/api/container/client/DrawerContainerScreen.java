@@ -93,7 +93,8 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
     protected void drawBackground(MatrixStack matrixStack, float delta, int mouseX, int mouseY)
     {
 //        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.client.getTextureManager().bindTexture(getBackgroundTexture());
+
+        RenderSystem.setShaderTexture(0, getBackgroundTexture());
         int i = (this.width - this.backgroundWidth) / 2;
         int j = (this.height - this.backgroundHeight) / 2;
         this.drawTexture(matrixStack, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
