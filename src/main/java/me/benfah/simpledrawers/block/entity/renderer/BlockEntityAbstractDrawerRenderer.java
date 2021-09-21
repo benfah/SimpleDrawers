@@ -1,13 +1,11 @@
 package me.benfah.simpledrawers.block.entity.renderer;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.utils.ModelUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.BakedModel;
@@ -15,20 +13,19 @@ import net.minecraft.client.render.model.json.ModelTransformation.Mode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Matrix3f;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.LightType;
-import static me.benfah.simpledrawers.utils.RenderConstants.*;
 
 public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbstractDrawer> implements BlockEntityRenderer<B> {
 
+    private final BlockEntityRendererFactory.Context renderContext;
+
     public BlockEntityAbstractDrawerRenderer(BlockEntityRendererFactory.Context ctx)
     {
-
+        this.renderContext = ctx;
     }
 
     public void transformToFace(MatrixStack stack, Direction d)
@@ -110,10 +107,9 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
 
         matrices.scale(0.01f, 0.01f, 0.01f);
 
-//TODO
-//        int width = dispatcher.getTextRenderer().getWidth(new LiteralText(s));
-//
-//        dispatcher.getTextRenderer().draw(s, -width / 2, 3, 0, false, matrices.peek().getModel(), vertexConsumers, false, 0, 15728880);
+        int width = renderContext.getTextRenderer().getWidth(new LiteralText(s));
+
+        renderContext.getTextRenderer().draw(s, -width / 2f, 3, 0, false, matrices.peek().getModel(), vertexConsumers, false, 0, 15728880);
 
         matrices.pop();
     }
