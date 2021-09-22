@@ -2,13 +2,14 @@ package me.benfah.simpledrawers.block;
 
 import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.api.border.BorderRegistry;
+import me.benfah.simpledrawers.api.container.DrawerContainer;
 import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.DrawerType;
 import me.benfah.simpledrawers.block.entity.BlockEntityHalfDrawer;
 import me.benfah.simpledrawers.init.SDContainers;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.math.BlockPos;
 
 public class BlockHalfDrawer extends BlockAbstractDrawer
@@ -27,9 +28,9 @@ public class BlockHalfDrawer extends BlockAbstractDrawer
     }
 
     @Override
-    public Identifier getContainerIdentifier()
+    public ScreenHandlerType<? extends DrawerContainer> getContainerType()
     {
-        return SDContainers.DOUBLE_DRAWER_CONTAINER;
+        return SDContainers.DOUBLE_DRAWER_CONTAINER_TYPE;
     }
 
 }

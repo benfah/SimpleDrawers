@@ -3,13 +3,13 @@ package me.benfah.simpledrawers.api.drawer;
 import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.api.border.BorderRegistry;
 import me.benfah.simpledrawers.api.border.BorderRegistry.BorderProperty;
+import me.benfah.simpledrawers.api.container.DrawerContainer;
 import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.item.DrawerInteractable;
 import me.benfah.simpledrawers.utils.BlockUtils;
 import me.benfah.simpledrawers.utils.ITapeable;
 import me.benfah.simpledrawers.utils.model.BorderModelProvider;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -17,18 +17,23 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.StateManager.Builder;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -77,10 +82,25 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
             {
             	if(player.getMainHandStack().isEmpty() && !(player.getUuid().equals(lastUsedPlayer) && world.getTime() - lastUsedTime < 10))
             	{
-                    // TODO use ScreenHandlerRegistry
-            		ContainerProviderRegistry.INSTANCE.openContainer(getContainerIdentifier(), player, (buf) ->
+                    BlockEntityAbstractDrawer drawer = (BlockEntityAbstractDrawer) world.getBlockEntity(pos);
+
+                    player.openHandledScreen(new ExtendedScreenHandlerFactory()
                     {
-                        buf.writeBlockPos(pos);
+                        @Override
+                        public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+                            buf.writeBlockPos(pos);
+                        }
+
+                        @Override
+                        public Text getDisplayName() {
+                            return getName();
+                        }
+
+                        @Override
+                        public ScreenHandler createMenu(int syncId, PlayerInventory inventory, PlayerEntity player)
+                        {
+                            return new DrawerContainer(getContainerType(), syncId, inventory, drawer);
+                        }
                     });
             	}
             	else if(state.get(FACING).equals(hit.getSide()))
@@ -264,7 +284,7 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
         return new DeserializedInfo(null);
     }
 
-    public abstract Identifier getContainerIdentifier();
+    public abstract ScreenHandlerType<? extends DrawerContainer> getContainerType();
 
     public static ItemStack getStack(BlockAbstractDrawer drawer, Border border)
     {

@@ -8,17 +8,17 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
-public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extends HandledScreen<T>
+public abstract class DrawerContainerScreen<T extends DrawerContainer> extends HandledScreen<T>
 {
 
-    public DrawerContainerScreen(T container)
+    public DrawerContainerScreen(T container, Text title)
     {
 
-        super(container, container.playerInv, container.drawer.getCachedState().getBlock().asItem().getName());
-
+        super(container, container.playerInv, title);
 
         this.backgroundWidth = 176;
         this.backgroundHeight = 187;
