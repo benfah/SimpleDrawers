@@ -14,7 +14,7 @@ import me.benfah.simpledrawers.models.border.BorderLoader;
 import me.benfah.simpledrawers.utils.ModelUtils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 
 public class SimpleDrawersModClient implements ClientModInitializer
 {
@@ -29,16 +29,16 @@ public class SimpleDrawersModClient implements ClientModInitializer
 
         ModelUtils.loadSpecialModels();
 
-        ModelLoadingRegistry.INSTANCE.registerAppender(new BorderLoader());
+        ModelLoadingRegistry.INSTANCE.registerModelProvider(new BorderLoader());
         ModelLoadingRegistry.INSTANCE.registerVariantProvider((resourceManager) -> new BorderLoader());
 
-        BlockEntityRendererRegistry.INSTANCE.register(SDBlockEntities.BASIC_DRAWER,
+        BlockEntityRendererRegistry.register(SDBlockEntities.BASIC_DRAWER,
                 BlockEntityFullDrawerRenderer::new);
 
-        BlockEntityRendererRegistry.INSTANCE.register(SDBlockEntities.HALF_DRAWER,
+        BlockEntityRendererRegistry.register(SDBlockEntities.HALF_DRAWER,
                 BlockEntityHalfDrawerRenderer::new);
 
-        BlockEntityRendererRegistry.INSTANCE.register(SDBlockEntities.QUAD_DRAWER,
+        BlockEntityRendererRegistry.register(SDBlockEntities.QUAD_DRAWER,
                 BlockEntityQuadDrawerRenderer::new);
 
         SDContainerScreens.initClient();

@@ -17,7 +17,6 @@ public class PropertyStateConverter
 
     BlockState state;
     String propertyString;
-    ;
 
     public static <T extends Comparable<T>> BlockState fromPropertyString(Block block, String propertyString)
     {

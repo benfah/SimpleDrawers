@@ -25,6 +25,7 @@ public class SDContainers
 
     public static void init()
     {
+        // TODO use ScreenHandlerRegistry
         ContainerProviderRegistry.INSTANCE.registerFactory(BASIC_DRAWER_CONTAINER, (syncId, identifier, player, buf) ->
         {
             BlockPos blockPos = buf.readBlockPos();

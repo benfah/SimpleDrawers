@@ -2,10 +2,7 @@ package me.benfah.simpledrawers.models.border;
 
 import me.benfah.simpledrawers.api.border.BorderRegistry;
 import me.benfah.simpledrawers.utils.ModelUtils;
-import net.fabricmc.fabric.api.client.model.ModelAppender;
-import net.fabricmc.fabric.api.client.model.ModelProviderContext;
-import net.fabricmc.fabric.api.client.model.ModelProviderException;
-import net.fabricmc.fabric.api.client.model.ModelVariantProvider;
+import net.fabricmc.fabric.api.client.model.*;
 import net.minecraft.client.render.model.UnbakedModel;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.resource.ResourceManager;
@@ -14,14 +11,13 @@ import net.minecraft.util.Identifier;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class BorderLoader implements ModelAppender, ModelVariantProvider
+public class BorderLoader implements ExtraModelProvider, ModelVariantProvider
 {
-
     @Override
-    public void appendAll(ResourceManager manager, Consumer<ModelIdentifier> out)
+    public void provideExtraModels(ResourceManager manager, Consumer<Identifier> out)
     {
         BorderRegistry.getBorders().stream().flatMap((border) -> border.getModelMap().values().stream())
-                .forEach(modelIdentifier -> out.accept(new ModelIdentifier(modelIdentifier, "")));
+                .forEach(out);
     }
 
     @Override

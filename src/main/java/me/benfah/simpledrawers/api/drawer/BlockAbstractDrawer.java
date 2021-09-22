@@ -9,6 +9,7 @@ import me.benfah.simpledrawers.utils.BlockUtils;
 import me.benfah.simpledrawers.utils.ITapeable;
 import me.benfah.simpledrawers.utils.model.BorderModelProvider;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -48,7 +49,7 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
     public static BorderProperty BORDER_TYPE = BorderRegistry.BORDER_TYPE;
     public static EnumProperty<DrawerType> DRAWER_TYPE = DrawerType.DRAWER_TYPE;
 
-    public Identifier borderIdentifier;
+    public Identifier borderIdentifier; // TODO unused
 
     private UUID lastUsedPlayer;
     private long lastUsedTime;
@@ -63,7 +64,7 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
     @Override
     public BlockState rotate(BlockState state, BlockRotation rotation)
     {
-        return (BlockState) state.with(FACING, rotation.rotate((Direction) state.get(FACING)));
+        return state.with(FACING, rotation.rotate(state.get(FACING)));
     }
 
     @Override
@@ -76,6 +77,7 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
             {
             	if(player.getMainHandStack().isEmpty() && !(player.getUuid().equals(lastUsedPlayer) && world.getTime() - lastUsedTime < 10))
             	{
+                    // TODO use ScreenHandlerRegistry
             		ContainerProviderRegistry.INSTANCE.openContainer(getContainerIdentifier(), player, (buf) ->
                     {
                         buf.writeBlockPos(pos);
@@ -205,12 +207,12 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
 
     public BlockState mirror(BlockState state, BlockMirror mirror)
     {
-        return state.rotate(mirror.getRotation((Direction) state.get(FACING)));
+        return state.rotate(mirror.getRotation(state.get(FACING)));
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx)
     {
-        return (BlockState) this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
+        return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
     }
 
     @Override

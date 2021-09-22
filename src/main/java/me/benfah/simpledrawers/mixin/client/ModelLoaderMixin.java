@@ -7,6 +7,7 @@ import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,11 +21,11 @@ import java.util.Map;
 public class ModelLoaderMixin
 {
 
-    @Shadow
-    Map<ModelIdentifier, BakedModel> bakedModels;
+    @Shadow @Final
+    private Map<ModelIdentifier, BakedModel> bakedModels;
 
-    @Shadow
-    Map<Identifier, UnbakedModel> modelsToBake;
+    @Shadow @Final
+    private Map<Identifier, UnbakedModel> modelsToBake;
 
     @Inject(method = "upload", at = @At(value = "RETURN"))
     public void onPostUpload(TextureManager textureManager, Profiler profiler,

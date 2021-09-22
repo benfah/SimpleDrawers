@@ -14,6 +14,7 @@ public class SDContainerScreens
 {
     public static void initClient()
     {
+        // TODO use ScreenRegistry
         ScreenProviderRegistry.INSTANCE.registerFactory(SDContainers.BASIC_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_1.png")));
         ScreenProviderRegistry.INSTANCE.registerFactory(SDContainers.DOUBLE_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_2.png")));
         ScreenProviderRegistry.INSTANCE.registerFactory(SDContainers.QUAD_DRAWER_CONTAINER, (container) -> new BasicDrawerContainerScreen((DrawerContainer<?>) container, new Identifier(SimpleDrawersMod.MOD_ID, "textures/gui/drawer_4.png")));

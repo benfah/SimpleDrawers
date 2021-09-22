@@ -25,13 +25,13 @@ public class ModelUtils
 {
     public static Random RANDOM = new Random();
 
-    public static final Function<Entry<Property<?>, Comparable<?>>, String> PROPERTY_MAP_PRINTER = new Function<Map.Entry<Property<?>, Comparable<?>>, String>() {
+    public static final Function<Entry<Property<?>, Comparable<?>>, String> PROPERTY_MAP_PRINTER = new Function<>() {
         public String apply(Map.Entry<Property<?>, Comparable<?>> entry) {
             if (entry == null) {
                 return "<NULL>";
             } else {
-                Property<?> property = (Property)entry.getKey();
-                return property.getName() + "=" + this.nameValue(property, (Comparable)entry.getValue());
+                Property<?> property = entry.getKey();
+                return property.getName() + "=" + this.nameValue(property, entry.getValue());
             }
         }
 
@@ -43,7 +43,7 @@ public class ModelUtils
     public static void loadSpecialModels()
     {
 
-        ModelLoadingRegistry.INSTANCE.registerAppender((manager, out) ->
+        ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) ->
         {
             for(SpecialModel model : SpecialModel.values())
                 out.accept(model.getIdentifier());
