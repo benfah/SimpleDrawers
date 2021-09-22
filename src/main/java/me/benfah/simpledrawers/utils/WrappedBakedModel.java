@@ -1,6 +1,5 @@
 package me.benfah.simpledrawers.utils;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
@@ -10,8 +9,6 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.util.math.Direction;
 
 import java.util.*;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 public class WrappedBakedModel implements BakedModel
 {

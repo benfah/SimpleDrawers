@@ -9,7 +9,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extends HandledScreen<T>

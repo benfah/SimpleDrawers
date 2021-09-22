@@ -1,7 +1,5 @@
 package me.benfah.simpledrawers.utils;
 
-import me.benfah.simpledrawers.api.border.BorderRegistry;
-import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -16,7 +14,6 @@ import net.minecraft.state.property.Property;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;

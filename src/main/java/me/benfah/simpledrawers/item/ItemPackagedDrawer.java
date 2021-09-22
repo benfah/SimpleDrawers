@@ -1,8 +1,6 @@
 package me.benfah.simpledrawers.item;
 
 import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
-import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
-import me.benfah.simpledrawers.utils.ITapeable;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
