@@ -34,7 +34,7 @@ public class BlockEntityHalfDrawerRenderer extends BlockEntityAbstractDrawerRend
         }
 
         matrices.pop();
-        DiffuseLighting.disableForLevel(matrices.peek().getModel());
+        DiffuseLighting.disableForLevel(matrices.peek().getPositionMatrix());
         matrices.push();
 
     }

@@ -89,7 +89,7 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
             DiffuseLighting.enableGuiDepthLighting();
         else
             DiffuseLighting.disableGuiDepthLighting();
-        matrices.peek().getNormal().loadIdentity();
+        matrices.peek().getNormalMatrix().loadIdentity();
 
         MinecraftClient.getInstance().getItemRenderer().renderItem(stack, Mode.GUI, light, overlay, matrices, vertexConsumers, 0);
 
@@ -109,7 +109,7 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
 
         int width = renderContext.getTextRenderer().getWidth(new LiteralText(s));
 
-        renderContext.getTextRenderer().draw(s, -width / 2f, 3, 0, false, matrices.peek().getModel(), vertexConsumers, false, 0, 15728880);
+        renderContext.getTextRenderer().draw(s, -width / 2f, 3, 0, false, matrices.peek().getPositionMatrix(), vertexConsumers, false, 0, 15728880);
 
         matrices.pop();
     }
