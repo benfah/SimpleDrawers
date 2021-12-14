@@ -5,7 +5,6 @@ import me.benfah.simpledrawers.api.drawer.holder.AreaHelper;
 import me.benfah.simpledrawers.api.drawer.holder.CombinedInventoryHandler;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import me.benfah.simpledrawers.init.SDBlockEntities;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec2f;
@@ -13,7 +12,7 @@ import net.minecraft.util.math.Vec2f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockEntityQuadDrawer extends BlockEntityAbstractDrawer implements BlockEntityClientSerializable
+public class BlockEntityQuadDrawer extends BlockEntityAbstractDrawer
 {
 
     List<ItemHolder> holderList = new ArrayList<>();

@@ -22,7 +22,7 @@ public class ItemHolder
     protected int maxStacks;
     protected BlockEntityAbstractDrawer blockEntity;
 
-    private InventoryHandler handler;
+    private final InventoryHandler handler;
 
     private boolean locked = false;
 
@@ -69,7 +69,7 @@ public class ItemHolder
         }
         return ActionResult.CONSUME;
     }
-    
+
     public ActionResult offerAll(ItemStack stack, PlayerEntity player)
     {
         Inventory inventory = player.getInventory();
@@ -116,10 +116,10 @@ public class ItemHolder
             amount = amount - stack.getCount();
             boolean result = player.getInventory().insertStack(stack);
             amount = amount + stack.getCount();
-            
+
             if(isEmpty() && !locked)
-            	clearData();
-            
+                clearData();
+
             blockEntity.sync();
             return result;
         }
@@ -159,21 +159,21 @@ public class ItemHolder
     {
         return locked;
     }
-    
+
     public void clearData()
     {
-    	this.locked = false;
+        this.locked = false;
         this.amount = 0;
         this.itemType = null;
     }
-    
+
     public void setLocked(boolean locked)
     {
         this.locked = locked;
-        
+
         if(isEmpty() && !locked)
-        	clearData();
-        
+            clearData();
+
         blockEntity.sync();
     }
 
