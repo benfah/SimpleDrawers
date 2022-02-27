@@ -1,43 +1,38 @@
 package me.benfah.simpledrawers.block.entity.renderer;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.utils.ModelUtils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation.Mode;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Matrix3f;
 import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.LightType;
-import static me.benfah.simpledrawers.utils.RenderConstants.*;
 
-public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbstractDrawer> extends BlockEntityRenderer<B>
-{
+public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbstractDrawer> implements BlockEntityRenderer<B> {
 
+    private final BlockEntityRendererFactory.Context renderContext;
 
-
-    public BlockEntityAbstractDrawerRenderer(BlockEntityRenderDispatcher dispatcher)
+    public BlockEntityAbstractDrawerRenderer(BlockEntityRendererFactory.Context ctx)
     {
-        super(dispatcher);
+        this.renderContext = ctx;
     }
-
 
     public void transformToFace(MatrixStack stack, Direction d)
     {
         stack.translate(.5f, .5f, .5f);
         stack.multiply(d.getRotationQuaternion());
-        stack.multiply(new Quaternion(Vector3f.POSITIVE_X, 90, true));
+        stack.multiply(new Quaternion(Vec3f.POSITIVE_X, 90, true));
         stack.translate(-.5f, -.5f, -.5f);
     }
 
@@ -45,7 +40,7 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
     {
         stack.translate(.5f, .5f, .5f);
         stack.multiply(d.getRotationQuaternion());
-        stack.multiply(new Quaternion(Vector3f.NEGATIVE_X, 90, true));
+        stack.multiply(new Quaternion(Vec3f.NEGATIVE_X, 90, true));
         stack.translate(-.5f, -.5f, -.5f);
     }
 
@@ -83,19 +78,20 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
         transformToFace(matrices, facing);
         transformToPosition(x, y, matrices);
         matrices.translate(0, 0, -0.01);
-        matrices.multiply(new Quaternion(Vector3f.NEGATIVE_Z, 180, true));
-        matrices.multiply(new Quaternion(Vector3f.NEGATIVE_Y, 180, true));
+        matrices.multiply(new Quaternion(Vec3f.NEGATIVE_Z, 180, true));
+        matrices.multiply(new Quaternion(Vec3f.NEGATIVE_Y, 180, true));
         matrices.scale(scale, scale, 0.0001f);
         if(vertexConsumers instanceof VertexConsumerProvider.Immediate)
             ((VertexConsumerProvider.Immediate) vertexConsumers).draw();
 
         BakedModel model = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(stack);
         if(model.hasDepth())
-            RenderSystem.setupGui3DDiffuseLighting(DIFFUSE_LIGHT_0, DIFFUSE_LIGHT_1);
+            DiffuseLighting.enableGuiDepthLighting();
         else
-            RenderSystem.setupGuiFlatDiffuseLighting(DIFFUSE_LIGHT_0, DIFFUSE_LIGHT_1);
-        matrices.peek().getNormal().load(Matrix3f.scale(1, -1, 1));
-        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, Mode.GUI, light, overlay, matrices, vertexConsumers);
+            DiffuseLighting.disableGuiDepthLighting();
+        matrices.peek().getNormal().loadIdentity();
+
+        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, Mode.GUI, light, overlay, matrices, vertexConsumers, 0);
 
         if(vertexConsumers instanceof VertexConsumerProvider.Immediate)
             ((VertexConsumerProvider.Immediate) vertexConsumers).draw();
@@ -111,9 +107,9 @@ public abstract class BlockEntityAbstractDrawerRenderer<B extends BlockEntityAbs
 
         matrices.scale(0.01f, 0.01f, 0.01f);
 
-        int width = dispatcher.getTextRenderer().getWidth(new LiteralText(s));
+        int width = renderContext.getTextRenderer().getWidth(new LiteralText(s));
 
-        dispatcher.getTextRenderer().draw(s, -width / 2, 3, 0, false, matrices.peek().getModel(), vertexConsumers, false, 0, 15728880);
+        renderContext.getTextRenderer().draw(s, -width / 2f, 3, 0, false, matrices.peek().getModel(), vertexConsumers, false, 0, 15728880);
 
         matrices.pop();
     }

@@ -8,17 +8,17 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
-public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extends HandledScreen<T>
+public abstract class DrawerContainerScreen<T extends DrawerContainer> extends HandledScreen<T>
 {
 
-    public DrawerContainerScreen(T container)
+    public DrawerContainerScreen(T container, Text title)
     {
 
-        super(container, container.playerInv, container.drawer.getCachedState().getBlock().asItem().getName());
-
+        super(container, container.playerInv, title);
 
         this.backgroundWidth = 176;
         this.backgroundHeight = 187;
@@ -29,11 +29,17 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
         handler.holderSlots.forEach((slot) ->
         {
             itemRenderer.renderGuiItemIcon(slot.getStack(), slot.x, slot.y);
-            RenderSystem.pushMatrix();
-            RenderSystem.translatef(slot.x + 3, slot.y + 3, 0);
-            RenderSystem.scalef(0.75f, 0.75f, 1);
+
+            MatrixStack matrices = RenderSystem.getModelViewStack();
+            matrices.push();
+            matrices.translate(slot.x + 3, slot.y + 3, 0);
+            matrices.scale(0.75f, 0.75f, 1);
+            RenderSystem.applyModelViewMatrix();
+
             itemRenderer.renderGuiItemOverlay(textRenderer, slot.getStack(), 0, 0, NumberUtils.displayShortNumber(slot.holder.get().getAmount()));
-            RenderSystem.popMatrix();
+
+            matrices.pop();
+            RenderSystem.applyModelViewMatrix();
 
         });
         HolderSlot slot = getHolderSlotAt(mouseX, mouseY);
@@ -49,7 +55,7 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
             RenderSystem.enableDepthTest();
         }
         this.textRenderer.draw(stack, this.title.asString(), 8.0F, 6.0F, 4210752);
-        this.textRenderer.draw(stack, this.playerInventory.getDisplayName().asString(), 8.0F,
+        this.textRenderer.draw(stack, this.playerInventoryTitle.asString(), 8.0F,
                 (float) (this.backgroundHeight - 96 + 2), 4210752);
 
     }
@@ -91,7 +97,8 @@ public abstract class DrawerContainerScreen<T extends DrawerContainer<?>> extend
     protected void drawBackground(MatrixStack matrixStack, float delta, int mouseX, int mouseY)
     {
 //        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.client.getTextureManager().bindTexture(getBackgroundTexture());
+
+        RenderSystem.setShaderTexture(0, getBackgroundTexture());
         int i = (this.width - this.backgroundWidth) / 2;
         int j = (this.height - this.backgroundHeight) / 2;
         this.drawTexture(matrixStack, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);

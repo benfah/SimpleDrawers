@@ -1,13 +1,10 @@
 package me.benfah.simpledrawers.utils;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.property.Property;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PropertyStateConverter
@@ -20,7 +17,6 @@ public class PropertyStateConverter
 
     BlockState state;
     String propertyString;
-    ;
 
     public static <T extends Comparable<T>> BlockState fromPropertyString(Block block, String propertyString)
     {

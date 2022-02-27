@@ -1,7 +1,5 @@
 package me.benfah.simpledrawers.utils;
 
-import me.benfah.simpledrawers.api.border.BorderRegistry;
-import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -16,7 +14,6 @@ import net.minecraft.state.property.Property;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -28,13 +25,13 @@ public class ModelUtils
 {
     public static Random RANDOM = new Random();
 
-    public static final Function<Entry<Property<?>, Comparable<?>>, String> PROPERTY_MAP_PRINTER = new Function<Map.Entry<Property<?>, Comparable<?>>, String>() {
+    public static final Function<Entry<Property<?>, Comparable<?>>, String> PROPERTY_MAP_PRINTER = new Function<>() {
         public String apply(Map.Entry<Property<?>, Comparable<?>> entry) {
             if (entry == null) {
                 return "<NULL>";
             } else {
-                Property<?> property = (Property)entry.getKey();
-                return property.getName() + "=" + this.nameValue(property, (Comparable)entry.getValue());
+                Property<?> property = entry.getKey();
+                return property.getName() + "=" + this.nameValue(property, entry.getValue());
             }
         }
 
@@ -46,7 +43,7 @@ public class ModelUtils
     public static void loadSpecialModels()
     {
 
-        ModelLoadingRegistry.INSTANCE.registerAppender((manager, out) ->
+        ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) ->
         {
             for(SpecialModel model : SpecialModel.values())
                 out.accept(model.getIdentifier());

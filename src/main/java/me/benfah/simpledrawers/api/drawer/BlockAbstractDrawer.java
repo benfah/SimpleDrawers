@@ -1,36 +1,46 @@
 package me.benfah.simpledrawers.api.drawer;
 
-import java.util.UUID;
-
 import me.benfah.simpledrawers.api.border.Border;
 import me.benfah.simpledrawers.api.border.BorderRegistry;
 import me.benfah.simpledrawers.api.border.BorderRegistry.BorderProperty;
+import me.benfah.simpledrawers.api.container.DrawerContainer;
 import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
 import me.benfah.simpledrawers.item.DrawerInteractable;
 import me.benfah.simpledrawers.utils.BlockUtils;
 import me.benfah.simpledrawers.utils.ITapeable;
 import me.benfah.simpledrawers.utils.model.BorderModelProvider;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.StateManager.Builder;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
 
 public abstract class BlockAbstractDrawer extends BlockWithEntity implements InventoryProvider, BorderModelProvider, ITapeable<BlockEntityAbstractDrawer>
 {
@@ -44,17 +54,24 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
     public static BorderProperty BORDER_TYPE = BorderRegistry.BORDER_TYPE;
     public static EnumProperty<DrawerType> DRAWER_TYPE = DrawerType.DRAWER_TYPE;
 
-    public Identifier borderIdentifier;
+    public Identifier borderIdentifier; // TODO unused
 
     private UUID lastUsedPlayer;
     private long lastUsedTime;
 
+    @Override
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient ? null : (w, p, s, blockEntity) ->
+            BlockEntityAbstractDrawer.serverTick(w, p, s, (BlockEntityAbstractDrawer) blockEntity);
+    }
+
+    @Override
     public BlockState rotate(BlockState state, BlockRotation rotation)
     {
-        return (BlockState) state.with(FACING, rotation.rotate((Direction) state.get(FACING)));
+        return state.with(FACING, rotation.rotate(state.get(FACING)));
     }
-    
-    
+
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
                               BlockHitResult hit)
@@ -65,9 +82,25 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
             {
             	if(player.getMainHandStack().isEmpty() && !(player.getUuid().equals(lastUsedPlayer) && world.getTime() - lastUsedTime < 10))
             	{
-            		ContainerProviderRegistry.INSTANCE.openContainer(getContainerIdentifier(), player, (buf) ->
+                    BlockEntityAbstractDrawer drawer = (BlockEntityAbstractDrawer) world.getBlockEntity(pos);
+
+                    player.openHandledScreen(new ExtendedScreenHandlerFactory()
                     {
-                        buf.writeBlockPos(pos);
+                        @Override
+                        public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+                            buf.writeBlockPos(pos);
+                        }
+
+                        @Override
+                        public Text getDisplayName() {
+                            return getName();
+                        }
+
+                        @Override
+                        public ScreenHandler createMenu(int syncId, PlayerInventory inventory, PlayerEntity player)
+                        {
+                            return new DrawerContainer(getContainerType(), syncId, inventory, drawer);
+                        }
                     });
             	}
             	else if(state.get(FACING).equals(hit.getSide()))
@@ -142,7 +175,7 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
 
 
             if(holder.getTag() != null)
-                stack.setTag(holder.getTag());
+                stack.setNbt(holder.getTag());
 
             for(int i = 0; i < fullStacksCount; i++)
             {
@@ -194,12 +227,12 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
 
     public BlockState mirror(BlockState state, BlockMirror mirror)
     {
-        return state.rotate(mirror.getRotation((Direction) state.get(FACING)));
+        return state.rotate(mirror.getRotation(state.get(FACING)));
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx)
     {
-        return (BlockState) this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
+        return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
     }
 
     @Override
@@ -236,9 +269,9 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
 
     public static DeserializedInfo deserializeInfo(ItemStack stack)
     {
-        if(stack.getSubTag("DrawerInfo") != null)
+        if(stack.getSubNbt("DrawerInfo") != null)
         {
-            CompoundTag data = stack.getSubTag("DrawerInfo");
+            NbtCompound data = stack.getSubNbt("DrawerInfo");
             
             
             String border = data.getString("Border");
@@ -251,16 +284,16 @@ public abstract class BlockAbstractDrawer extends BlockWithEntity implements Inv
         return new DeserializedInfo(null);
     }
 
-    public abstract Identifier getContainerIdentifier();
+    public abstract ScreenHandlerType<? extends DrawerContainer> getContainerType();
 
     public static ItemStack getStack(BlockAbstractDrawer drawer, Border border)
     {
         ItemStack result = new ItemStack(drawer.asItem());
-        CompoundTag data = new CompoundTag();
+        NbtCompound data = new NbtCompound();
 
         data.putString("Border", BorderRegistry.getName(border));
 
-        result.putSubTag("DrawerInfo", data);
+        result.setSubNbt("DrawerInfo", data);
         return result;
     }
 
