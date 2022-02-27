@@ -11,7 +11,7 @@ public class HwylaPlugin implements IWailaPlugin
     @Override
     public void register(IRegistrar registrar)
     {
-        registrar.addDisplayItem(DrawerComponentProvider.INSTANCE, BlockAbstractDrawer.class);
+        registrar.addIcon(DrawerComponentProvider.INSTANCE, BlockAbstractDrawer.class);
         registrar.addComponent(DrawerComponentProvider.INSTANCE, TooltipPosition.BODY, BlockAbstractDrawer.class);
     }
 
