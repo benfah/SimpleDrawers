@@ -22,7 +22,7 @@ public class ModelLoaderMixin
 {
 
     @Shadow @Final
-    private Map<ModelIdentifier, BakedModel> bakedModels;
+    private Map<Identifier, BakedModel> bakedModels;
 
     @Shadow @Final
     private Map<Identifier, UnbakedModel> modelsToBake;

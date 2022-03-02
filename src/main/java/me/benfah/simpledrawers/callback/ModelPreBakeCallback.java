@@ -24,6 +24,6 @@ public interface ModelPreBakeCallback
             });
 
     void onPreBake(Map<Identifier, UnbakedModel> unbaked, BiFunction<Identifier, ModelBakeSettings, BakedModel> bakeFunction,
-                   Map<ModelIdentifier, BakedModel> baked);
+                   Map<Identifier, BakedModel> baked);
 
 }
