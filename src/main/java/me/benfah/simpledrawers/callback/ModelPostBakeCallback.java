@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.ModelIdentifier;
+import net.minecraft.util.Identifier;
 
 import java.util.Map;
 
@@ -19,6 +20,6 @@ public interface ModelPostBakeCallback
                 }
             });
 
-    void onPostBake(Map<ModelIdentifier, BakedModel> baked);
+    void onPostBake(Map<Identifier, BakedModel> baked);
 
 }
