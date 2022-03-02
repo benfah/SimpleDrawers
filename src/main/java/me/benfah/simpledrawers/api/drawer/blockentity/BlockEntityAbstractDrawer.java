@@ -1,29 +1,26 @@
 package me.benfah.simpledrawers.api.drawer.blockentity;
 
-import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.holder.CombinedInventoryHandler;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
-import net.minecraft.util.Tickable;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public abstract class BlockEntityAbstractDrawer extends BlockEntity implements BlockEntityClientSerializable, Tickable
+public abstract class BlockEntityAbstractDrawer extends BlockEntity
 {
 
-    public BlockEntityAbstractDrawer(BlockEntityType<?> type)
+    public BlockEntityAbstractDrawer(BlockEntityType<?> type, BlockPos pos, BlockState state)
     {
-        super(type);
+        super(type, pos, state);
     }
 
     public abstract ItemHolder getItemHolderAt(float x, float y);
@@ -34,59 +31,68 @@ public abstract class BlockEntityAbstractDrawer extends BlockEntity implements B
 
     public abstract CombinedInventoryHandler getInventoryHandler();
 
-    public void tick()
+    public static void serverTick(World world, BlockPos pos, BlockState state, BlockEntityAbstractDrawer blockEntity)
     {
-        if(!world.isClient)
-            getItemHolders().forEach((holder) -> holder.getInventoryHandler().transferItems());
+        blockEntity.getItemHolders().forEach((holder) -> holder.getInventoryHandler().transferItems());
     }
 
+    // needed to sync to client
     @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
+    }
+
+    // needed to sync to client
+    @Override
+    public BlockEntityUpdateS2CPacket toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
+
     public void sync()
     {
         markDirty();
-        BlockEntityClientSerializable.super.sync();
+
+        // sync to client
+        BlockEntity blockEntity = this;
+        if (blockEntity.hasWorld() && !blockEntity.getWorld().isClient)
+            ((ServerWorld) blockEntity.getWorld()).getChunkManager().markForUpdate(blockEntity.getPos());
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag)
+    public void readNbt(NbtCompound nbt)
     {
-        fromClientTag(tag);
-        super.fromTag(state, tag);
+        readClientNbt(nbt);
+        super.readNbt(nbt);
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag)
+    public void writeNbt(NbtCompound nbt)
     {
-        toClientTag(tag);
-        return super.toTag(tag);
+        writeClientNbt(nbt);
+        super.writeNbt(nbt);
     }
 
-    @Override
-    public void fromClientTag(CompoundTag tag)
+    public void readClientNbt(NbtCompound nbt)
     {
         List<ItemHolder> holders = new ArrayList<>();
-        if(tag.contains("Holder"))
+        if(nbt.contains("Holder"))
         {
-            holders.add(ItemHolder.fromNBT(tag.getCompound("Holder"), this));
-        } else if(tag.contains("Holders"))
+            holders.add(ItemHolder.fromNBT(nbt.getCompound("Holder"), this));
+        } else if(nbt.contains("Holders"))
         {
-            ListTag listTag = tag.getList("Holders", 10);
+            NbtList listTag = nbt.getList("Holders", 10);
             holders.addAll(listTag.stream()
-                    .map((holderTag) -> ItemHolder.fromNBT((CompoundTag) holderTag, this)).collect(Collectors.toList()));
+                    .map((holderTag) -> ItemHolder.fromNBT((NbtCompound) holderTag, this)).toList());
         }
         if(!holders.isEmpty())
             setItemHolders(holders);
     }
 
-    @Override
-    public CompoundTag toClientTag(CompoundTag tag)
+    public void writeClientNbt(NbtCompound nbt)
     {
-        List<CompoundTag> holderList = getItemHolders().stream().map((holder) -> holder.toNBT(new CompoundTag()))
-                .collect(Collectors.toList());
-        ListTag listTag = new ListTag();
+        List<NbtCompound> holderList = getItemHolders().stream().map((holder) -> holder.toNBT(new NbtCompound())).toList();
+        NbtList listTag = new NbtList();
         listTag.addAll(holderList);
-        tag.put("Holders", listTag);
-        return tag;
+        nbt.put("Holders", listTag);
     }
-
 }

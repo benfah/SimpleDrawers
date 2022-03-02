@@ -4,18 +4,18 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
+import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
-import static me.benfah.simpledrawers.utils.RenderConstants.*;
 
 public class BlockEntityFullDrawerRenderer extends BlockEntityAbstractDrawerRenderer<BlockEntityBasicDrawer>
 {
 
-    public BlockEntityFullDrawerRenderer(BlockEntityRenderDispatcher dispatcher)
+    public BlockEntityFullDrawerRenderer(BlockEntityRendererFactory.Context ctx)
     {
-        super(dispatcher);
+        super(ctx);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class BlockEntityFullDrawerRenderer extends BlockEntityAbstractDrawerRend
 
 
             matrices.pop();
-            RenderSystem.setupLevelDiffuseLighting(DIFFUSE_LIGHT_0, DIFFUSE_LIGHT_1, matrices.peek().getModel());
+            DiffuseLighting.disableForLevel(matrices.peek().getPositionMatrix());
             matrices.push();
         }
 

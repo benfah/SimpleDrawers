@@ -5,14 +5,14 @@ import me.benfah.simpledrawers.api.drawer.holder.AreaHelper;
 import me.benfah.simpledrawers.api.drawer.holder.CombinedInventoryHandler;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import me.benfah.simpledrawers.init.SDBlockEntities;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.minecraft.util.Tickable;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec2f;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockEntityHalfDrawer extends BlockEntityAbstractDrawer implements BlockEntityClientSerializable, Tickable
+public class BlockEntityHalfDrawer extends BlockEntityAbstractDrawer
 {
 
     List<ItemHolder> holderList = new ArrayList<>();
@@ -20,9 +20,9 @@ public class BlockEntityHalfDrawer extends BlockEntityAbstractDrawer implements 
 
     private CombinedInventoryHandler handler;
 
-    public BlockEntityHalfDrawer()
+    public BlockEntityHalfDrawer(BlockPos pos, BlockState state)
     {
-        super(SDBlockEntities.HALF_DRAWER);
+        super(SDBlockEntities.HALF_DRAWER, pos, state);
         holderList.add(new ItemHolder(16, this));
         holderList.add(new ItemHolder(16, this));
         helper = new AreaHelper(() -> holderList, new AreaHelper.Area(new Vec2f(0, 0), new Vec2f(1F, 0.5F)), new AreaHelper.Area(new Vec2f(0, 0.5F), new Vec2f(1F, 1F)));

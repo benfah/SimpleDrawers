@@ -6,25 +6,26 @@ import me.benfah.simpledrawers.api.drawer.holder.CombinedInventoryHandler;
 import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 import me.benfah.simpledrawers.block.BlockDrawerController;
 import me.benfah.simpledrawers.init.SDBlockEntities;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlockEntityDrawerController extends BlockEntity implements Tickable
+public class BlockEntityDrawerController extends BlockEntity
 {
 
     List<BlockPos> drawerPositions = new ArrayList<>();
 
     CombinedInventoryHandler handler = new CombinedInventoryHandler(this::getAffectedItemHolders);
 
-    public BlockEntityDrawerController()
+    public BlockEntityDrawerController(BlockPos pos, BlockState state)
     {
-        super(SDBlockEntities.DRAWER_CONTROLLER);
+        super(SDBlockEntities.DRAWER_CONTROLLER, pos, state);
     }
 
     public void updateDrawerPositions()
@@ -65,10 +66,9 @@ public class BlockEntityDrawerController extends BlockEntity implements Tickable
         return handler;
     }
 
-    @Override
-    public void tick()
+    public static void serverTick(World world, BlockPos pos, BlockState state, BlockEntityDrawerController blockEntity)
     {
-        updateDrawerPositions();
+        blockEntity.updateDrawerPositions();
     }
 
 }
