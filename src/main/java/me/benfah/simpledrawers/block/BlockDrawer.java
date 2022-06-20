@@ -1,19 +1,22 @@
 package me.benfah.simpledrawers.block;
 
 import me.benfah.simpledrawers.api.border.Border;
+import me.benfah.simpledrawers.api.container.DrawerContainer;
 import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.DrawerType;
 import me.benfah.simpledrawers.block.entity.BlockEntityBasicDrawer;
 import me.benfah.simpledrawers.init.SDContainers;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
 
 public class BlockDrawer extends BlockAbstractDrawer
 {
 
-    public BlockDrawer(Settings settings, Border border)
+    public BlockDrawer(AbstractBlock.Settings settings, Border border)
     {
         super(settings);
         this.setDefaultState(getDefaultState().with(FACING, Direction.NORTH).with(BORDER_TYPE, border).with(DRAWER_TYPE,
@@ -21,15 +24,15 @@ public class BlockDrawer extends BlockAbstractDrawer
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockView arg0)
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
     {
-        return new BlockEntityBasicDrawer();
+        return new BlockEntityBasicDrawer(pos, state);
     }
 
     @Override
-    public Identifier getContainerIdentifier()
+    public ScreenHandlerType<? extends DrawerContainer> getContainerType()
     {
-        return SDContainers.BASIC_DRAWER_CONTAINER;
+        return SDContainers.BASIC_DRAWER_CONTAINER_TYPE;
     }
 
 }

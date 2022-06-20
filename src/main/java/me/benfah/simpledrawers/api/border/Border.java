@@ -99,7 +99,7 @@ public class Border implements Comparable<Border>
 
     public enum BorderType
     {
-        BASIC, UPGRADED;
+        BASIC, UPGRADED
     }
 
 }

@@ -1,20 +1,12 @@
 package me.benfah.simpledrawers.plugin.hwyla;
 
-import mcp.mobius.waila.api.IComponentProvider;
-import mcp.mobius.waila.api.IDataAccessor;
-import mcp.mobius.waila.api.IPluginConfig;
-import mcp.mobius.waila.api.RenderableTextComponent;
+import mcp.mobius.waila.api.*;
+import mcp.mobius.waila.api.component.ItemComponent;
 import me.benfah.simpledrawers.api.drawer.BlockAbstractDrawer;
 import me.benfah.simpledrawers.api.drawer.blockentity.BlockEntityAbstractDrawer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import me.benfah.simpledrawers.api.drawer.holder.ItemHolder;
 
-import java.util.List;
-
-public class DrawerComponentProvider implements IComponentProvider
+public class DrawerComponentProvider implements IBlockComponentProvider
 {
 
     public static DrawerComponentProvider INSTANCE = new DrawerComponentProvider();
@@ -24,42 +16,24 @@ public class DrawerComponentProvider implements IComponentProvider
     }
 
     @Override
-    public ItemStack getStack(IDataAccessor accessor, IPluginConfig config)
-    {
+    public ITooltipComponent getIcon(IBlockAccessor accessor, IPluginConfig config) {
         if(accessor.getBlock() instanceof BlockAbstractDrawer)
         {
-            return BlockAbstractDrawer.getStack((BlockAbstractDrawer) accessor.getBlock(),
-                    accessor.getBlockState().get(BlockAbstractDrawer.BORDER_TYPE));
+            return new ItemComponent(BlockAbstractDrawer.getStack((BlockAbstractDrawer) accessor.getBlock(),
+                    accessor.getBlockState().get(BlockAbstractDrawer.BORDER_TYPE)));
         }
-        return IComponentProvider.super.getStack(accessor, config);
+        return ItemComponent.EMPTY;
     }
 
     @Override
-    public void appendBody(List<Text> tooltip, IDataAccessor accessor, IPluginConfig config)
+    public void appendBody(ITooltip tooltip, IBlockAccessor accessor, IPluginConfig config)
     {
-        BlockEntityAbstractDrawer drawer = (BlockEntityAbstractDrawer) accessor.getBlockEntity();
+        BlockEntityAbstractDrawer drawer = accessor.getBlockEntity();
 
-        RenderableTextComponent[] renderables = (RenderableTextComponent[]) drawer.getItemHolders().stream()
-                .map(holder -> getRenderable(holder.generateStack(holder.getAmount()))).toArray(RenderableTextComponent[]::new);
-        tooltip.add(new RenderableTextComponent(renderables));
+        ITooltipLine line = tooltip.addLine();
 
-    }
-
-    private static RenderableTextComponent getRenderable(ItemStack stack)
-    {
-        if(!stack.isEmpty())
-        {
-            CompoundTag tag = new CompoundTag();
-            tag.putString("id", Registry.ITEM.getId(stack.getItem()).toString());
-            tag.putInt("count", stack.getCount());
-            if(stack.hasTag())
-                tag.putString("nbt", stack.getTag().toString());
-            return new RenderableTextComponent(new Identifier("item"), tag);
-        } else
-        {
-            CompoundTag spacerTag = new CompoundTag();
-            spacerTag.putInt("width", 18);
-            return new RenderableTextComponent(new Identifier("spacer"), spacerTag);
+        for(ItemHolder holder : drawer.getItemHolders()) {
+            line.with(new ItemComponent(holder.generateStack(holder.getAmount())));
         }
     }
 
